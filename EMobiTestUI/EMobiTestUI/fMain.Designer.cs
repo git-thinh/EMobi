@@ -37,10 +37,12 @@
             this._splitterLeft = new System.Windows.Forms.Splitter();
             this._splitterRight = new System.Windows.Forms.Splitter();
             this._panelRight = new System.Windows.Forms.Panel();
-            this._buttonReIndex = new System.Windows.Forms.Button();
-            this._buttonClean = new System.Windows.Forms.Button();
-            this._buttonSave = new System.Windows.Forms.Button();
+            this._buttonView = new System.Windows.Forms.Button();
+            this._buttonPageOpen = new System.Windows.Forms.Button();
             this._buttonOpen = new System.Windows.Forms.Button();
+            this._buttonSave = new System.Windows.Forms.Button();
+            this._buttonClean = new System.Windows.Forms.Button();
+            this._buttonReIndex = new System.Windows.Forms.Button();
             this._panelBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).BeginInit();
             this._panelRight.SuspendLayout();
@@ -51,7 +53,7 @@
             this._buttonSelection.BackColor = System.Drawing.SystemColors.Control;
             this._buttonSelection.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonSelection.ForeColor = System.Drawing.Color.Black;
-            this._buttonSelection.Location = new System.Drawing.Point(-1, 79);
+            this._buttonSelection.Location = new System.Drawing.Point(-1, 51);
             this._buttonSelection.Name = "_buttonSelection";
             this._buttonSelection.Size = new System.Drawing.Size(48, 23);
             this._buttonSelection.TabIndex = 5;
@@ -137,6 +139,8 @@
             // _panelRight
             // 
             this._panelRight.BackColor = System.Drawing.Color.Black;
+            this._panelRight.Controls.Add(this._buttonView);
+            this._panelRight.Controls.Add(this._buttonPageOpen);
             this._panelRight.Controls.Add(this._buttonOpen);
             this._panelRight.Controls.Add(this._buttonSave);
             this._panelRight.Controls.Add(this._buttonClean);
@@ -150,31 +154,47 @@
             this._panelRight.Size = new System.Drawing.Size(45, 805);
             this._panelRight.TabIndex = 5;
             // 
-            // _buttonReIndex
+            // _buttonView
             // 
-            this._buttonReIndex.BackColor = System.Drawing.SystemColors.Control;
-            this._buttonReIndex.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this._buttonReIndex.ForeColor = System.Drawing.Color.Black;
-            this._buttonReIndex.Location = new System.Drawing.Point(-1, 128);
-            this._buttonReIndex.Name = "_buttonReIndex";
-            this._buttonReIndex.Size = new System.Drawing.Size(49, 23);
-            this._buttonReIndex.TabIndex = 9;
-            this._buttonReIndex.Text = "Index";
-            this._buttonReIndex.UseVisualStyleBackColor = false;
-            this._buttonReIndex.Click += new System.EventHandler(this._buttonReIndex_Click);
+            this._buttonView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._buttonView.BackColor = System.Drawing.SystemColors.Control;
+            this._buttonView.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this._buttonView.ForeColor = System.Drawing.Color.Black;
+            this._buttonView.Location = new System.Drawing.Point(-2, 778);
+            this._buttonView.Name = "_buttonView";
+            this._buttonView.Size = new System.Drawing.Size(49, 23);
+            this._buttonView.TabIndex = 14;
+            this._buttonView.Text = "View";
+            this._buttonView.UseVisualStyleBackColor = false;
+            this._buttonView.Click += new System.EventHandler(this._buttonView_Click);
             // 
-            // _buttonClean
+            // _buttonPageOpen
             // 
-            this._buttonClean.BackColor = System.Drawing.SystemColors.Control;
-            this._buttonClean.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this._buttonClean.ForeColor = System.Drawing.Color.Black;
-            this._buttonClean.Location = new System.Drawing.Point(-1, 103);
-            this._buttonClean.Name = "_buttonClean";
-            this._buttonClean.Size = new System.Drawing.Size(48, 23);
-            this._buttonClean.TabIndex = 10;
-            this._buttonClean.Text = "Clean";
-            this._buttonClean.UseVisualStyleBackColor = false;
-            this._buttonClean.Click += new System.EventHandler(this._buttonClean_Click);
+            this._buttonPageOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._buttonPageOpen.BackColor = System.Drawing.SystemColors.Control;
+            this._buttonPageOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this._buttonPageOpen.ForeColor = System.Drawing.Color.Black;
+            this._buttonPageOpen.Location = new System.Drawing.Point(-2, 753);
+            this._buttonPageOpen.Name = "_buttonPageOpen";
+            this._buttonPageOpen.Size = new System.Drawing.Size(49, 23);
+            this._buttonPageOpen.TabIndex = 13;
+            this._buttonPageOpen.Text = "Page";
+            this._buttonPageOpen.UseVisualStyleBackColor = false;
+            this._buttonPageOpen.Click += new System.EventHandler(this._buttonPageOpen_Click);
+            // 
+            // _buttonOpen
+            // 
+            this._buttonOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._buttonOpen.BackColor = System.Drawing.SystemColors.Control;
+            this._buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this._buttonOpen.ForeColor = System.Drawing.Color.Black;
+            this._buttonOpen.Location = new System.Drawing.Point(-3, 727);
+            this._buttonOpen.Name = "_buttonOpen";
+            this._buttonOpen.Size = new System.Drawing.Size(47, 23);
+            this._buttonOpen.TabIndex = 12;
+            this._buttonOpen.Text = "Open";
+            this._buttonOpen.UseVisualStyleBackColor = false;
+            this._buttonOpen.Click += new System.EventHandler(this._buttonOpen_Click);
             // 
             // _buttonSave
             // 
@@ -182,7 +202,7 @@
             this._buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._buttonSave.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this._buttonSave.Location = new System.Drawing.Point(-2, 27);
+            this._buttonSave.Location = new System.Drawing.Point(-2, 24);
             this._buttonSave.Name = "_buttonSave";
             this._buttonSave.Size = new System.Drawing.Size(48, 23);
             this._buttonSave.TabIndex = 11;
@@ -190,18 +210,31 @@
             this._buttonSave.UseVisualStyleBackColor = false;
             this._buttonSave.Click += new System.EventHandler(this._buttonSave_Click);
             // 
-            // _buttonOpen
+            // _buttonClean
             // 
-            this._buttonOpen.BackColor = System.Drawing.SystemColors.Control;
-            this._buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this._buttonOpen.ForeColor = System.Drawing.Color.Black;
-            this._buttonOpen.Location = new System.Drawing.Point(-1, 54);
-            this._buttonOpen.Name = "_buttonOpen";
-            this._buttonOpen.Size = new System.Drawing.Size(47, 23);
-            this._buttonOpen.TabIndex = 12;
-            this._buttonOpen.Text = "Open";
-            this._buttonOpen.UseVisualStyleBackColor = false;
-            this._buttonOpen.Click += new System.EventHandler(this._buttonOpen_Click);
+            this._buttonClean.BackColor = System.Drawing.SystemColors.Control;
+            this._buttonClean.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this._buttonClean.ForeColor = System.Drawing.Color.Black;
+            this._buttonClean.Location = new System.Drawing.Point(-1, 75);
+            this._buttonClean.Name = "_buttonClean";
+            this._buttonClean.Size = new System.Drawing.Size(48, 23);
+            this._buttonClean.TabIndex = 10;
+            this._buttonClean.Text = "Clean";
+            this._buttonClean.UseVisualStyleBackColor = false;
+            this._buttonClean.Click += new System.EventHandler(this._buttonClean_Click);
+            // 
+            // _buttonReIndex
+            // 
+            this._buttonReIndex.BackColor = System.Drawing.SystemColors.Control;
+            this._buttonReIndex.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this._buttonReIndex.ForeColor = System.Drawing.Color.Black;
+            this._buttonReIndex.Location = new System.Drawing.Point(-1, 100);
+            this._buttonReIndex.Name = "_buttonReIndex";
+            this._buttonReIndex.Size = new System.Drawing.Size(49, 23);
+            this._buttonReIndex.TabIndex = 9;
+            this._buttonReIndex.Text = "Index";
+            this._buttonReIndex.UseVisualStyleBackColor = false;
+            this._buttonReIndex.Click += new System.EventHandler(this._buttonReIndex_Click);
             // 
             // fMain
             // 
@@ -239,5 +272,7 @@
         private System.Windows.Forms.Button _buttonClean;
         private System.Windows.Forms.Button _buttonOpen;
         private System.Windows.Forms.Button _buttonSave;
+        private System.Windows.Forms.Button _buttonPageOpen;
+        private System.Windows.Forms.Button _buttonView;
     }
 }

@@ -135,19 +135,7 @@ namespace EMobiTestUI
 
         private void _pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = Path.GetDirectoryName(_pictureBox.Tag.ToString());
-                openFileDialog.Filter = "Image files (*.png)|*.png|(*.jpg)|*.jpg|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string file = openFileDialog.FileName;
-                    openImage(file);
-                }
-            }
+            
         }
 
         private void _buttonReIndex_Click(object sender, EventArgs e)
@@ -197,7 +185,18 @@ namespace EMobiTestUI
 
         private void _buttonOpen_Click(object sender, EventArgs e)
         {
+            var f = new fOpen(_pictureBox.Tag.ToString());
+            f.ShowDialog();
+        }
 
+        private void _buttonPageOpen_Click(object sender, EventArgs e)
+        {
+            new fPage().ShowDialog();
+        }
+
+        private void _buttonView_Click(object sender, EventArgs e)
+        {
+            new fView().ShowDialog();
         }
 
         private void _buttonSave_Click(object sender, EventArgs e)
@@ -267,6 +266,7 @@ namespace EMobiTestUI
             x = 0;
             y = 0;
         }
+
 
         void openImage(string file)
         {

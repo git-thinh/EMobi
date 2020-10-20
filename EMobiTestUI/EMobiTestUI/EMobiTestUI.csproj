@@ -18,9 +18,10 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET_2_0;NET20</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,18 +33,836 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DocxToText.cs" />
+    <Compile Include="Core\ExcelWriter.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Class1.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Combination.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Hook.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\HotKeys\HotKeyArgs.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\HotKeys\HotKeySet.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\HotKeys\HotKeySetCollection.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\HotKeys\HotKeySetsListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\IKeyboardEvents.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\IKeyboardMouseEvents.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\IMouseEvents.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\AppEventFacade.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\AppKeyListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\AppMouseListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\BaseListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\ButtonSet.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\Callback.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\Chord.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\EventFacade.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\GlobalEventFacade.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\GlobalKeyListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\GlobalMouseListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\KeyboardState.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\KeyListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\KeysExtensions.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\MouseListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\Subscribe.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\KeyCombinationExtensions.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\KeyEventArgsExt.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\KeyPressEventArgsExt.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\MouseEventExtArgs.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Sequence.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\SequenceBase.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\AppMouseStruct.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\CallbackData.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookHelper.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookIds.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookNativeMethods.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookProcedure.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookProcedureHandle.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookResult.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HotkeysNativeMethods.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\KeyboardHookStruct.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\KeyboardNativeMethods.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\Messages.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\MouseNativeMethods.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\MouseStruct.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\Point.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\ThreadNativeMethods.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\ByteArray.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\ByteString.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\CodedInputStream.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\CodedOutputStream.ComputeSize.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\CodedOutputStream.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Collections\MapField.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Collections\ReadOnlyDictionary.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Collections\RepeatedField.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Compatibility\PropertyInfoExtensions.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Compatibility\TypeExtensions.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\FieldCodec.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\FrameworkPortability.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\ICustomDiagnosticMessage.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\IDeepCloneable.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\IMessage.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\InvalidJsonException.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\InvalidProtocolBufferException.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\JsonFormatter.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\JsonParser.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\JsonToken.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\JsonTokenizer.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\LimitedInputStream.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\MessageExtensions.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\MessageParser.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\ProtoPreconditions.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\Descriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\DescriptorBase.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\DescriptorPool.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\DescriptorUtil.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\DescriptorValidationException.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\EnumDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\EnumValueDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\FieldAccessorBase.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\FieldDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\FieldType.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\FileDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\GeneratedClrTypeInfo.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\IDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\IFieldAccessor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\MapFieldAccessor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\MessageDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\MethodDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\OneofAccessor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\OneofDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\OriginalNameAttribute.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\PackageDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\PartialClasses.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\ReflectionUtil.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\RepeatedFieldAccessor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\ServiceDescriptor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\SingleFieldAccessor.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\Reflection\TypeRegistry.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\Any.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\AnyPartial.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\Api.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\Duration.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\DurationPartial.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\Empty.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\FieldMask.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\FieldMaskPartial.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\SourceContext.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\Struct.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\TimeExtensions.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\Timestamp.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\TimestampPartial.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\Type.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\ValuePartial.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\Wrappers.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WellKnownTypes\WrappersPartial.cs" />
+    <Compile Include="Core\Google\Google.Protobuf_3.1.x_Nov.30.2016\Google.Protobuf\WireFormat.cs" />
+    <Compile Include="Core\Google\GooTranslateService_v1.cs" />
+    <Compile Include="Core\Google\GooTranslateService_v2.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\crc32.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\EncodingFoundException.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlAttribute.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlAttributeCollection.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlCmdLine.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlCommentNode.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlConsoleListener.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlDocument.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlDocument.PathMethods.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlDocument.Xpath.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlElementFlag.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlEntity.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlNameTable.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlNode.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlNode.Encapsulator.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlNode.Xpath.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlNodeCollection.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlNodeNavigator.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlNodeType.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlParseError.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlParseErrorCode.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlTextNode.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlWeb.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlWeb.Xpath.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\HtmlWebException.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\InvalidProgramException.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\IOLibrary.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\Metro\HtmlWeb.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\Metro\InvalidProgramException.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\MixedCodeDocument.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\MixedCodeDocumentCodeFragment.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\MixedCodeDocumentFragment.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\MixedCodeDocumentFragmentList.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\MixedCodeDocumentFragmentType.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\MixedCodeDocumentTextFragment.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\NameValuePair.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\NameValuePairList.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\Trace.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\Trace.FullFramework.cs" />
+    <Compile Include="Core\HtmlAgilityPack\Core\Utilities.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\CssSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\ExtensionMethods.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\NodeExtensionMethods.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\PseudoClass.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\PseudoClassNameAttribute.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\PseudoClassSelectors\FirstChildPseudoClass.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\PseudoClassSelectors\LastChildPseudoClass.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\PseudoClassSelectors\NotPseudoClass.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\PseudoClassSelectors\NthChildPseudoClass.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Selectors\AllSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Selectors\AttributeSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Selectors\ClassNameSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Selectors\IdSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Selectors\ImediateChildrenSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Selectors\PseudoClassSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Selectors\SiblingImediateSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Selectors\SiblingSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Selectors\TagNameSelector.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Token.cs" />
+    <Compile Include="Core\HtmlAgilityPack\CssSelectors\Tokenizer.cs" />
+    <Compile Include="Core\NAudio\CachedSound.cs" />
+    <Compile Include="Core\NAudio\Codecs\ALawDecoder.cs" />
+    <Compile Include="Core\NAudio\Codecs\ALawEncoder.cs" />
+    <Compile Include="Core\NAudio\Codecs\G722Codec.cs" />
+    <Compile Include="Core\NAudio\Codecs\MuLawDecoder.cs" />
+    <Compile Include="Core\NAudio\Codecs\MuLawEncoder.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioCaptureClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientBufferFlags.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientProperties.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientShareMode.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientStreamFlags.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientStreamOptions.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClockClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeCallback.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeChannel.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeChannels.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeNotificationDelegate.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeStepInformation.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeVolumeRange.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioMeterInformation.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioMeterInformationChannels.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioRenderClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioSessionControl.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioSessionEventsCallback.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioSessionManager.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioSessionNotification.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioStreamCategory.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioStreamVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioVolumeNotificationData.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\DataFlow.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\DeviceState.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\EEndpointHardwareSupport.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\AudioVolumeNotificationDataStruct.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\Blob.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\ClsCtx.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\ErrorCodes.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioCaptureClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioClock2.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioEndpointVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioEndpointVolumeCallback.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioMeterInformation.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioRenderClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionControl.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionEnumerator.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionEvents.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionEventsHandler.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionManager.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionNotification.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioStreamVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMDevice.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMDeviceCollection.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMDeviceEnumerator.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMEndpoint.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMNotificationClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IPropertyStore.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\ISimpleAudioVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\MMDeviceEnumeratorComObject.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\StorageAccessMode.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\MMDevice.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\MMDeviceCollection.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\MMDeviceEnumerator.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropertyKey.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropertyKeys.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropertyStore.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropertyStoreProperty.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropVariant.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropVariantNative.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Role.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\SessionCollection.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\SimpleAudioVolume.cs" />
+    <Compile Include="Core\NAudio\Dmo\AudioMediaSubtypes.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoDescriptor.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoEnumerator.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoEnumFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoGuids.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoHResults.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoInputDataBufferFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoInputStatusFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoInterop.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoMediaType.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoOutputDataBuffer.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoOutputDataBufferFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoPartialMediaType.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoProcessOutputFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoSetTypeFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\IEnumDmo.cs" />
+    <Compile Include="Core\NAudio\Dmo\IMediaBuffer.cs" />
+    <Compile Include="Core\NAudio\Dmo\IMediaObject.cs" />
+    <Compile Include="Core\NAudio\Dmo\IMediaParamInfo.cs" />
+    <Compile Include="Core\NAudio\Dmo\InputStreamInfoFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\IWMResamplerProps.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaBuffer.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaObject.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaObjectSizeInfo.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaParamInfo.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaTypes.cs" />
+    <Compile Include="Core\NAudio\Dmo\OutputStreamInfoFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\ResamplerMediaObject.cs" />
+    <Compile Include="Core\NAudio\Dmo\WindowsMediaMp3Decoder.cs" />
+    <Compile Include="Core\NAudio\Dsp\BiQuadFilter.cs" />
+    <Compile Include="Core\NAudio\Dsp\Complex.cs" />
+    <Compile Include="Core\NAudio\Dsp\EnvelopeDetector.cs" />
+    <Compile Include="Core\NAudio\Dsp\EnvelopeGenerator.cs" />
+    <Compile Include="Core\NAudio\Dsp\FastFourierTransform.cs" />
+    <Compile Include="Core\NAudio\Dsp\ImpulseResponseConvolution.cs" />
+    <Compile Include="Core\NAudio\Dsp\SimpleCompressor.cs" />
+    <Compile Include="Core\NAudio\Dsp\SimpleGate.cs" />
+    <Compile Include="Core\NAudio\Dsp\SmbPitchShifter.cs" />
+    <Compile Include="Core\NAudio\Dsp\WdlResampler.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\ChannelMode.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\DmoMp3FrameDecompressor.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\Id3v2Tag.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\IMp3FrameDecompressor.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\Mp3Frame.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\Mp3FrameDecompressor.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\MpegLayer.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\MpegVersion.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\XingHeader.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Generator.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\GeneratorBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\GeneratorEnum.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\InfoChunk.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Instrument.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\InstrumentBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Modulator.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\ModulatorBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\ModulatorType.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Preset.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\PresetBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\PresetsChunk.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\RiffChunk.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SampleDataChunk.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SampleHeader.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SampleHeaderBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SampleMode.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SFSampleLink.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SFVersion.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SFVersionBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SoundFont.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\StructureBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Zone.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\ZoneBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Wav\WaveFileChunkReader.cs" />
+    <Compile Include="Core\NAudio\Gui\Fader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\PanSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\Pot.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\Pot.Designer.cs">
+      <DependentUpon>Pot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\VolumeMeter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\VolumeMeter.Designer.cs">
+      <DependentUpon>VolumeMeter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\VolumeSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\WaveformPainter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\WaveformPainter.Designer.cs">
+      <DependentUpon>WaveformPainter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\WaveViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\LoopStream.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\AudioSubtypes.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFActivate.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFAttributes.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFByteStream.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFCollection.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFMediaBuffer.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFMediaEvent.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFMediaType.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFReadWriteClassFactory.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFSample.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFSinkWriter.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFSourceReader.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFTransform.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaEventType.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationAttributes.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationErrors.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationHelpers.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationInterop.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationTransform.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationTransformCategories.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaType.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaTypes.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_INPUT_STREAM_INFO.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_MESSAGE_TYPE.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_OUTPUT_DATA_BUFFER.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_OUTPUT_STREAM_INFO.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_REGISTER_TYPE_INFO.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MF_SINK_WRITER_STATISTICS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_ENUM_FLAG.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_INPUT_STATUS_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_INPUT_STREAM_INFO_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_OUTPUT_DATA_BUFFER_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_OUTPUT_STATUS_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_OUTPUT_STREAM_INFO_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_PROCESS_OUTPUT_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_PROCESS_OUTPUT_STATUS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_SET_TYPE_FLAGS.cs" />
+    <Compile Include="Core\NAudio\Midi\ChannelAfterTouchEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\ControlChangeEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\KeySignatureEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\MetaEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\MetaEventType.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiCommandCode.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiController.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiEventCollection.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiEventComparer.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiFile.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiIn.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiInCapabilities.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiInMessageEventArgs.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiInterop.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiMessage.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiOut.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiOutCapabilities.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiOutTechnology.cs" />
+    <Compile Include="Core\NAudio\Midi\NoteEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\NoteOnEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\PatchChangeEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\PitchWheelChangeEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\RawMetaEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\SequencerSpecificEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\SmpteOffsetEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\SysexEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\TempoEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\TextEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\TimeSignatureEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\TrackSequenceNumberEvent.cs" />
+    <Compile Include="Core\NAudio\Mixer\BooleanMixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\CustomMixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\ListTextMixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\Mixer.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerControlType.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerFlags.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerInterop.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerLine.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerLineComponentType.cs" />
+    <Compile Include="Core\NAudio\Mixer\SignedMixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\UnsignedMixerControl.cs" />
+    <Compile Include="Core\NAudio\Utils\BufferHelpers.cs" />
+    <Compile Include="Core\NAudio\Utils\ByteArrayExtensions.cs" />
+    <Compile Include="Core\NAudio\Utils\ByteEncoding.cs" />
+    <Compile Include="Core\NAudio\Utils\ChunkIdentifier.cs" />
+    <Compile Include="Core\NAudio\Utils\CircularBuffer.cs" />
+    <Compile Include="Core\NAudio\Utils\Decibels.cs" />
+    <Compile Include="Core\NAudio\Utils\FieldDescriptionAttribute.cs" />
+    <Compile Include="Core\NAudio\Utils\FieldDescriptionHelper.cs" />
+    <Compile Include="Core\NAudio\Utils\HResult.cs" />
+    <Compile Include="Core\NAudio\Utils\IEEE.cs" />
+    <Compile Include="Core\NAudio\Utils\IgnoreDisposeStream.cs" />
+    <Compile Include="Core\NAudio\Utils\MarshalHelpers.cs" />
+    <Compile Include="Core\NAudio\Utils\MergeSort.cs" />
+    <Compile Include="Core\NAudio\Utils\NativeMethods.cs" />
+    <Compile Include="Core\NAudio\Utils\ProgressLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Utils\ProgressLog.Designer.cs">
+      <DependentUpon>ProgressLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\NAudio\Utils\WavePositionExtensions.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\Asio64Bit.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioCallbacks.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioChannelInfo.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\ASIODriver.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioDriverCapability.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\ASIODriverExt.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioError.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioMessageSelector.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\ASIOSampleConvertor.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioSampleType.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\ASIOStructures.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriver.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriverAddFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriverDetails.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriverDetailsSupportFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriverEnumFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatChoose.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatChooseStyleFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatDetails.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatEnumFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatSuggestFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatTag.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatTagDetails.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmInterop.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmMetrics.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStream.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamConvertFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamHeader.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamHeaderStatusFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamHeaderStruct.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamOpenFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamSizeFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\WaveFilter.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\Manufacturers.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\MmException.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\MmResult.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\MmTime.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveCallbackInfo.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveCallbackStrategy.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveHeader.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveHeaderFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveInCapabilities.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveInEventArgs.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveInterop.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveOutCapabilities.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveOutSupport.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveWindow.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\ISampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Mono16SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Mono24SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Mono8SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\MonoFloatSampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Stereo16SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Stereo24SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Stereo8SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\StereoFloatSampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\AdsrSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\ConcatenatingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\FadeInOutSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\MeteringSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\MixingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\MonoToStereoSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\MultiplexingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\NotifyingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\OffsetSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\PanningSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\Pcm16BitToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\Pcm24BitToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\Pcm32BitToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\Pcm8BitToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleChannel.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleProviderConverterBase.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleProviderConverters.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleToWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleToWaveProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleToWaveProvider24.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SignalGenerator.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SMBPitchShiftingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\StereoToMonoSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\VolumeSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\WaveToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\WaveToSampleProvider64.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\WdlResamplingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveExtensionMethods.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\AdpcmWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\Gsm610WaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\ImaAdpcmWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\Mp3WaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\OggWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\TrueSpeechWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormatCustomMarshaler.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormatEncoding.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormatExtensible.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormatExtraData.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WmaWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\IWaveIn.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\WasapiCapture.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\WasapiLoopbackCapture.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\WaveIn.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\WaveInEvent.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\AiffFileWriter.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\AsioAudioAvailableEventArgs.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\AsioOut.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\BextChunkInfo.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\BwfWriter.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\CueWaveFileWriter.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\DirectSoundOut.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\IWaveBuffer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\IWavePlayer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\IWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\IWaveProviderFloat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\MediaFoundationEncoder.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\PlaybackState.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\StoppedEventArgs.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WasapiOut.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WaveBuffer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WaveFileWriter.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WaveOut.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WaveOutEvent.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\BufferedWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\MediaFoundationResampler.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\MixingWaveProvider32.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\MonoToStereoProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\MultiplexingWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\SilenceWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\StereoToMonoProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\VolumeWaveProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\Wave16toFloatProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveFloatTo16Provider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveInProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveProvider32.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveRecorder.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\AiffFileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\AudioFileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\BlockAlignReductionStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\ComStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\CueList.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\CueWaveFileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\ISampleNotifier.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\MediaFoundationReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\Mp3FileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\RawSourceWaveStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\ResamplerDmoStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\RiffChunk.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\SimpleCompressorStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\StreamMediaFoundationReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\Wave32To16Stream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveChannel32.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveFileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveFormatConversionProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveFormatConversionStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveInBuffer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveMixerStream32.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOffsetStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOutBuffer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveStream.cs" />
+    <Compile Include="Core\SimpleBrowser\BasicAuthenticationToken.cs" />
+    <Compile Include="Core\SimpleBrowser\Browser.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\AnchorElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\ButtonInputElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\CheckboxInputElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\FileUploadElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\FormElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\FormElementElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\FrameElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\IHasRawPostData.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\ImageInputElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\InputElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\LabelElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\OptionElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\RadioInputElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\SelectableInputElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\SelectElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Elements\TextAreaElement.cs" />
+    <Compile Include="Core\SimpleBrowser\Enumerations.cs" />
+    <Compile Include="Core\SimpleBrowser\HtmlElement.cs" />
+    <Compile Include="Core\SimpleBrowser\HtmlLogFormatter.cs" />
+    <Compile Include="Core\SimpleBrowser\HtmlResult.cs" />
+    <Compile Include="Core\SimpleBrowser\HttpRequestLog.cs" />
+    <Compile Include="Core\SimpleBrowser\Internal\ApacheMimeTypes.cs" />
+    <Compile Include="Core\SimpleBrowser\Internal\CollectionExtensions.cs" />
+    <Compile Include="Core\SimpleBrowser\Internal\ObjectExtensions.cs" />
+    <Compile Include="Core\SimpleBrowser\Internal\SetCookieHeaderParser.cs" />
+    <Compile Include="Core\SimpleBrowser\Internal\StringExtensions.cs" />
+    <Compile Include="Core\SimpleBrowser\Internal\StringUtil.cs" />
+    <Compile Include="Core\SimpleBrowser\Internal\XmlExtensions.cs" />
+    <Compile Include="Core\SimpleBrowser\KeyStateOption.cs" />
+    <Compile Include="Core\SimpleBrowser\NavigationState.cs" />
+    <Compile Include="Core\SimpleBrowser\Network\IHttpWebRequest.cs" />
+    <Compile Include="Core\SimpleBrowser\Network\IHttpWebResponse.cs" />
+    <Compile Include="Core\SimpleBrowser\Network\IWebRequestFactory.cs" />
+    <Compile Include="Core\SimpleBrowser\Network\WebRequestWrapper.cs" />
+    <Compile Include="Core\SimpleBrowser\Network\WebResponseWrapper.cs" />
+    <Compile Include="Core\SimpleBrowser\Parser\DocumentBuilder.cs" />
+    <Compile Include="Core\SimpleBrowser\Parser\DocumentCleaner.cs" />
+    <Compile Include="Core\SimpleBrowser\Parser\ElementPositioningRule.cs" />
+    <Compile Include="Core\SimpleBrowser\Parser\HtmlParser.cs" />
+    <Compile Include="Core\SimpleBrowser\Parser\HtmlTokenizer.cs" />
+    <Compile Include="Core\SimpleBrowser\Parser\PositioningRules\A.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\ExpressionUtil.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\SelectorParserCatalog.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\Selectors\AllSelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\Selectors\AttributeSelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\Selectors\ChildSelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\Selectors\ClassSelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\Selectors\CommaSelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\Selectors\DescendentSelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\Selectors\ElementSelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\Selectors\IdSelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\Selectors\NeighbourSelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\XQuery.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\XQueryException.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\XQueryParserContext.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\XQueryResultsContext.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\XQuerySelector.cs" />
+    <Compile Include="Core\SimpleBrowser\Query\XQuerySelectorCreator.cs" />
+    <Compile Include="Core\SimpleBrowser\StringExt.cs" />
+    <Compile Include="Core\System.Linq\Class1.cs" />
+    <Compile Include="Core\System.Linq\DeepCopy.Assign.cs" />
+    <Compile Include="Core\System.Linq\IsNumber.cs" />
+    <Compile Include="Core\System.Linq\Lucene.Net.cs" />
+    <Compile Include="Core\System.Linq\ReaderWriterLockSlim.cs" />
+    <Compile Include="Core\System.Linq\System.Collections.Generic\HashSet.cs" />
+    <Compile Include="Core\System.Linq\System.Collections.Generic\ISet.cs" />
+    <Compile Include="Core\System.Linq\System.Data.Linq\MonoTODOAttribute.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Dynamic\System.Linq.Dynamic.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\BinaryExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ConditionalExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ConstantExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ElementInit.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\EmitContext.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\Expression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ExpressionPrinter.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ExpressionTransformer.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ExpressionType.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ExpressionVisitor.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\Expression_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\Extensions.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\InvocationExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\LambdaExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ListInitExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberAssignment.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberBinding.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberBindingType.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberInitExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberListBinding.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberMemberBinding.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MethodCallExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\NewArrayExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\NewExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ParameterExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\TypeBinaryExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\UnaryExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Ext.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Check.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Enumerable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Grouping.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IGrouping.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\ILookup_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IOrderedEnumerable_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IOrderedQueryable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IOrderedQueryable_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IQueryable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IQueryable_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IQueryProvider.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Lookup.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\OrderedEnumerable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\OrderedSequence.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Queryable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\QueryableEnumerable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\QueryableTransformer.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\QuickSort.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\SortContext.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\SortDirection.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\SortSequenceContext.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\DynamicAttribute.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\ExecutionScope.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\ExtensionAttribute.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\IStrongBox.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\StrongBox_T.cs" />
+    <Compile Include="Core\System.Linq\System\Action.cs" />
+    <Compile Include="Core\System.Linq\System\Func.cs" />
+    <Compile Include="Core\System.Linq\Tuple\IStructuralComparable.cs" />
+    <Compile Include="Core\System.Linq\Tuple\IStructuralEquatable.cs" />
+    <Compile Include="Core\System.Linq\Tuple\Tuple.cs" />
+    <Compile Include="Core\System.Linq\_demo\_demo.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\AuthenticationType.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\ContentGrant.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\ContentRight.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\ContentUser.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\CryptoProvider.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\LocalizedNameDescriptionPair.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\PublishLicense.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\RightsManagementException.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\RightsManagementFailureCode.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\SecureEnvironment.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\UnsignedPublishLicense.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\UseLicense.cs" />
+    <Compile Include="Core\System.Security.RightsManagement\UserActivationMode.cs" />
+    <Compile Include="Core\System.Threading\ConcurrentDictionary\System\ArrayHelper.cs" />
+    <Compile Include="Core\System.Threading\ConcurrentDictionary\System\Collections\Concurrent\ConcurrentDictionary.cs" />
+    <Compile Include="Core\System.Threading\ConcurrentDictionary\System\Collections\Generic\IReadOnlyCollection.cs" />
+    <Compile Include="Core\System.Threading\ConcurrentDictionary\System\Collections\Generic\IReadOnlyDictionary.cs" />
+    <Compile Include="Core\System.Threading\ConcurrentDictionary\System\PlatformHelper.cs" />
+    <Compile Include="Core\System.Threading\ConcurrentDictionary\System\SR.cs" />
+    <Compile Include="Core\System.Threading\ConcurrentDictionary\System\Threading\Volatile.cs" />
+    <Compile Include="Core\System.Threading\DictionaryThreadSafe.cs" />
+    <Compile Include="Core\System.Threading\ListThreadSafe.cs" />
+    <Compile Include="Core\System.Threading\QueueThreadSafe.cs" />
+    <Compile Include="Core\System.Threading\ReaderWriterLockSlimExtensions.cs" />
+    <Compile Include="Core\System.Threading\ReadWriteLockSlimExtend.cs" />
+    <Compile Include="Core\System.Threading\StackThreadSafe.cs" />
+    <Compile Include="Core\JWT\JWT.cs" />
+    <Compile Include="Core\JWT\JwtToken.cs" />
+    <Compile Include="Core\JWT\token.cs" />
+    <Compile Include="Core\System.Xml.Linq\Extensions.cs" />
+    <Compile Include="Core\System.Xml.Linq\LoadOptions.cs" />
+    <Compile Include="Core\System.Xml.Linq\SaveOptions.cs" />
+    <Compile Include="Core\System.Xml.Linq\XAttribute.cs" />
+    <Compile Include="Core\System.Xml.Linq\XCData.cs" />
+    <Compile Include="Core\System.Xml.Linq\XComment.cs" />
+    <Compile Include="Core\System.Xml.Linq\XContainer.cs" />
+    <Compile Include="Core\System.Xml.Linq\XDeclaration.cs" />
+    <Compile Include="Core\System.Xml.Linq\XDocument.cs" />
+    <Compile Include="Core\System.Xml.Linq\XDocumentType.cs" />
+    <Compile Include="Core\System.Xml.Linq\XElement.cs" />
+    <Compile Include="Core\System.Xml.Linq\XIterators.cs" />
+    <Compile Include="Core\System.Xml.Linq\XName.cs" />
+    <Compile Include="Core\System.Xml.Linq\XNamespace.cs" />
+    <Compile Include="Core\System.Xml.Linq\XNode.cs" />
+    <Compile Include="Core\System.Xml.Linq\XNodeDocumentOrderComparer.cs" />
+    <Compile Include="Core\System.Xml.Linq\XNodeEqualityComparer.cs" />
+    <Compile Include="Core\System.Xml.Linq\XNodeNavigator.cs" />
+    <Compile Include="Core\System.Xml.Linq\XNodeReader.cs" />
+    <Compile Include="Core\System.Xml.Linq\XNodeWriter.cs" />
+    <Compile Include="Core\System.Xml.Linq\XObject.cs" />
+    <Compile Include="Core\System.Xml.Linq\XObjectChange.cs" />
+    <Compile Include="Core\System.Xml.Linq\XObjectChangeEventArgs.cs" />
+    <Compile Include="Core\System.Xml.Linq\XProcessingInstruction.cs" />
+    <Compile Include="Core\System.Xml.Linq\XStreamingElement.cs" />
+    <Compile Include="Core\System.Xml.Linq\XText.cs" />
+    <Compile Include="Core\System.Xml.Linq\XUtil.cs" />
     <Compile Include="Core\UiTransparent.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Core\UiSelectRectangle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\UiTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="fMain.cs">
@@ -52,10 +871,55 @@
     <Compile Include="fMain.Designer.cs">
       <DependentUpon>fMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="fView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fView.Designer.cs">
+      <DependentUpon>fView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fPage.Designer.cs">
+      <DependentUpon>fPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fOpen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fOpen.Designer.cs">
+      <DependentUpon>fOpen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Core\NAudio\Gui\Fader.resx">
+      <DependentUpon>Fader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Gui\PanSlider.resx">
+      <DependentUpon>PanSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Gui\Pot.resx">
+      <DependentUpon>Pot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Gui\VolumeSlider.resx">
+      <DependentUpon>VolumeSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Gui\WaveViewer.resx">
+      <DependentUpon>WaveViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Utils\ProgressLog.resx">
+      <DependentUpon>ProgressLog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fView.resx">
+      <DependentUpon>fView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fPage.resx">
+      <DependentUpon>fPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fOpen.resx">
+      <DependentUpon>fOpen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -66,6 +930,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Core\HtmlAgilityPack\CssSelectors\README.md" />
+    <None Include="Core\SimpleBrowser\Resources\HtmlLogTemplate.cshtml" />
+    <None Include="Core\System.Xml.Linq\ChangeLog" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +942,26 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Core\NAudio\Changes.xml" />
+    <Content Include="DLL\CefSharp.dll" />
+    <Content Include="DLL\CefSharp.WinForms.dll" />
+    <Content Include="DLL\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="DLL\Newtonsoft.Json.dll" />
+    <Content Include="DLL\ReadMe.txt" />
+    <Content Include="DLL\System.Core.dll" />
+    <Content Include="DLL\System.Speech.dll" />
+    <Content Include="DLL\System.Threading.dll" />
+    <Content Include="DLL\System.Xml.Linq.dll" />
+    <Content Include="Core\Gma.System.MouseKeyHook\HotKeys\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PdfiumViewer\PdfiumViewer.csproj">
+      <Project>{438914b6-5d1c-482c-b942-5c0e057eef6f}</Project>
+      <Name>PdfiumViewer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

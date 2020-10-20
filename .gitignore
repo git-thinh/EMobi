@@ -2,3 +2,6 @@
 /EMobiTestUI/EMobiTestUI/bin
 /EMobiTestUI/EMobiTestUI/obj
 debug/EMobi.PushBook.pdb
+/EMobiTestUI/PdfiumViewer/obj
+/EMobiTestUI/PdfiumViewer/debug
+debug/PdfiumViewer.pdb
