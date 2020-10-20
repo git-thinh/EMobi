@@ -27,17 +27,14 @@ namespace EMobiTestUI
         }
 
         private void _buttonClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void _buttonSearch_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonCrop_Click(object sender, EventArgs e)
-        {
+        {            
+            var confirmResult = MessageBox.Show("Are you sure to exit program?",
+                                     "Confirm Exit",
+                                     MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
+            {
+                this.Close();
+            }
         }
 
         private void _buttonMini_Click(object sender, EventArgs e)
@@ -51,11 +48,6 @@ namespace EMobiTestUI
                 IS_MODE_EDIT = false;
             else
                 IS_MODE_EDIT = true;
-        }
-
-        private void _buttonRemove_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void _pictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -102,7 +94,7 @@ namespace EMobiTestUI
 
         private void _pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            if (IS_MODE_EDIT)
+            if (IS_MODE_EDIT && mList.Count > 0 && index != -1)
             {
                 int w = Math.Abs(x - x1), h = Math.Abs(y - y1);
 
@@ -135,7 +127,11 @@ namespace EMobiTestUI
             }
         }
 
+        int COUNTER_REINDEX = 0;
+        int w0 = 0, h0 = 0;
         int x = 0, y = 0, x1 = 0, y1 = 0;
+        int index = -1;
+        List<UiSelectRectangle> mList = new List<UiSelectRectangle>() { };
 
         private void _pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -153,9 +149,6 @@ namespace EMobiTestUI
                 }
             }
         }
-
-        int index = -1;
-        List<UiSelectRectangle> mList = new List<UiSelectRectangle>() { };
 
         private void _buttonReIndex_Click(object sender, EventArgs e)
         {
@@ -191,13 +184,15 @@ namespace EMobiTestUI
             }
         }
 
-        int COUNTER_REINDEX = 0;
-
         private void _buttonClean_Click(object sender, EventArgs e)
         {
-            mList.Clear();
-            _pictureBox.Controls.Clear();
-            _buttonSave.Enabled = false;
+            var confirmResult = MessageBox.Show("Are you sure to clean all item selected ?",
+                                     "Confirm Clean All",
+                                     MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
+            {
+                cleanAll();
+            }
         }
 
         private void _buttonOpen_Click(object sender, EventArgs e)
@@ -263,10 +258,20 @@ namespace EMobiTestUI
             }
         }
 
-        int w0 = 0, h0 = 0;
+        void cleanAll() {
+            mList.Clear();
+            _pictureBox.Controls.Clear();
+            _buttonSave.Enabled = false;
+            index = -1;
+            COUNTER_REINDEX = 0;
+            x = 0;
+            y = 0;
+        }
 
         void openImage(string file)
         {
+            cleanAll();
+
             int w = 0, h = 0;
 
             var img = Image.FromFile(file);
