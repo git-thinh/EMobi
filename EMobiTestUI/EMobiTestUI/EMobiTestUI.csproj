@@ -950,6 +950,7 @@
     <Content Include="DLL\ICSharpCode.SharpZipLib.dll" />
     <Content Include="DLL\Newtonsoft.Json.dll" />
     <Content Include="DLL\ReadMe.txt" />
+    <EmbeddedResource Include="DLL\emobi-db.exe" />
     <Content Include="DLL\System.Core.dll" />
     <Content Include="DLL\System.Speech.dll" />
     <Content Include="DLL\System.Threading.dll" />

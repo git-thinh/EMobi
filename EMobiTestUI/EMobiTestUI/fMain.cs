@@ -1,16 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace EMobiTestUI
 {
     public partial class fMain : Form
     {
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        public string PATH_DATA { get { return Application.StartupPath[0] + @":\emobidata"; } }
+        string REDIS_PATH = string.Empty;
+        int REDIS_PORT = 3456;
+        bool REDIS_OPEN = false;
+        Thread REDIS_THREAD = null;
+
         public fMain()
         {
+            REDIS_PORT = getFreeTcpPort();
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
             UiSelectRectangle.CheckForIllegalCrossThreadCalls = false;
@@ -18,12 +34,75 @@ namespace EMobiTestUI
 
         private void fMain_Load(object sender, EventArgs e)
         {
+            this.Text = REDIS_PORT.ToString();
+
+            exitRedis();
+
+            if (!Directory.Exists(PATH_DATA)) Directory.CreateDirectory(PATH_DATA);
+            REDIS_PATH = Path.Combine(PATH_DATA, "emobi-db.exe");
+            if (!File.Exists(REDIS_PATH))
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                var resourceName = "EMobiTestUI.DLL.emobi-db.exe";
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                using (BinaryReader br = new BinaryReader(stream))
+                {
+                    var buf = br.ReadBytes((int)stream.Length);
+                    File.WriteAllBytes(REDIS_PATH, buf);
+                    Thread.Sleep(100);
+                }
+            }
+
+            REDIS_THREAD = new Thread(() =>
+            {
+                Process p = new Process();
+                //p.StartInfo.WorkingDirectory = @"dir";
+                p.StartInfo.Arguments = "--port " + REDIS_PORT.ToString() + " --bind 127.0.0.1";
+                p.StartInfo.FileName = REDIS_PATH;
+
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.RedirectStandardError = true;
+                p.StartInfo.CreateNoWindow = true;
+                p.ErrorDataReceived += (se,ev)=> {
+                    //Debug.WriteLine(ev.Data);
+                };
+                p.OutputDataReceived += (se, ev) => {
+                    //Debug.WriteLine(ev.Data);
+                    if (!string.IsNullOrEmpty(ev.Data) && ev.Data.Contains("Ready")) {
+                        REDIS_OPEN = true;
+                        //IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
+                        IntPtr h = p.MainWindowHandle;
+                        ShowWindow(h, 0);
+                    }
+                };
+                p.EnableRaisingEvents = true;
+                p.Start();
+                p.BeginOutputReadLine();
+                p.BeginErrorReadLine();
+                p.WaitForExit();
+                ;
+
+                ////ProcessStartInfo r = new ProcessStartInfo(REDIS_PATH);
+                ////r.UseShellExecute = false;
+                //////r.CreateNoWindow = true;
+                ////r.Arguments = "--port " + REDIS_PORT.ToString() + " --bind 127.0.0.1"; 
+                ////var p = Process.Start(r);
+                //////IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
+                //////IntPtr h = p.MainWindowHandle;
+                //////ShowWindow(h, 0);
+                ////p.WaitForExit();
+                ////;
+            });
+            REDIS_THREAD.Start();
+
             _buttonSave.Enabled = false;
             _panelLeft.Width = 0;
             _panelRight.Width = 45;
-            IS_MODE_EDIT = true;
-            //openImage(@"C:\EMobi\data\speackout elementary student book.bbc\36.jpg");
-            openImage(@"D:\EMobi\data\speackout elementary student book.bbc\15.jpg");
+
+            //IS_MODE_EDIT = true;
+            ////openImage(@"C:\EMobi\data\speackout elementary student book.bbc\36.jpg");
+            //openImage(@"D:\EMobi\data\speackout elementary student book.bbc\15.jpg");
         }
 
         private void _buttonClose_Click(object sender, EventArgs e)
@@ -185,8 +264,11 @@ namespace EMobiTestUI
 
         private void _buttonOpen_Click(object sender, EventArgs e)
         {
-            var f = new fOpen(_pictureBox.Tag.ToString());
-            f.ShowDialog();
+            if (_pictureBox.Tag != null)
+            {
+                var f = new fOpen(_pictureBox.Tag.ToString());
+                f.ShowDialog();
+            }
         }
 
         private void _buttonPageOpen_Click(object sender, EventArgs e)
@@ -197,6 +279,11 @@ namespace EMobiTestUI
         private void _buttonView_Click(object sender, EventArgs e)
         {
             new fView().ShowDialog();
+        }
+
+        private void fMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            exitRedis();
         }
 
         private void _buttonSave_Click(object sender, EventArgs e)
@@ -267,7 +354,6 @@ namespace EMobiTestUI
             y = 0;
         }
 
-
         void openImage(string file)
         {
             cleanAll();
@@ -300,6 +386,22 @@ namespace EMobiTestUI
             _pictureBox.Height = h;
             _pictureBox.Image = Image.FromFile(file);
             _pictureBox.Tag = file;
+        }
+
+        void exitRedis() {
+            Process.Start("TASKKILL", @"/F /IM ""emobi-db.exe*""");
+            Thread.Sleep(100);
+            if (REDIS_THREAD != null) REDIS_THREAD.Abort();
+        }
+
+        static int getFreeTcpPort()
+        {
+            TcpListener l = new TcpListener(IPAddress.Loopback, 0);
+            l.Start();
+            int port = ((IPEndPoint)l.LocalEndpoint).Port;
+            l.Stop();
+            Thread.Sleep(100);
+            return port;
         }
     }
 }

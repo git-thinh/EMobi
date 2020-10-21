@@ -105,11 +105,11 @@
             // 
             // _pictureBox
             // 
-            this._pictureBox.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this._pictureBox.BackColor = System.Drawing.Color.Black;
             this._pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this._pictureBox.Location = new System.Drawing.Point(3, 1);
             this._pictureBox.Name = "_pictureBox";
-            this._pictureBox.Size = new System.Drawing.Size(477, 710);
+            this._pictureBox.Size = new System.Drawing.Size(45, 46);
             this._pictureBox.TabIndex = 0;
             this._pictureBox.TabStop = false;
             this._pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseDoubleClick);
@@ -188,7 +188,7 @@
             this._buttonOpen.BackColor = System.Drawing.SystemColors.Control;
             this._buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonOpen.ForeColor = System.Drawing.Color.Black;
-            this._buttonOpen.Location = new System.Drawing.Point(-3, 727);
+            this._buttonOpen.Location = new System.Drawing.Point(-1, 727);
             this._buttonOpen.Name = "_buttonOpen";
             this._buttonOpen.Size = new System.Drawing.Size(47, 23);
             this._buttonOpen.TabIndex = 12;
@@ -250,6 +250,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "fMain";
             this.Text = "English";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fMain_FormClosing);
             this.Load += new System.EventHandler(this.fMain_Load);
             this._panelBody.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).EndInit();
