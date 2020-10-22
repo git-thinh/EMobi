@@ -22,6 +22,7 @@ namespace EMobiTestUI
 
         public string PATH_DATA { get { return Application.StartupPath[0] + @":\emobidata"; } }
         public int REDIS_PORT { get; }
+        public string REDIS_HOST { get; }
         public bool REDIS_OPEN { get; set; }
 
         [DllImport("user32.dll")]
@@ -29,8 +30,11 @@ namespace EMobiTestUI
 
         RedisDataAccessProvider m_redis;
 
-        public fMain()
+        public fMain(string host = "127.0.0.1", int port = 6379) : base()
         {
+            REDIS_HOST = host;
+            REDIS_PORT = port;
+
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
             Control.CheckForIllegalCrossThreadCalls = false;
@@ -40,12 +44,9 @@ namespace EMobiTestUI
         {
             var _self = this;
 
-            m_redis = new RedisDataAccessProvider();
-            m_redis.Configuration.Host = "127.0.0.1";
-            m_redis.Configuration.Port = 6379;
-
-            m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.FLUSHALL));
-            m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
+            m_redis = new RedisDataAccessProvider(REDIS_HOST, REDIS_PORT);
+            //m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.FLUSHALL));
+            //m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
 
             _buttonSave.Enabled = false;
             _panelLeft.Width = 0;
@@ -398,23 +399,28 @@ namespace EMobiTestUI
             return thumbnailBitmap;
         }
 
-        public void pageOpen(int page = 0) {
-            //var buf = m_redis.ListIndex(DocumentName, 38);
-            //if (buf != null)
-            //{
-            //    using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
-            //    {
-            //        ms.Write(buf, 0, buf.Length);
-            //        var img = Image.FromStream(ms, true);
-            //        openImage(img);
-            //    }
-            //}
+        public void pageOpen(int page = 0)
+        {
+            if (m_redis.Key.Exists(DocumentName))
+            {
+                var buf = m_redis.Hash[DocumentName].GetData(page.ToString());
+                if (buf != null)
+                {
+                    using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
+                    {
+                        ms.Write(buf, 0, buf.Length);
+                        var img = Image.FromStream(ms, true);
+                        openImage(img);
+                    }
+                }
+            }
         }
     }
 
     public interface IMain
     {
-        string PATH_DATA { get; } 
+        string PATH_DATA { get; }
+        string REDIS_HOST { get; }
         int REDIS_PORT { get; }
         bool REDIS_OPEN { get; set; }
         string DocumentFile { set; get; }

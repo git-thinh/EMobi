@@ -33,7 +33,7 @@ namespace EMobiTestUI
         public static void exitRedis()
         {
             Process.Start("TASKKILL", @"/F /IM ""emobi-db.exe*""");
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             if (REDIS_THREAD != null) REDIS_THREAD.Abort();
         }
 
@@ -117,7 +117,7 @@ namespace EMobiTestUI
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new fMain());
+                Application.Run(new fMain("127.0.0.1", REDIS_PORT));
             }
             else {
                 exitRedis();

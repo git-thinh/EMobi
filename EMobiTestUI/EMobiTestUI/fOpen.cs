@@ -91,7 +91,7 @@ namespace EMobiTestUI
 
                         for (int i = 0; i < max; i++)
                         {
-                            //if (i != 5 && i != 7) continue;
+                            if (i != 5 && i != 7) continue;
 
                             wp = (int)document.PageSizes[i].Width;
                             hp = (int)document.PageSizes[i].Height;
@@ -128,6 +128,7 @@ namespace EMobiTestUI
                         _buttonClose.Enabled = true;
                         _labelMessage.Text = "Process complete: " + max + " pages";
 
+                        m_redis.Hash[docName].Clear();
                         m_redis.Hash[docName].Set(dic);
                         m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
 

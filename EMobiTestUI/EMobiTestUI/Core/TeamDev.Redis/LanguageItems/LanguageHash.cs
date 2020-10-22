@@ -39,6 +39,12 @@ namespace TeamDev.Redis.LanguageItems
             return _provider.ReadString(_provider.SendCommand(RedisCommand.HGET, _name, field));
         }
 
+        [Description(CommandDescriptions.HGET)]
+        public byte[] GetData(string field)
+        {
+            return _provider.ReadData(_provider.SendCommand(RedisCommand.HGET, _name, field));
+        }
+
         [Description(CommandDescriptions.HSET)]
         public bool Set(string field, string value)
         {

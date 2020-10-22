@@ -90,11 +90,10 @@ namespace TeamDev.Redis
 
         #region constructor
 
-        public RedisDataAccessProvider()
-          : base()
+        public RedisDataAccessProvider(string host = "localhost",int port = 6379) : base()
         {
-            base.Configuration.Host = "localhost";
-            base.Configuration.Port = 6379;
+            base.Configuration.Host = host;
+            base.Configuration.Port = port;
             base.Configuration.ReceiveTimeout = -1;
             RenewConnectionPeriod = 20;
 
