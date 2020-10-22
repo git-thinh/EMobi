@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this._labelMessage = new System.Windows.Forms.Label();
             this._buttonOpen = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@
             this._buttonBrowser = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this._labelMessage = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.uiTabControl1.SuspendLayout();
@@ -60,6 +60,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 43);
             this.panel1.TabIndex = 1;
+            // 
+            // _labelMessage
+            // 
+            this._labelMessage.AutoSize = true;
+            this._labelMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labelMessage.ForeColor = System.Drawing.Color.Red;
+            this._labelMessage.Location = new System.Drawing.Point(19, 13);
+            this._labelMessage.Name = "_labelMessage";
+            this._labelMessage.Size = new System.Drawing.Size(163, 18);
+            this._labelMessage.TabIndex = 5;
+            this._labelMessage.Text = "Processing page 1...";
             // 
             // _buttonOpen
             // 
@@ -242,17 +253,6 @@
             this.tabPage2.Size = new System.Drawing.Size(792, 385);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Search on store";
-            // 
-            // _labelMessage
-            // 
-            this._labelMessage.AutoSize = true;
-            this._labelMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labelMessage.ForeColor = System.Drawing.Color.Red;
-            this._labelMessage.Location = new System.Drawing.Point(19, 13);
-            this._labelMessage.Name = "_labelMessage";
-            this._labelMessage.Size = new System.Drawing.Size(163, 18);
-            this._labelMessage.TabIndex = 5;
-            this._labelMessage.Text = "Processing page 1...";
             // 
             // fOpen
             // 

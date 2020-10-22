@@ -16,33 +16,38 @@ namespace EMobiTestUI
 {
     public partial class fMain : Form, IMain
     {
-        public string FileDocument { set; get; }
+        public string DocumentFile { set; get; }
+        public string DocumentName { set; get; }
+
+        public string PATH_DATA { get { return Application.StartupPath[0] + @":\emobidata"; } }
+        public int REDIS_PORT { get; }
+        public bool REDIS_OPEN { get; set; }
 
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        public string PATH_DATA { get { return Application.StartupPath[0] + @":\emobidata"; } }
-        string REDIS_PATH = string.Empty;
-        int REDIS_PORT = 3456;
-        bool REDIS_OPEN = false;
         Thread REDIS_THREAD = null;
+        Redis m_redis;
 
         public fMain()
         {
-            REDIS_PORT = getFreeTcpPort();
+            REDIS_PORT = 6379;
+            //REDIS_PORT = getFreeTcpPort();
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized;
-            UiSelectRectangle.CheckForIllegalCrossThreadCalls = false;
+            //this.WindowState = FormWindowState.Maximized;
+            Control.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void fMain_Load(object sender, EventArgs e)
         {
+            var _self = this;
+            this.Left = Screen.PrimaryScreen.WorkingArea.Width;
             this.Text = REDIS_PORT.ToString();
 
             exitRedis();
 
             if (!Directory.Exists(PATH_DATA)) Directory.CreateDirectory(PATH_DATA);
-            REDIS_PATH = Path.Combine(PATH_DATA, "emobi-db.exe");
+            string REDIS_PATH = Path.Combine(PATH_DATA, "emobi-db.exe");
             if (!File.Exists(REDIS_PATH))
             {
                 var assembly = Assembly.GetExecutingAssembly();
@@ -69,17 +74,27 @@ namespace EMobiTestUI
                 p.StartInfo.CreateNoWindow = true;
                 p.ErrorDataReceived += (se, ev) =>
                 {
-                    //Debug.WriteLine(ev.Data);
+                    Debug.WriteLine(ev.Data);
+                    if (REDIS_OPEN == false)
+                    {
+                        this.Close();
+                    }
                 };
                 p.OutputDataReceived += (se, ev) =>
                 {
-                    //Debug.WriteLine(ev.Data);
+                    Debug.WriteLine(ev.Data);
                     if (!string.IsNullOrEmpty(ev.Data) && ev.Data.Contains("Ready"))
                     {
                         REDIS_OPEN = true;
                         //IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
                         IntPtr h = p.MainWindowHandle;
                         ShowWindow(h, 0);
+
+                        this.Left = 0;
+                        this.WindowState = FormWindowState.Maximized;
+
+                        m_redis = new Redis("127.0.0.1", REDIS_PORT);
+                        m_redis.Db = 1;
                     }
                 };
                 p.EnableRaisingEvents = true;
@@ -110,7 +125,7 @@ namespace EMobiTestUI
             ////openImage(@"C:\EMobi\data\speackout elementary student book.bbc\36.jpg");
             //openImage(@"D:\EMobi\data\speackout elementary student book.bbc\15.jpg");
 
-            _buttonOpen_Click(null, null);
+            //_buttonOpen_Click(null, null);
         }
 
         private void _buttonClose_Click(object sender, EventArgs e)
@@ -393,7 +408,44 @@ namespace EMobiTestUI
             _pictureBox.Image = Image.FromFile(file);
             _pictureBox.Tag = file;
 
-            this.FileDocument = file;
+            this.DocumentFile = file;
+        }
+
+        void openImage(Image img)
+        {
+            cleanAll();
+
+            int w = 0, h = 0;
+
+            //var img = Image.FromFile(file);
+            w0 = img.Width;
+            h0 = img.Height;
+
+            if (w0 > h0)
+            {
+                h = _panelBody.Height;
+                w = h * w0 / h0;
+            }
+            else
+            {
+                w = _panelBody.Width;
+                h = (w * h0) / w0;
+                if (h > h0)
+                {
+                    h = _panelBody.Height;
+                    w = h * w0 / h0;
+                }
+            }
+
+            _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            _pictureBox.Width = w;
+            _pictureBox.Height = h;
+
+            _pictureBox.Image = img;
+            //_pictureBox.Image = Image.FromFile(file);
+            //_pictureBox.Tag = file;
+            //this.DocumentFile = file;
         }
 
         void exitRedis()
@@ -430,10 +482,29 @@ namespace EMobiTestUI
             }
             return thumbnailBitmap;
         }
+
+        public void pageOpen(int page = 0) {
+            var buf = m_redis.ListIndex(DocumentName, 38);
+            if (buf != null)
+            {
+                using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
+                {
+                    ms.Write(buf, 0, buf.Length);
+                    var img = Image.FromStream(ms, true);
+                    openImage(img);
+                }
+            }
+        }
     }
 
     public interface IMain
     {
-        string FileDocument { set; get; }
+        string PATH_DATA { get; } 
+        int REDIS_PORT { get; }
+        bool REDIS_OPEN { get; set; }
+        string DocumentFile { set; get; }
+        string DocumentName { set; get; }
+
+        void pageOpen(int page = 0);
     }
 }

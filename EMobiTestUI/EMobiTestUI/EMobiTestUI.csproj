@@ -733,6 +733,8 @@
     <Compile Include="Core\PdfiumViewer\ShadeBorder.cs" />
     <Compile Include="Core\PdfiumViewer\StreamExtensions.cs" />
     <Compile Include="Core\PdfiumViewer\StreamManager.cs" />
+    <Compile Include="Core\redis-sharp\redis-sharp.cs" />
+    <Compile Include="Core\redis-sharp\test.cs" />
     <Compile Include="Core\SimpleBrowser\BasicAuthenticationToken.cs" />
     <Compile Include="Core\SimpleBrowser\Browser.cs" />
     <Compile Include="Core\SimpleBrowser\Elements\AnchorElement.cs" />
