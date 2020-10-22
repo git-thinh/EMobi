@@ -669,6 +669,30 @@
     <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOffsetStream.cs" />
     <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOutBuffer.cs" />
     <Compile Include="Core\NAudio\Wave\WaveStreams\WaveStream.cs" />
+    <Compile Include="Core\TeamDev.Redis\Attributes\DocumentStoreIndexAttribute.cs" />
+    <Compile Include="Core\TeamDev.Redis\Attributes\DocumentStoreKeyAttribute.cs" />
+    <Compile Include="Core\TeamDev.Redis\Attributes\DocumentValueAttribute.cs" />
+    <Compile Include="Core\TeamDev.Redis\CommandDescriptions.cs" />
+    <Compile Include="Core\TeamDev.Redis\CommandTracing.cs" />
+    <Compile Include="Core\TeamDev.Redis\DataAccessProvider.cs" />
+    <Compile Include="Core\TeamDev.Redis\DocumentStore.cs" />
+    <Compile Include="Core\TeamDev.Redis\Exceptions\UnbalancedReadException.cs" />
+    <Compile Include="Core\TeamDev.Redis\Interface\IComplexItem.cs" />
+    <Compile Include="Core\TeamDev.Redis\Interface\ILanguageItem.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\Configuration.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\LanguageHash.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\LanguageItemCollection.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\LanguageKey.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\LanguageList.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\LanguageMessaging.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\LanguageSet.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\LanguageSortedSet.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\LanguageString.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\LanguageTransactions.cs" />
+    <Compile Include="Core\TeamDev.Redis\LanguageItems\TimeExtensions.cs" />
+    <Compile Include="Core\TeamDev.Redis\RedisCommandsEnum.cs" />
+    <Compile Include="Core\TeamDev.Redis\RedisDataAccessProvider.cs" />
+    <Compile Include="Core\TeamDev.Redis\StoreEntityTypesCache.cs" />
     <Compile Include="Core\PdfiumViewer\CustomScrollControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -733,8 +757,6 @@
     <Compile Include="Core\PdfiumViewer\ShadeBorder.cs" />
     <Compile Include="Core\PdfiumViewer\StreamExtensions.cs" />
     <Compile Include="Core\PdfiumViewer\StreamManager.cs" />
-    <Compile Include="Core\redis-sharp\redis-sharp.cs" />
-    <Compile Include="Core\redis-sharp\test.cs" />
     <Compile Include="Core\SimpleBrowser\BasicAuthenticationToken.cs" />
     <Compile Include="Core\SimpleBrowser\Browser.cs" />
     <Compile Include="Core\SimpleBrowser\Elements\AnchorElement.cs" />
@@ -955,7 +977,7 @@
     <Compile Include="fOpen.Designer.cs">
       <DependentUpon>fOpen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Core\NAudio\Gui\Fader.resx">
       <DependentUpon>Fader.cs</DependentUpon>

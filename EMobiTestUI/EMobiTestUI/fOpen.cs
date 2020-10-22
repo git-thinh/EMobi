@@ -1,9 +1,11 @@
 ﻿using PdfiumViewer;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using TeamDev.Redis;
 
 namespace EMobiTestUI
 {
@@ -14,16 +16,17 @@ namespace EMobiTestUI
 
         readonly IMain m_main;
         string m_file;
-        readonly Redis m_redis;
+        readonly RedisDataAccessProvider m_redis;
         public fOpen(IMain main) : base()
         {
             Control.CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
             m_main = main;
             m_file = main.DocumentFile;
-            m_redis = new Redis("127.0.0.1", main.REDIS_PORT);
-            m_redis.Db = 1;
-            //Test.test(main);
+
+            m_redis = new RedisDataAccessProvider();
+            m_redis.Configuration.Host = "127.0.0.1";
+            m_redis.Configuration.Port = 6379;
         }
 
         private void fOpen_Load(object sender, EventArgs e)
@@ -61,7 +64,7 @@ namespace EMobiTestUI
                     string docName = Path.GetFileName(file);
                     docName = docName.Substring(0, docName.Length - 4).Trim().ToLower();
 
-                    if (m_redis.ContainsKey(docName))
+                    if (m_redis.Key.Exists(docName))
                     {
                         m_main.DocumentFile = file;
                         m_main.DocumentName = docName;
@@ -83,6 +86,9 @@ namespace EMobiTestUI
                             hi = Screen.PrimaryScreen.WorkingArea.Height;
                         string time = DateTime.Now.ToString("yyMMdd.HHmmss");
                         int wp = 0, hp = 0, w = 0, h = 0;
+
+                        var dic = new Dictionary<string, byte[]>();
+
                         for (int i = 0; i < max; i++)
                         {
                             //if (i != 5 && i != 7) continue;
@@ -104,10 +110,6 @@ namespace EMobiTestUI
                                 h = w * hp / wp;
                             }
 
-                            //string outputPath = @"C:\test\images\" + (i + 1).ToString() + "." + time + ".jpg";
-                            //string outputPath = @"C:\test\images\" + (i + 1).ToString() + ".jpg";
-                            //using (var stream = new FileStream(outputPath, FileMode.Create))
-                            //{
                             using (var image = document.Render(i, w, h, dpi, dpi, PdfRenderFlags.Annotations))
                             {
                                 _labelMessage.Text = "Processing page " + (i + 1).ToString() + "...";
@@ -116,10 +118,9 @@ namespace EMobiTestUI
                                 {
                                     image.Save(ms, ImageFormat.Jpeg);
                                     var buf = ms.ToArray();
-                                    m_redis.RightPush(docName, buf);
+                                    dic.Add(i.ToString(), buf);
                                 }
                             }
-                            //}
                         }//end for
                         
                         _buttonBrowser.Enabled = true;
@@ -127,7 +128,8 @@ namespace EMobiTestUI
                         _buttonClose.Enabled = true;
                         _labelMessage.Text = "Process complete: " + max + " pages";
 
-                        m_redis.BackgroundSave();
+                        m_redis.Hash[docName].Set(dic);
+                        m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
 
                         m_main.DocumentFile = file;
                         m_main.DocumentName = docName;

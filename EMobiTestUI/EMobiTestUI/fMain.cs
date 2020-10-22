@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using TeamDev.Redis;
 
 namespace EMobiTestUI
 {
@@ -26,96 +27,25 @@ namespace EMobiTestUI
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        Thread REDIS_THREAD = null;
-        Redis m_redis;
+        RedisDataAccessProvider m_redis;
 
         public fMain()
         {
-            REDIS_PORT = 6379;
-            //REDIS_PORT = getFreeTcpPort();
             InitializeComponent();
-            //this.WindowState = FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Maximized;
             Control.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void fMain_Load(object sender, EventArgs e)
         {
             var _self = this;
-            this.Left = Screen.PrimaryScreen.WorkingArea.Width;
-            this.Text = REDIS_PORT.ToString();
 
-            exitRedis();
+            m_redis = new RedisDataAccessProvider();
+            m_redis.Configuration.Host = "127.0.0.1";
+            m_redis.Configuration.Port = 6379;
 
-            if (!Directory.Exists(PATH_DATA)) Directory.CreateDirectory(PATH_DATA);
-            string REDIS_PATH = Path.Combine(PATH_DATA, "emobi-db.exe");
-            if (!File.Exists(REDIS_PATH))
-            {
-                var assembly = Assembly.GetExecutingAssembly();
-                var resourceName = "EMobiTestUI.DLL.emobi-db.exe";
-                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                using (BinaryReader br = new BinaryReader(stream))
-                {
-                    var buf = br.ReadBytes((int)stream.Length);
-                    File.WriteAllBytes(REDIS_PATH, buf);
-                    Thread.Sleep(100);
-                }
-            }
-
-            REDIS_THREAD = new Thread(() =>
-            {
-                Process p = new Process();
-                //p.StartInfo.WorkingDirectory = @"dir";
-                p.StartInfo.Arguments = "--port " + REDIS_PORT.ToString() + " --bind 127.0.0.1";
-                p.StartInfo.FileName = REDIS_PATH;
-
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.RedirectStandardError = true;
-                p.StartInfo.CreateNoWindow = true;
-                p.ErrorDataReceived += (se, ev) =>
-                {
-                    Debug.WriteLine(ev.Data);
-                    if (REDIS_OPEN == false)
-                    {
-                        this.Close();
-                    }
-                };
-                p.OutputDataReceived += (se, ev) =>
-                {
-                    Debug.WriteLine(ev.Data);
-                    if (!string.IsNullOrEmpty(ev.Data) && ev.Data.Contains("Ready"))
-                    {
-                        REDIS_OPEN = true;
-                        //IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
-                        IntPtr h = p.MainWindowHandle;
-                        ShowWindow(h, 0);
-
-                        this.Left = 0;
-                        this.WindowState = FormWindowState.Maximized;
-
-                        m_redis = new Redis("127.0.0.1", REDIS_PORT);
-                        m_redis.Db = 1;
-                    }
-                };
-                p.EnableRaisingEvents = true;
-                p.Start();
-                p.BeginOutputReadLine();
-                p.BeginErrorReadLine();
-                p.WaitForExit();
-                ;
-
-                ////ProcessStartInfo r = new ProcessStartInfo(REDIS_PATH);
-                ////r.UseShellExecute = false;
-                //////r.CreateNoWindow = true;
-                ////r.Arguments = "--port " + REDIS_PORT.ToString() + " --bind 127.0.0.1"; 
-                ////var p = Process.Start(r);
-                //////IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
-                //////IntPtr h = p.MainWindowHandle;
-                //////ShowWindow(h, 0);
-                ////p.WaitForExit();
-                ////;
-            });
-            REDIS_THREAD.Start();
+            m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.FLUSHALL));
+            m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
 
             _buttonSave.Enabled = false;
             _panelLeft.Width = 0;
@@ -303,7 +233,7 @@ namespace EMobiTestUI
 
         private void fMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            exitRedis();
+            App.exitRedis();
         }
 
         private void _buttonSave_Click(object sender, EventArgs e)
@@ -448,22 +378,7 @@ namespace EMobiTestUI
             //this.DocumentFile = file;
         }
 
-        void exitRedis()
-        {
-            Process.Start("TASKKILL", @"/F /IM ""emobi-db.exe*""");
-            Thread.Sleep(100);
-            if (REDIS_THREAD != null) REDIS_THREAD.Abort();
-        }
 
-        static int getFreeTcpPort()
-        {
-            TcpListener l = new TcpListener(IPAddress.Loopback, 0);
-            l.Start();
-            int port = ((IPEndPoint)l.LocalEndpoint).Port;
-            l.Stop();
-            Thread.Sleep(100);
-            return port;
-        }
 
         //Standard high quality thumbnail generation from http://weblogs.asp.net/gunnarpeipman/archive/2009/04/02/resizing-images-without-loss-of-quality.aspx
         static System.Drawing.Image ShrinkImage(System.Drawing.Image sourceImage, float scaleFactor)
@@ -484,16 +399,16 @@ namespace EMobiTestUI
         }
 
         public void pageOpen(int page = 0) {
-            var buf = m_redis.ListIndex(DocumentName, 38);
-            if (buf != null)
-            {
-                using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
-                {
-                    ms.Write(buf, 0, buf.Length);
-                    var img = Image.FromStream(ms, true);
-                    openImage(img);
-                }
-            }
+            //var buf = m_redis.ListIndex(DocumentName, 38);
+            //if (buf != null)
+            //{
+            //    using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
+            //    {
+            //        ms.Write(buf, 0, buf.Length);
+            //        var img = Image.FromStream(ms, true);
+            //        openImage(img);
+            //    }
+            //}
         }
     }
 
