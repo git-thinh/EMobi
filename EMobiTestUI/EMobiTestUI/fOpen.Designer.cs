@@ -44,6 +44,7 @@
             this._buttonBrowser = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this._labelMessage = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.uiTabControl1.SuspendLayout();
@@ -52,6 +53,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this._labelMessage);
             this.panel1.Controls.Add(this._buttonOpen);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 407);
@@ -241,6 +243,17 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Search on store";
             // 
+            // _labelMessage
+            // 
+            this._labelMessage.AutoSize = true;
+            this._labelMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labelMessage.ForeColor = System.Drawing.Color.Red;
+            this._labelMessage.Location = new System.Drawing.Point(19, 13);
+            this._labelMessage.Name = "_labelMessage";
+            this._labelMessage.Size = new System.Drawing.Size(163, 18);
+            this._labelMessage.TabIndex = 5;
+            this._labelMessage.Text = "Processing page 1...";
+            // 
             // fOpen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,6 +268,7 @@
             this.Text = "fOpen";
             this.Load += new System.EventHandler(this.fOpen_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.uiTabControl1.ResumeLayout(false);
@@ -282,5 +296,6 @@
         private System.Windows.Forms.Label _labelDocumentName;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label _labelMessage;
     }
 }

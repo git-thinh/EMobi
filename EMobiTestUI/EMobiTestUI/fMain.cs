@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
@@ -13,8 +14,10 @@ using System.Windows.Forms;
 
 namespace EMobiTestUI
 {
-    public partial class fMain : Form
+    public partial class fMain : Form, IMain
     {
+        public string FileDocument { set; get; }
+
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
@@ -64,12 +67,15 @@ namespace EMobiTestUI
                 p.StartInfo.RedirectStandardOutput = true;
                 p.StartInfo.RedirectStandardError = true;
                 p.StartInfo.CreateNoWindow = true;
-                p.ErrorDataReceived += (se,ev)=> {
+                p.ErrorDataReceived += (se, ev) =>
+                {
                     //Debug.WriteLine(ev.Data);
                 };
-                p.OutputDataReceived += (se, ev) => {
+                p.OutputDataReceived += (se, ev) =>
+                {
                     //Debug.WriteLine(ev.Data);
-                    if (!string.IsNullOrEmpty(ev.Data) && ev.Data.Contains("Ready")) {
+                    if (!string.IsNullOrEmpty(ev.Data) && ev.Data.Contains("Ready"))
+                    {
                         REDIS_OPEN = true;
                         //IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
                         IntPtr h = p.MainWindowHandle;
@@ -103,10 +109,12 @@ namespace EMobiTestUI
             //IS_MODE_EDIT = true;
             ////openImage(@"C:\EMobi\data\speackout elementary student book.bbc\36.jpg");
             //openImage(@"D:\EMobi\data\speackout elementary student book.bbc\15.jpg");
+
+            _buttonOpen_Click(null, null);
         }
 
         private void _buttonClose_Click(object sender, EventArgs e)
-        {            
+        {
             var confirmResult = MessageBox.Show("Are you sure to exit program?",
                                      "Confirm Exit",
                                      MessageBoxButtons.YesNo);
@@ -214,7 +222,7 @@ namespace EMobiTestUI
 
         private void _pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            
+
         }
 
         private void _buttonReIndex_Click(object sender, EventArgs e)
@@ -264,11 +272,8 @@ namespace EMobiTestUI
 
         private void _buttonOpen_Click(object sender, EventArgs e)
         {
-            if (_pictureBox.Tag != null)
-            {
-                var f = new fOpen(_pictureBox.Tag.ToString());
-                f.ShowDialog();
-            }
+            var f = new fOpen(this);
+            f.ShowDialog();
         }
 
         private void _buttonPageOpen_Click(object sender, EventArgs e)
@@ -287,7 +292,7 @@ namespace EMobiTestUI
         }
 
         private void _buttonSave_Click(object sender, EventArgs e)
-        {            
+        {
             if (mList.Count > 0)
             {
                 for (var i = 0; i < mList.Count; i++)
@@ -344,7 +349,8 @@ namespace EMobiTestUI
             }
         }
 
-        void cleanAll() {
+        void cleanAll()
+        {
             mList.Clear();
             _pictureBox.Controls.Clear();
             _buttonSave.Enabled = false;
@@ -386,9 +392,12 @@ namespace EMobiTestUI
             _pictureBox.Height = h;
             _pictureBox.Image = Image.FromFile(file);
             _pictureBox.Tag = file;
+
+            this.FileDocument = file;
         }
 
-        void exitRedis() {
+        void exitRedis()
+        {
             Process.Start("TASKKILL", @"/F /IM ""emobi-db.exe*""");
             Thread.Sleep(100);
             if (REDIS_THREAD != null) REDIS_THREAD.Abort();
@@ -403,5 +412,28 @@ namespace EMobiTestUI
             Thread.Sleep(100);
             return port;
         }
+
+        //Standard high quality thumbnail generation from http://weblogs.asp.net/gunnarpeipman/archive/2009/04/02/resizing-images-without-loss-of-quality.aspx
+        static System.Drawing.Image ShrinkImage(System.Drawing.Image sourceImage, float scaleFactor)
+        {
+            int newWidth = Convert.ToInt32(sourceImage.Width * scaleFactor);
+            int newHeight = Convert.ToInt32(sourceImage.Height * scaleFactor);
+
+            var thumbnailBitmap = new Bitmap(newWidth, newHeight);
+            using (Graphics g = Graphics.FromImage(thumbnailBitmap))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                System.Drawing.Rectangle imageRectangle = new System.Drawing.Rectangle(0, 0, newWidth, newHeight);
+                g.DrawImage(sourceImage, imageRectangle);
+            }
+            return thumbnailBitmap;
+        }
+    }
+
+    public interface IMain
+    {
+        string FileDocument { set; get; }
     }
 }

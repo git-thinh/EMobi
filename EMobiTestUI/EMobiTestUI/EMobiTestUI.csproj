@@ -669,6 +669,70 @@
     <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOffsetStream.cs" />
     <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOutBuffer.cs" />
     <Compile Include="Core\NAudio\Wave\WaveStreams\WaveStream.cs" />
+    <Compile Include="Core\PdfiumViewer\CustomScrollControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\HitTest.cs" />
+    <Compile Include="Core\PdfiumViewer\IPdfDocument.cs" />
+    <Compile Include="Core\PdfiumViewer\IPdfMarker.cs" />
+    <Compile Include="Core\PdfiumViewer\LinkClickEventHandler.cs" />
+    <Compile Include="Core\PdfiumViewer\MouseWheelMode.cs" />
+    <Compile Include="Core\PdfiumViewer\NativeMethods.cs" />
+    <Compile Include="Core\PdfiumViewer\NativeMethods.Pdfium.cs" />
+    <Compile Include="Core\PdfiumViewer\NativeTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PanningZoomingScrollControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PdfBookmarkCollection.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfDocument.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfError.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfException.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfFile.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfInformation.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfiumResolveEventHandler.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfiumResolver.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfLibrary.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfMarker.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfMarkerCollection.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfMatch.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfMatches.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPageLink.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPageLinks.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPoint.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPrintDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PdfPrintMode.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPrintMultiplePages.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPrintSettings.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfRectangle.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfRenderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PdfRenderFlags.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfRotation.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfSearchManager.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfTextSpan.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PdfViewer.Designer.cs">
+      <DependentUpon>PdfViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PdfViewerZoomMode.cs" />
+    <Compile Include="Core\PdfiumViewer\ScrollAction.cs" />
+    <Compile Include="Core\PdfiumViewer\SetCursorEventHandler.cs" />
+    <Compile Include="Core\PdfiumViewer\ShadeBorder.cs" />
+    <Compile Include="Core\PdfiumViewer\StreamExtensions.cs" />
+    <Compile Include="Core\PdfiumViewer\StreamManager.cs" />
     <Compile Include="Core\SimpleBrowser\BasicAuthenticationToken.cs" />
     <Compile Include="Core\SimpleBrowser\Browser.cs" />
     <Compile Include="Core\SimpleBrowser\Elements\AnchorElement.cs" />
@@ -909,6 +973,16 @@
     <EmbeddedResource Include="Core\NAudio\Utils\ProgressLog.resx">
       <DependentUpon>ProgressLog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Core\PdfiumViewer\PasswordForm.resx">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\PdfiumViewer\PdfViewer.nl.resx">
+      <DependentUpon>PdfViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\PdfiumViewer\PdfViewer.resx">
+      <DependentUpon>PdfViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -929,6 +1003,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Core\HtmlAgilityPack\CssSelectors\README.md" />
     <None Include="Core\SimpleBrowser\Resources\HtmlLogTemplate.cshtml" />
@@ -945,6 +1020,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\NAudio\Changes.xml" />
+    <None Include="Resources\IMG_NONE.bmp" />
+    <None Include="Core\PdfiumViewer\Resources\disk_blue.png" />
+    <None Include="Core\PdfiumViewer\Resources\printer.png" />
+    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-E.png" />
+    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-N.png" />
+    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-NE.png" />
+    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-NW.png" />
+    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-S.png" />
+    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-SE.png" />
+    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-SW.png" />
+    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-W.png" />
+    <None Include="Core\PdfiumViewer\Resources\zoom_in.png" />
+    <None Include="Core\PdfiumViewer\Resources\zoom_out.png" />
+    <EmbeddedResource Include="Core\PdfiumViewer\pan.cur" />
     <Content Include="DLL\CefSharp.dll" />
     <Content Include="DLL\CefSharp.WinForms.dll" />
     <Content Include="DLL\ICSharpCode.SharpZipLib.dll" />
@@ -958,11 +1047,5 @@
     <Content Include="Core\Gma.System.MouseKeyHook\HotKeys\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\PdfiumViewer\PdfiumViewer.csproj">
-      <Project>{438914b6-5d1c-482c-b942-5c0e057eef6f}</Project>
-      <Name>PdfiumViewer</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
