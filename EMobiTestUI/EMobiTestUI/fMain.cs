@@ -17,6 +17,7 @@ namespace EMobiTestUI
 {
     public partial class fMain : Form, IMain
     {
+        public int PageNumber { set; get; }
         public string DocumentFile { set; get; }
         public string DocumentName { set; get; }
 
@@ -57,6 +58,9 @@ namespace EMobiTestUI
             //openImage(@"D:\EMobi\data\speackout elementary student book.bbc\15.jpg");
 
             //_buttonOpen_Click(null, null);
+
+            this.KeyPreview = true;
+            this.KeyUp += event_keyUp;            
         }
 
         private void _buttonClose_Click(object sender, EventArgs e)
@@ -342,6 +346,18 @@ namespace EMobiTestUI
             this.DocumentFile = file;
         }
 
+        private void _buttonNext_Click(object sender, EventArgs e)
+        {
+            int page = PageNumber + 1;
+            pageOpen(page);
+        }
+
+        private void _buttonPrev_Click(object sender, EventArgs e)
+        {
+            int page = PageNumber - 1;
+            pageOpen(page);
+        }
+
         void openImage(Image img)
         {
             cleanAll();
@@ -378,6 +394,16 @@ namespace EMobiTestUI
             //_pictureBox.Tag = file;
             //this.DocumentFile = file;
         }
+         
+        private void event_keyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Right) {
+                _buttonNext_Click(null, null);
+            }
+            else if(e.KeyData == Keys.Left) {
+                _buttonPrev_Click(null, null);
+            }
+        }
 
 
 
@@ -399,21 +425,27 @@ namespace EMobiTestUI
             return thumbnailBitmap;
         }
 
-        public void pageOpen(int page = 0)
-        {
-            if (m_redis.Key.Exists(DocumentName))
+        IDictionary<int, byte[]> m_images = new Dictionary<int, byte[]>() { };
+        public void pageOpen(int page) {
+            if (m_images.ContainsKey(page))
             {
-                var buf = m_redis.Hash[DocumentName].GetData(page.ToString());
-                if (buf != null)
+                PageNumber = page;
+
+                var buf = m_images[page];
+                Image img = null;
+                using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
                 {
-                    using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
-                    {
-                        ms.Write(buf, 0, buf.Length);
-                        var img = Image.FromStream(ms, true);
-                        openImage(img);
-                    }
+                    ms.Write(buf, 0, buf.Length);
+                    img = Image.FromStream(ms, true);
+                    openImage(img);
                 }
             }
+        }
+        public void pageOpen(IDictionary<int, byte[]> dic)
+        {
+            if (dic.Count == 0) return;
+            m_images = dic;
+            pageOpen(0);
         }
     }
 
@@ -423,9 +455,10 @@ namespace EMobiTestUI
         string REDIS_HOST { get; }
         int REDIS_PORT { get; }
         bool REDIS_OPEN { get; set; }
+        int PageNumber { set; get; }
         string DocumentFile { set; get; }
         string DocumentName { set; get; }
 
-        void pageOpen(int page = 0);
+        void pageOpen(IDictionary<int, byte[]> dic);
     }
 }

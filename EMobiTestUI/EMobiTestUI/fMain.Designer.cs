@@ -37,6 +37,8 @@
             this._splitterLeft = new System.Windows.Forms.Splitter();
             this._splitterRight = new System.Windows.Forms.Splitter();
             this._panelRight = new System.Windows.Forms.Panel();
+            this._buttonNext = new System.Windows.Forms.Button();
+            this._buttonPrev = new System.Windows.Forms.Button();
             this._buttonView = new System.Windows.Forms.Button();
             this._buttonPageOpen = new System.Windows.Forms.Button();
             this._buttonOpen = new System.Windows.Forms.Button();
@@ -139,6 +141,8 @@
             // _panelRight
             // 
             this._panelRight.BackColor = System.Drawing.Color.Black;
+            this._panelRight.Controls.Add(this._buttonNext);
+            this._panelRight.Controls.Add(this._buttonPrev);
             this._panelRight.Controls.Add(this._buttonView);
             this._panelRight.Controls.Add(this._buttonPageOpen);
             this._panelRight.Controls.Add(this._buttonOpen);
@@ -154,13 +158,41 @@
             this._panelRight.Size = new System.Drawing.Size(45, 805);
             this._panelRight.TabIndex = 5;
             // 
+            // _buttonNext
+            // 
+            this._buttonNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._buttonNext.BackColor = System.Drawing.SystemColors.Control;
+            this._buttonNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this._buttonNext.ForeColor = System.Drawing.Color.Black;
+            this._buttonNext.Location = new System.Drawing.Point(23, 780);
+            this._buttonNext.Name = "_buttonNext";
+            this._buttonNext.Size = new System.Drawing.Size(22, 23);
+            this._buttonNext.TabIndex = 16;
+            this._buttonNext.Text = ">";
+            this._buttonNext.UseVisualStyleBackColor = false;
+            this._buttonNext.Click += new System.EventHandler(this._buttonNext_Click);
+            // 
+            // _buttonPrev
+            // 
+            this._buttonPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._buttonPrev.BackColor = System.Drawing.SystemColors.Control;
+            this._buttonPrev.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this._buttonPrev.ForeColor = System.Drawing.Color.Black;
+            this._buttonPrev.Location = new System.Drawing.Point(-2, 780);
+            this._buttonPrev.Name = "_buttonPrev";
+            this._buttonPrev.Size = new System.Drawing.Size(23, 23);
+            this._buttonPrev.TabIndex = 15;
+            this._buttonPrev.Text = "<";
+            this._buttonPrev.UseVisualStyleBackColor = false;
+            this._buttonPrev.Click += new System.EventHandler(this._buttonPrev_Click);
+            // 
             // _buttonView
             // 
             this._buttonView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._buttonView.BackColor = System.Drawing.SystemColors.Control;
             this._buttonView.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonView.ForeColor = System.Drawing.Color.Black;
-            this._buttonView.Location = new System.Drawing.Point(-2, 778);
+            this._buttonView.Location = new System.Drawing.Point(-2, 739);
             this._buttonView.Name = "_buttonView";
             this._buttonView.Size = new System.Drawing.Size(49, 23);
             this._buttonView.TabIndex = 14;
@@ -174,7 +206,7 @@
             this._buttonPageOpen.BackColor = System.Drawing.SystemColors.Control;
             this._buttonPageOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonPageOpen.ForeColor = System.Drawing.Color.Black;
-            this._buttonPageOpen.Location = new System.Drawing.Point(-2, 753);
+            this._buttonPageOpen.Location = new System.Drawing.Point(-2, 714);
             this._buttonPageOpen.Name = "_buttonPageOpen";
             this._buttonPageOpen.Size = new System.Drawing.Size(49, 23);
             this._buttonPageOpen.TabIndex = 13;
@@ -188,7 +220,7 @@
             this._buttonOpen.BackColor = System.Drawing.SystemColors.Control;
             this._buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonOpen.ForeColor = System.Drawing.Color.Black;
-            this._buttonOpen.Location = new System.Drawing.Point(-1, 727);
+            this._buttonOpen.Location = new System.Drawing.Point(-1, 688);
             this._buttonOpen.Name = "_buttonOpen";
             this._buttonOpen.Size = new System.Drawing.Size(47, 23);
             this._buttonOpen.TabIndex = 12;
@@ -251,7 +283,7 @@
             this.Name = "fMain";
             this.Text = "English";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fMain_FormClosing);
-            this.Load += new System.EventHandler(this.fMain_Load);
+            this.Load += new System.EventHandler(this.fMain_Load);            
             this._panelBody.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).EndInit();
             this._panelRight.ResumeLayout(false);
@@ -275,5 +307,7 @@
         private System.Windows.Forms.Button _buttonSave;
         private System.Windows.Forms.Button _buttonPageOpen;
         private System.Windows.Forms.Button _buttonView;
+        private System.Windows.Forms.Button _buttonNext;
+        private System.Windows.Forms.Button _buttonPrev;
     }
 }

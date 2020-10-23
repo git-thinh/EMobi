@@ -16,7 +16,7 @@ namespace EMobiTestUI
         static Thread REDIS_THREAD = null;
         static bool REDIS_OPEN = false;
         static Process REDIS_PROCESS = null;
-        static string PATH_DATA = Application.StartupPath[0] + @":\emobidata";
+        public static string PATH_DATA = Application.StartupPath[0] + @":\emobidata";
         static AutoResetEvent REDIS_SIGNAL = new AutoResetEvent(false);
 
 

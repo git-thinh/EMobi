@@ -1,4 +1,5 @@
-﻿using PdfiumViewer;
+﻿using ICSharpCode.SharpZipLib.Zip;
+using PdfiumViewer;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -64,13 +65,44 @@ namespace EMobiTestUI
                     string docName = Path.GetFileName(file);
                     docName = docName.Substring(0, docName.Length - 4).Trim().ToLower();
 
-                    if (m_redis.Key.Exists(docName))
+                    var dic = new Dictionary<int, byte[]>();
+
+                    string zipFile = Path.Combine(App.PATH_DATA, docName + ".zip");
+                    if (File.Exists(zipFile))
                     {
+                        using (ZipInputStream zstream = new ZipInputStream(File.OpenRead(zipFile)))
+                        {
+                            ZipEntry entry;
+                            while ((entry = zstream.GetNextEntry()) != null)
+                            {
+                                int i = int.Parse(entry.Name.Substring(0, entry.Name.Length - 4));
+                                //int size = 0;
+                                //var data = new byte[entry.Size];
+                                //size = s.Read(data, 0, data.Length);
+                                //dic.Add(i, data);
+
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    byte[] data = new byte[4096];
+                                    int size = zstream.Read(data, 0, data.Length);
+                                    ms.Write(data, 0, size);
+                                    while (size > 0)
+                                    {
+                                        size = zstream.Read(data, 0, data.Length);
+                                        if (size > 0)
+                                            ms.Write(data, 0, size);
+                                        else {
+                                            dic.Add(i, ms.ToArray());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         m_main.DocumentFile = file;
                         m_main.DocumentName = docName;
-                        m_main.pageOpen();
+                        m_main.pageOpen(dic);
                         this.Close();
-
                         return;
                     }
 
@@ -87,11 +119,10 @@ namespace EMobiTestUI
                         string time = DateTime.Now.ToString("yyMMdd.HHmmss");
                         int wp = 0, hp = 0, w = 0, h = 0;
 
-                        var dic = new Dictionary<string, byte[]>();
 
                         for (int i = 0; i < max; i++)
                         {
-                            if (i != 5 && i != 7) continue;
+                            //if (i != 5 && i != 7) continue;
 
                             wp = (int)document.PageSizes[i].Width;
                             hp = (int)document.PageSizes[i].Height;
@@ -118,23 +149,35 @@ namespace EMobiTestUI
                                 {
                                     image.Save(ms, ImageFormat.Jpeg);
                                     var buf = ms.ToArray();
-                                    dic.Add(i.ToString(), buf);
+                                    dic.Add(i, buf);
                                 }
                             }
                         }//end for
-                        
+
                         _buttonBrowser.Enabled = true;
                         _buttonOpen.Enabled = true;
                         _buttonClose.Enabled = true;
                         _labelMessage.Text = "Process complete: " + max + " pages";
 
-                        m_redis.Hash[docName].Clear();
-                        m_redis.Hash[docName].Set(dic);
-                        m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
+                        //m_redis.Hash[docName].Clear();
+                        //m_redis.Hash[docName].Set(dic);
+                        //m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
+
+                        using (ZipOutputStream zipStream = new ZipOutputStream(File.Create(zipFile)))
+                        {
+                            zipStream.SetLevel(9); // 0 - store only to 9 - means best compression
+                            foreach (var kv in dic)
+                            {
+                                var entry = new ZipEntry(kv.Key.ToString() + ".jpg");
+                                entry.DateTime = DateTime.Now;
+                                zipStream.PutNextEntry(entry);
+                                zipStream.Write(kv.Value, 0, kv.Value.Length);
+                            }
+                        }
 
                         m_main.DocumentFile = file;
                         m_main.DocumentName = docName;
-                        m_main.pageOpen();
+                        m_main.pageOpen(dic);
                         this.Close();
                     }
                 }
