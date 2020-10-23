@@ -669,6 +669,7 @@
     <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOffsetStream.cs" />
     <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOutBuffer.cs" />
     <Compile Include="Core\NAudio\Wave\WaveStreams\WaveStream.cs" />
+    <Compile Include="Core\PdfiumViewer\ShadeBorder.cs" />
     <Compile Include="Core\TeamDev.Redis\Attributes\DocumentStoreIndexAttribute.cs" />
     <Compile Include="Core\TeamDev.Redis\Attributes\DocumentStoreKeyAttribute.cs" />
     <Compile Include="Core\TeamDev.Redis\Attributes\DocumentValueAttribute.cs" />
@@ -709,12 +710,6 @@
     <Compile Include="Core\PdfiumViewer\PanningZoomingScrollControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Core\PdfiumViewer\PasswordForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Core\PdfiumViewer\PasswordForm.Designer.cs">
-      <DependentUpon>PasswordForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Core\PdfiumViewer\PdfBookmarkCollection.cs" />
     <Compile Include="Core\PdfiumViewer\PdfDocument.cs" />
     <Compile Include="Core\PdfiumViewer\PdfError.cs" />
@@ -745,16 +740,9 @@
     <Compile Include="Core\PdfiumViewer\PdfRotation.cs" />
     <Compile Include="Core\PdfiumViewer\PdfSearchManager.cs" />
     <Compile Include="Core\PdfiumViewer\PdfTextSpan.cs" />
-    <Compile Include="Core\PdfiumViewer\PdfViewer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Core\PdfiumViewer\PdfViewer.Designer.cs">
-      <DependentUpon>PdfViewer.cs</DependentUpon>
-    </Compile>
     <Compile Include="Core\PdfiumViewer\PdfViewerZoomMode.cs" />
     <Compile Include="Core\PdfiumViewer\ScrollAction.cs" />
     <Compile Include="Core\PdfiumViewer\SetCursorEventHandler.cs" />
-    <Compile Include="Core\PdfiumViewer\ShadeBorder.cs" />
     <Compile Include="Core\PdfiumViewer\StreamExtensions.cs" />
     <Compile Include="Core\PdfiumViewer\StreamManager.cs" />
     <Compile Include="Core\SimpleBrowser\BasicAuthenticationToken.cs" />
@@ -997,16 +985,6 @@
     <EmbeddedResource Include="Core\NAudio\Utils\ProgressLog.resx">
       <DependentUpon>ProgressLog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\PdfiumViewer\PasswordForm.resx">
-      <DependentUpon>PasswordForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\PdfiumViewer\PdfViewer.nl.resx">
-      <DependentUpon>PdfViewer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\PdfiumViewer\PdfViewer.resx">
-      <DependentUpon>PdfViewer.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -1045,18 +1023,6 @@
   <ItemGroup>
     <Content Include="Core\NAudio\Changes.xml" />
     <None Include="Resources\IMG_NONE.bmp" />
-    <None Include="Core\PdfiumViewer\Resources\disk_blue.png" />
-    <None Include="Core\PdfiumViewer\Resources\printer.png" />
-    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-E.png" />
-    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-N.png" />
-    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-NE.png" />
-    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-NW.png" />
-    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-S.png" />
-    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-SE.png" />
-    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-SW.png" />
-    <None Include="Core\PdfiumViewer\Resources\ShadeBorder-W.png" />
-    <None Include="Core\PdfiumViewer\Resources\zoom_in.png" />
-    <None Include="Core\PdfiumViewer\Resources\zoom_out.png" />
     <EmbeddedResource Include="Core\PdfiumViewer\pan.cur" />
     <Content Include="DLL\CefSharp.dll" />
     <Content Include="DLL\CefSharp.WinForms.dll" />

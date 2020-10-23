@@ -84,17 +84,18 @@ namespace PdfiumViewer
                     }
                     catch (PdfException ex)
                     {
-                        if (owner != null && ex.Error == PdfError.PasswordProtected)
-                        {
-                            using (var form = new PasswordForm())
-                            {
-                                if (form.ShowDialog(owner) == DialogResult.OK)
-                                {
-                                    password = form.Password;
-                                    continue;
-                                }
-                            }
-                        }
+                        //????????????????????
+                        //////if (owner != null && ex.Error == PdfError.PasswordProtected)
+                        //////{
+                        //////    using (var form = new PasswordForm())
+                        //////    {
+                        //////        if (form.ShowDialog(owner) == DialogResult.OK)
+                        //////        {
+                        //////            password = form.Password;
+                        //////            continue;
+                        //////        }
+                        //////    }
+                        //////}
 
                         throw;
                     }

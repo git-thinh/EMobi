@@ -59,15 +59,5 @@ namespace EMobiTestUI.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap IMG_NONE {
-            get {
-                object obj = ResourceManager.GetObject("IMG_NONE", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

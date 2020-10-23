@@ -33,9 +33,7 @@
             this._buttonOpen = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this._labelDocumentName = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this._buttonClose = new System.Windows.Forms.Button();
             this.uiTabControl1 = new System.Windows.Forms.UiTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -63,14 +61,12 @@
             // 
             // _labelMessage
             // 
-            this._labelMessage.AutoSize = true;
             this._labelMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._labelMessage.ForeColor = System.Drawing.Color.Red;
             this._labelMessage.Location = new System.Drawing.Point(19, 13);
             this._labelMessage.Name = "_labelMessage";
-            this._labelMessage.Size = new System.Drawing.Size(163, 18);
+            this._labelMessage.Size = new System.Drawing.Size(678, 18);
             this._labelMessage.TabIndex = 5;
-            this._labelMessage.Text = "Processing page 1...";
             // 
             // _buttonOpen
             // 
@@ -84,9 +80,7 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this._labelDocumentName);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this._buttonClose);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
@@ -105,17 +99,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "//";
             // 
-            // _labelDocumentName
-            // 
-            this._labelDocumentName.AutoSize = true;
-            this._labelDocumentName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labelDocumentName.ForeColor = System.Drawing.Color.Red;
-            this._labelDocumentName.Location = new System.Drawing.Point(176, 8);
-            this._labelDocumentName.Name = "_labelDocumentName";
-            this._labelDocumentName.Size = new System.Drawing.Size(72, 18);
-            this._labelDocumentName.TabIndex = 4;
-            this._labelDocumentName.Text = "file123...";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -126,17 +109,6 @@
             this.label5.Size = new System.Drawing.Size(137, 22);
             this.label5.TabIndex = 3;
             this.label5.Text = "Open document";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(163, 7);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(15, 22);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "/";
             // 
             // _buttonClose
             // 
@@ -195,10 +167,11 @@
             // 
             // listBox1
             // 
+            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(13, 61);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(771, 277);
+            this.listBox1.Size = new System.Drawing.Size(771, 273);
             this.listBox1.TabIndex = 4;
             // 
             // label2
@@ -220,7 +193,6 @@
             this._labelFile.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this._labelFile.Size = new System.Drawing.Size(657, 21);
             this._labelFile.TabIndex = 1;
-            this._labelFile.Text = "file 123...";
             this._labelFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // _buttonBrowser
@@ -268,7 +240,6 @@
             this.Text = "fOpen";
             this.Load += new System.EventHandler(this.fOpen_Load);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.uiTabControl1.ResumeLayout(false);
@@ -293,9 +264,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label _labelDocumentName;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label _labelMessage;
     }
 }

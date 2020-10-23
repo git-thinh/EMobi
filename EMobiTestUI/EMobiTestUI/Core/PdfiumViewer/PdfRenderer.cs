@@ -650,7 +650,8 @@ namespace PdfiumViewer
 
                     DrawPageImage(e.Graphics, page, pageBounds);
 
-                    _shadeBorder.Draw(e.Graphics, pageBounds);
+                    //??????????????????????????????????
+                    //////////_shadeBorder.Draw(e.Graphics, pageBounds);
 
                     DrawMarkers(e.Graphics, page);
                 }
