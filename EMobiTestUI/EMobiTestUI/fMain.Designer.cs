@@ -45,6 +45,7 @@
             this._buttonSave = new System.Windows.Forms.Button();
             this._buttonClean = new System.Windows.Forms.Button();
             this._buttonReIndex = new System.Windows.Forms.Button();
+            this._labelPageNumber = new System.Windows.Forms.Label();
             this._panelBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).BeginInit();
             this._panelRight.SuspendLayout();
@@ -98,6 +99,7 @@
             // 
             // _panelBody
             // 
+            this._panelBody.Controls.Add(this._labelPageNumber);
             this._panelBody.Controls.Add(this._pictureBox);
             this._panelBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this._panelBody.Location = new System.Drawing.Point(200, 0);
@@ -268,6 +270,17 @@
             this._buttonReIndex.UseVisualStyleBackColor = false;
             this._buttonReIndex.Click += new System.EventHandler(this._buttonReIndex_Click);
             // 
+            // _labelPageNumber
+            // 
+            this._labelPageNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._labelPageNumber.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this._labelPageNumber.Location = new System.Drawing.Point(3, 780);
+            this._labelPageNumber.Name = "_labelPageNumber";
+            this._labelPageNumber.Size = new System.Drawing.Size(45, 24);
+            this._labelPageNumber.TabIndex = 1;
+            this._labelPageNumber.Text = "1";
+            this._labelPageNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -283,7 +296,7 @@
             this.Name = "fMain";
             this.Text = "English";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fMain_FormClosing);
-            this.Load += new System.EventHandler(this.fMain_Load);            
+            this.Load += new System.EventHandler(this.fMain_Load);
             this._panelBody.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).EndInit();
             this._panelRight.ResumeLayout(false);
@@ -309,5 +322,6 @@
         private System.Windows.Forms.Button _buttonView;
         private System.Windows.Forms.Button _buttonNext;
         private System.Windows.Forms.Button _buttonPrev;
+        private System.Windows.Forms.Label _labelPageNumber;
     }
 }

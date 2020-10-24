@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 using TeamDev.Redis;
 
@@ -17,24 +12,14 @@ namespace EMobiTestUI
 {
     public partial class fMain : Form, IMain
     {
-        public int PageNumber { set; get; }
-        public string DocumentFile { set; get; }
-        public string DocumentName { set; get; }
-
-        public string PATH_DATA { get { return Application.StartupPath[0] + @":\emobidata"; } }
-        public int REDIS_PORT { get; }
-        public string REDIS_HOST { get; }
-        public bool REDIS_OPEN { get; set; }
-
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        RedisDataAccessProvider m_redis;
+        readonly IApp m_app;
 
-        public fMain(string host = "127.0.0.1", int port = 6379) : base()
+        public fMain(IApp app) : base()
         {
-            REDIS_HOST = host;
-            REDIS_PORT = port;
+            m_app = app;
 
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
@@ -45,7 +30,6 @@ namespace EMobiTestUI
         {
             var _self = this;
 
-            m_redis = new RedisDataAccessProvider(REDIS_HOST, REDIS_PORT);
             //m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.FLUSHALL));
             //m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
 
@@ -222,7 +206,7 @@ namespace EMobiTestUI
 
         private void _buttonOpen_Click(object sender, EventArgs e)
         {
-            var f = new fOpen(this);
+            var f = new fOpen(m_app, this);
             f.ShowDialog();
         }
 
@@ -238,7 +222,7 @@ namespace EMobiTestUI
 
         private void fMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            App.exitRedis();
+            m_app.exitRedis();
         }
 
         private void _buttonSave_Click(object sender, EventArgs e)
@@ -343,18 +327,18 @@ namespace EMobiTestUI
             _pictureBox.Image = Image.FromFile(file);
             _pictureBox.Tag = file;
 
-            this.DocumentFile = file;
+            m_app.DocumentFile = file;
         }
 
         private void _buttonNext_Click(object sender, EventArgs e)
         {
-            int page = PageNumber + 1;
+            int page = m_app.PageNumber + 1;
             pageOpen(page);
         }
 
         private void _buttonPrev_Click(object sender, EventArgs e)
         {
-            int page = PageNumber - 1;
+            int page = m_app.PageNumber - 1;
             pageOpen(page);
         }
 
@@ -400,8 +384,17 @@ namespace EMobiTestUI
             if (e.KeyData == Keys.Right) {
                 _buttonNext_Click(null, null);
             }
-            else if(e.KeyData == Keys.Left) {
+            else if (e.KeyData == Keys.Left)
+            {
                 _buttonPrev_Click(null, null);
+            }
+            else if (e.KeyData == Keys.PageUp)
+            {
+                pageOpen(0);
+            }
+            else if (e.KeyData == Keys.PageDown)
+            {
+                pageOpen(m_images.Count - 1);
             }
         }
 
@@ -429,8 +422,8 @@ namespace EMobiTestUI
         public void pageOpen(int page) {
             if (m_images.ContainsKey(page))
             {
-                PageNumber = page;
-
+                m_app.PageNumber = page;
+                
                 var buf = m_images[page];
                 Image img = null;
                 using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
@@ -439,8 +432,12 @@ namespace EMobiTestUI
                     img = Image.FromStream(ms, true);
                     openImage(img);
                 }
+
+                _labelPageNumber.Text = (page + 1).ToString();
+                _labelPageNumber.Left = _pictureBox.Width - 42;
             }
         }
+
         public void pageOpen(IDictionary<int, byte[]> dic)
         {
             if (dic.Count == 0) return;
@@ -451,14 +448,6 @@ namespace EMobiTestUI
 
     public interface IMain
     {
-        string PATH_DATA { get; }
-        string REDIS_HOST { get; }
-        int REDIS_PORT { get; }
-        bool REDIS_OPEN { get; set; }
-        int PageNumber { set; get; }
-        string DocumentFile { set; get; }
-        string DocumentName { set; get; }
-
         void pageOpen(IDictionary<int, byte[]> dic);
     }
 }

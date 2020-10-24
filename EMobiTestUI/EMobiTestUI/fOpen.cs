@@ -15,19 +15,15 @@ namespace EMobiTestUI
         const int IMG_WIDTH_BIG = 2400;
         const int IMG_WIDTH_NORMAL = 1200;
 
+        readonly IApp m_app;
         readonly IMain m_main;
-        string m_file;
-        readonly RedisDataAccessProvider m_redis;
-        public fOpen(IMain main) : base()
+        public fOpen(IApp app, IMain main) : base()
         {
+            m_app = app;
+            m_main = main;
+
             Control.CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
-            m_main = main;
-            m_file = main.DocumentFile;
-
-            m_redis = new RedisDataAccessProvider();
-            m_redis.Configuration.Host = "127.0.0.1";
-            m_redis.Configuration.Port = 6379;
         }
 
         private void fOpen_Load(object sender, EventArgs e)
@@ -49,15 +45,21 @@ namespace EMobiTestUI
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = Path.GetDirectoryName(m_file);
+                if (!string.IsNullOrEmpty(m_app.PathBrowserLastest))
+                    openFileDialog.InitialDirectory = m_app.PathBrowserLastest;
+                else
+                    openFileDialog.InitialDirectory = m_app.PATH_DATA;
+
                 //openFileDialog.Filter = "Image files (*.png)|*.png|(*.jpg)|*.jpg|All files (*.*)|*.*";
-                openFileDialog.Filter = "PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
+                openFileDialog.Filter = "EBook Files (*.ebk)|*.ebk|PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string file = openFileDialog.FileName;
+                    m_app.PathBrowserLastest = Path.GetDirectoryName(file);
+
                     //openImage(file);
                     _labelFile.Text = file;
                     _labelMessage.Text = "";
@@ -67,7 +69,7 @@ namespace EMobiTestUI
 
                     var dic = new Dictionary<int, byte[]>();
 
-                    string zipFile = Path.Combine(App.PATH_DATA, docName + ".zip");
+                    string zipFile = Path.Combine(m_app.PATH_DATA, docName + ".ebk");
                     if (File.Exists(zipFile))
                     {
                         using (ZipInputStream zstream = new ZipInputStream(File.OpenRead(zipFile)))
@@ -99,8 +101,8 @@ namespace EMobiTestUI
                             }
                         }
 
-                        m_main.DocumentFile = file;
-                        m_main.DocumentName = docName;
+                        m_app.DocumentFile = file;
+                        m_app.DocumentName = docName;
                         m_main.pageOpen(dic);
                         this.Close();
                         return;
@@ -175,8 +177,8 @@ namespace EMobiTestUI
                             }
                         }
 
-                        m_main.DocumentFile = file;
-                        m_main.DocumentName = docName;
+                        m_app.DocumentFile = file;
+                        m_app.DocumentName = docName;
                         m_main.pageOpen(dic);
                         this.Close();
                     }
