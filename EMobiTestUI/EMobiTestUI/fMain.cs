@@ -6,7 +6,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using TeamDev.Redis;
 
 namespace EMobiTestUI
 {
@@ -16,6 +15,7 @@ namespace EMobiTestUI
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         readonly IApp m_app;
+        Dictionary<int, byte[]> m_images = new Dictionary<int, byte[]>() { };
 
         public fMain(IApp app) : base()
         {
@@ -28,23 +28,15 @@ namespace EMobiTestUI
 
         private void fMain_Load(object sender, EventArgs e)
         {
-            var _self = this;
-
-            //m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.FLUSHALL));
-            //m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
-
             _buttonSave.Enabled = false;
             _panelLeft.Width = 0;
             _panelRight.Width = 45;
 
-            //IS_MODE_EDIT = true;
-            ////openImage(@"C:\EMobi\data\speackout elementary student book.bbc\36.jpg");
-            //openImage(@"D:\EMobi\data\speackout elementary student book.bbc\15.jpg");
-
-            //_buttonOpen_Click(null, null);
-
             this.KeyPreview = true;
-            this.KeyUp += event_keyUp;            
+            this.KeyUp += form_KeyUp;
+
+            var dic = m_app.doc_recentOpen();
+            doc_Open(dic);
         }
 
         private void _buttonClose_Click(object sender, EventArgs e)
@@ -222,7 +214,8 @@ namespace EMobiTestUI
 
         private void fMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            m_app.exitRedis();
+            m_app.redis_writeFile();
+            m_app.redis_Exit();
         }
 
         private void _buttonSave_Click(object sender, EventArgs e)
@@ -379,7 +372,7 @@ namespace EMobiTestUI
             //this.DocumentFile = file;
         }
          
-        private void event_keyUp(object sender, KeyEventArgs e)
+        private void form_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Right) {
                 _buttonNext_Click(null, null);
@@ -395,6 +388,10 @@ namespace EMobiTestUI
             else if (e.KeyData == Keys.PageDown)
             {
                 pageOpen(m_images.Count - 1);
+            }
+            else if (e.KeyData == Keys.Escape)
+            {
+                this.WindowState = FormWindowState.Minimized;
             }
         }
 
@@ -418,7 +415,6 @@ namespace EMobiTestUI
             return thumbnailBitmap;
         }
 
-        IDictionary<int, byte[]> m_images = new Dictionary<int, byte[]>() { };
         public void pageOpen(int page) {
             if (m_images.ContainsKey(page))
             {
@@ -435,10 +431,12 @@ namespace EMobiTestUI
 
                 _labelPageNumber.Text = (page + 1).ToString();
                 _labelPageNumber.Left = _pictureBox.Width - 42;
+
+                this.Text = string.Format("{0}|{1}", m_app.PageNumber, m_app.DocumentName);
             }
         }
 
-        public void pageOpen(IDictionary<int, byte[]> dic)
+        public void doc_Open(Dictionary<int, byte[]> dic)
         {
             if (dic.Count == 0) return;
             m_images = dic;
@@ -448,6 +446,6 @@ namespace EMobiTestUI
 
     public interface IMain
     {
-        void pageOpen(IDictionary<int, byte[]> dic);
+        void doc_Open(Dictionary<int, byte[]> dic);
     }
 }

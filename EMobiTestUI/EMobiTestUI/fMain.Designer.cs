@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fMain));
             this._buttonSelection = new System.Windows.Forms.Button();
             this._buttonMini = new System.Windows.Forms.Button();
             this._buttonClose = new System.Windows.Forms.Button();
             this._panelLeft = new System.Windows.Forms.FlowLayoutPanel();
             this._panelBody = new System.Windows.Forms.Panel();
+            this._labelPageNumber = new System.Windows.Forms.Label();
             this._pictureBox = new System.Windows.Forms.PictureBox();
             this._splitterLeft = new System.Windows.Forms.Splitter();
             this._splitterRight = new System.Windows.Forms.Splitter();
@@ -45,7 +47,6 @@
             this._buttonSave = new System.Windows.Forms.Button();
             this._buttonClean = new System.Windows.Forms.Button();
             this._buttonReIndex = new System.Windows.Forms.Button();
-            this._labelPageNumber = new System.Windows.Forms.Label();
             this._panelBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).BeginInit();
             this._panelRight.SuspendLayout();
@@ -106,6 +107,17 @@
             this._panelBody.Name = "_panelBody";
             this._panelBody.Size = new System.Drawing.Size(705, 805);
             this._panelBody.TabIndex = 2;
+            // 
+            // _labelPageNumber
+            // 
+            this._labelPageNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._labelPageNumber.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this._labelPageNumber.Location = new System.Drawing.Point(3, 780);
+            this._labelPageNumber.Name = "_labelPageNumber";
+            this._labelPageNumber.Size = new System.Drawing.Size(45, 24);
+            this._labelPageNumber.TabIndex = 1;
+            this._labelPageNumber.Text = "1";
+            this._labelPageNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // _pictureBox
             // 
@@ -270,17 +282,6 @@
             this._buttonReIndex.UseVisualStyleBackColor = false;
             this._buttonReIndex.Click += new System.EventHandler(this._buttonReIndex_Click);
             // 
-            // _labelPageNumber
-            // 
-            this._labelPageNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._labelPageNumber.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this._labelPageNumber.Location = new System.Drawing.Point(3, 780);
-            this._labelPageNumber.Name = "_labelPageNumber";
-            this._labelPageNumber.Size = new System.Drawing.Size(45, 24);
-            this._labelPageNumber.TabIndex = 1;
-            this._labelPageNumber.Text = "1";
-            this._labelPageNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,6 +294,7 @@
             this.Controls.Add(this._panelLeft);
             this.Controls.Add(this._panelRight);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "fMain";
             this.Text = "English";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fMain_FormClosing);

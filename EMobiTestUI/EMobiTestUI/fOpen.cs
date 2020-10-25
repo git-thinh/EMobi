@@ -51,7 +51,7 @@ namespace EMobiTestUI
                     openFileDialog.InitialDirectory = m_app.PATH_DATA;
 
                 //openFileDialog.Filter = "Image files (*.png)|*.png|(*.jpg)|*.jpg|All files (*.*)|*.*";
-                openFileDialog.Filter = "EBook Files (*.ebk)|*.ebk|PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
+                openFileDialog.Filter = "PDF Files (*.pdf)|*.pdf|EBook Files (*.ebk)|*.ebk|All Files (*.*)|*.*";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 
@@ -65,45 +65,15 @@ namespace EMobiTestUI
                     _labelMessage.Text = "";
 
                     string docName = Path.GetFileName(file);
-                    docName = docName.Substring(0, docName.Length - 4).Trim().ToLower();
+                    docName = m_app.doc_formatName(docName);
 
                     var dic = new Dictionary<int, byte[]>();
 
                     string zipFile = Path.Combine(m_app.PATH_DATA, docName + ".ebk");
                     if (File.Exists(zipFile))
                     {
-                        using (ZipInputStream zstream = new ZipInputStream(File.OpenRead(zipFile)))
-                        {
-                            ZipEntry entry;
-                            while ((entry = zstream.GetNextEntry()) != null)
-                            {
-                                int i = int.Parse(entry.Name.Substring(0, entry.Name.Length - 4));
-                                //int size = 0;
-                                //var data = new byte[entry.Size];
-                                //size = s.Read(data, 0, data.Length);
-                                //dic.Add(i, data);
-
-                                using (MemoryStream ms = new MemoryStream())
-                                {
-                                    byte[] data = new byte[4096];
-                                    int size = zstream.Read(data, 0, data.Length);
-                                    ms.Write(data, 0, size);
-                                    while (size > 0)
-                                    {
-                                        size = zstream.Read(data, 0, data.Length);
-                                        if (size > 0)
-                                            ms.Write(data, 0, size);
-                                        else {
-                                            dic.Add(i, ms.ToArray());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        m_app.DocumentFile = file;
-                        m_app.DocumentName = docName;
-                        m_main.pageOpen(dic);
+                        dic = m_app.ebk_Read(zipFile);
+                        m_main.doc_Open(dic);
                         this.Close();
                         return;
                     }
@@ -131,14 +101,11 @@ namespace EMobiTestUI
 
                             if (wp > hp)
                             {
-                                //w = wi;
                                 w = IMG_WIDTH_BIG;
                                 h = w * hp / wp;
                             }
                             else
                             {
-                                //h = hi;
-                                //w = h * wp / hp;
                                 w = IMG_WIDTH_NORMAL;
                                 h = w * hp / wp;
                             }
@@ -164,22 +131,26 @@ namespace EMobiTestUI
                         //m_redis.Hash[docName].Clear();
                         //m_redis.Hash[docName].Set(dic);
                         //m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
-
-                        using (ZipOutputStream zipStream = new ZipOutputStream(File.Create(zipFile)))
+                        using (var fileStream = File.Create(zipFile))
                         {
-                            zipStream.SetLevel(9); // 0 - store only to 9 - means best compression
-                            foreach (var kv in dic)
+                            using (ZipOutputStream zipStream = new ZipOutputStream(fileStream))
                             {
-                                var entry = new ZipEntry(kv.Key.ToString() + ".jpg");
-                                entry.DateTime = DateTime.Now;
-                                zipStream.PutNextEntry(entry);
-                                zipStream.Write(kv.Value, 0, kv.Value.Length);
+                                zipStream.SetLevel(9); // 0 - store only to 9 - means best compression
+                                zipStream.Password = m_app.FOLDER_DATA;
+
+                                foreach (var kv in dic)
+                                {
+                                    var entry = new ZipEntry(kv.Key.ToString() + ".jpg");
+                                    entry.DateTime = DateTime.Now;
+                                    zipStream.PutNextEntry(entry);
+                                    zipStream.Write(kv.Value, 0, kv.Value.Length);
+                                }
                             }
                         }
 
                         m_app.DocumentFile = file;
                         m_app.DocumentName = docName;
-                        m_main.pageOpen(dic);
+                        m_main.doc_Open(dic);
                         this.Close();
                     }
                 }

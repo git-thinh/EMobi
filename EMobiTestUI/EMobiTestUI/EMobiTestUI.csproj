@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -50,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Core\DocxToText.cs" />
     <Compile Include="Core\ExcelWriter.cs" />
     <Compile Include="Core\Gma.System.MouseKeyHook\Class1.cs" />
@@ -1022,7 +1026,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\NAudio\Changes.xml" />
-    <None Include="Resources\IMG_NONE.bmp" />
+    <Content Include="icon.ico" />
     <EmbeddedResource Include="Core\PdfiumViewer\pan.cur" />
     <Content Include="DLL\CefSharp.dll" />
     <Content Include="DLL\CefSharp.WinForms.dll" />
