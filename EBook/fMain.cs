@@ -1,5 +1,6 @@
 ﻿using Ionic.Zip;
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -18,12 +19,16 @@ namespace EBook
 
         private MenuStrip _menuStrip;
         private ToolStripMenuItem _menuOpen;
-        private ToolStripSeparator _menuHr;
+        private ToolStripSeparator _menuHr2;
         private ToolStripMenuItem _menuExit;
         private Label _labelPage;
         private PictureBox _pictureBox;
         private ToolStripMenuItem _menuCropMode;
         private ToolStripMenuItem _menuExtractTextSelection;
+        private ToolStripMenuItem _menuSetIndex;
+        private ToolStripMenuItem _menuSaveSelection;
+        private ToolStripSeparator _menuHr1;
+        private ToolStripSeparator _menuHr0;
         private ToolStripMenuItem _menuMain;
 
         private void InitializeComponent()
@@ -32,12 +37,16 @@ namespace EBook
             this._menuStrip = new System.Windows.Forms.MenuStrip();
             this._menuMain = new System.Windows.Forms.ToolStripMenuItem();
             this._menuOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuExtractTextSelection = new System.Windows.Forms.ToolStripMenuItem();
             this._menuCropMode = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuHr = new System.Windows.Forms.ToolStripSeparator();
+            this._menuHr2 = new System.Windows.Forms.ToolStripSeparator();
             this._menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this._labelPage = new System.Windows.Forms.Label();
             this._pictureBox = new System.Windows.Forms.PictureBox();
-            this._menuExtractTextSelection = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuSetIndex = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuSaveSelection = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuHr1 = new System.Windows.Forms.ToolStripSeparator();
+            this._menuHr0 = new System.Windows.Forms.ToolStripSeparator();
             this._menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).BeginInit();
             this.SuspendLayout();
@@ -48,7 +57,7 @@ namespace EBook
             this._menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this._menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuMain});
-            this._menuStrip.Location = new System.Drawing.Point(-6, -8);
+            this._menuStrip.Location = new System.Drawing.Point(-8, -9);
             this._menuStrip.Name = "_menuStrip";
             this._menuStrip.Size = new System.Drawing.Size(156, 34);
             this._menuStrip.TabIndex = 0;
@@ -59,9 +68,13 @@ namespace EBook
             this._menuMain.AutoSize = false;
             this._menuMain.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuOpen,
-            this._menuExtractTextSelection,
+            this._menuHr0,
             this._menuCropMode,
-            this._menuHr,
+            this._menuSetIndex,
+            this._menuHr1,
+            this._menuExtractTextSelection,
+            this._menuSaveSelection,
+            this._menuHr2,
             this._menuExit});
             this._menuMain.Font = new System.Drawing.Font("Segoe UI", 15F);
             this._menuMain.ForeColor = System.Drawing.Color.Black;
@@ -80,6 +93,13 @@ namespace EBook
             this._menuOpen.Text = "&Open";
             this._menuOpen.Click += new System.EventHandler(this._menuOpen_Click);
             // 
+            // _menuExtractTextSelection
+            // 
+            this._menuExtractTextSelection.Name = "_menuExtractTextSelection";
+            this._menuExtractTextSelection.Size = new System.Drawing.Size(267, 32);
+            this._menuExtractTextSelection.Text = "Extract Text Selection";
+            this._menuExtractTextSelection.Click += new System.EventHandler(this._menuExtractTextSelection_Click);
+            // 
             // _menuCropMode
             // 
             this._menuCropMode.Name = "_menuCropMode";
@@ -87,10 +107,10 @@ namespace EBook
             this._menuCropMode.Text = "Crop Mode";
             this._menuCropMode.Click += new System.EventHandler(this._menuCropMode_Click);
             // 
-            // _menuHr
+            // _menuHr2
             // 
-            this._menuHr.Name = "_menuHr";
-            this._menuHr.Size = new System.Drawing.Size(264, 6);
+            this._menuHr2.Name = "_menuHr2";
+            this._menuHr2.Size = new System.Drawing.Size(264, 6);
             // 
             // _menuExit
             // 
@@ -101,11 +121,11 @@ namespace EBook
             // 
             // _labelPage
             // 
-            this._labelPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._labelPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._labelPage.BackColor = System.Drawing.SystemColors.Control;
             this._labelPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._labelPage.ForeColor = System.Drawing.Color.Black;
-            this._labelPage.Location = new System.Drawing.Point(718, 794);
+            this._labelPage.Location = new System.Drawing.Point(-2, 739);
             this._labelPage.Name = "_labelPage";
             this._labelPage.Size = new System.Drawing.Size(35, 23);
             this._labelPage.TabIndex = 3;
@@ -120,18 +140,38 @@ namespace EBook
             this._pictureBox.TabIndex = 4;
             this._pictureBox.TabStop = false;
             this._pictureBox.Click += new System.EventHandler(this._pictureBox_Click);
+            this._pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseDown);
+            this._pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseMove);
+            this._pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseUp);
             // 
-            // _menuExtractTextSelection
+            // _menuSetIndex
             // 
-            this._menuExtractTextSelection.Name = "_menuExtractTextSelection";
-            this._menuExtractTextSelection.Size = new System.Drawing.Size(267, 32);
-            this._menuExtractTextSelection.Text = "Extract Text Selection";
-            this._menuExtractTextSelection.Click += new System.EventHandler(this._menuExtractTextSelection_Click);
+            this._menuSetIndex.Name = "_menuSetIndex";
+            this._menuSetIndex.Size = new System.Drawing.Size(267, 32);
+            this._menuSetIndex.Text = "Set Index";
+            this._menuSetIndex.Click += new System.EventHandler(this._menuSetIndex_Click);
+            // 
+            // _menuSaveSelection
+            // 
+            this._menuSaveSelection.Name = "_menuSaveSelection";
+            this._menuSaveSelection.Size = new System.Drawing.Size(267, 32);
+            this._menuSaveSelection.Text = "Save Selection";
+            this._menuSaveSelection.Click += new System.EventHandler(this._menuSaveSelection_Click);
+            // 
+            // _menuHr1
+            // 
+            this._menuHr1.Name = "_menuHr1";
+            this._menuHr1.Size = new System.Drawing.Size(264, 6);
+            // 
+            // _menuHr0
+            // 
+            this._menuHr0.Name = "_menuHr0";
+            this._menuHr0.Size = new System.Drawing.Size(264, 6);
             // 
             // fMain
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(754, 819);
+            this.ClientSize = new System.Drawing.Size(754, 762);
             this.Controls.Add(this._labelPage);
             this.Controls.Add(this._menuStrip);
             this.Controls.Add(this._pictureBox);
@@ -215,6 +255,128 @@ namespace EBook
             }
         }
 
+        #region [ CROP ]
+
+        int COUNTER_REINDEX = 0;
+        int w0 = 0, h0 = 0;
+        int x = 0, y = 0, x1 = 0, y1 = 0;
+        int index = -1;
+        List<UiSelectRectangle> mList = new List<UiSelectRectangle>() { };
+
+        bool IS_MODE_REINDEX
+        {
+            get
+            {
+                return _buttonReIndex.BackColor == Color.Orange;
+            }
+
+            set
+            {
+                if (value)
+                {
+                    foreach (var l in _pictureBox.Controls) (l as UiSelectRectangle).Index = 0;
+                    _buttonReIndex.BackColor = Color.Orange;
+                }
+                else
+                {
+                    COUNTER_REINDEX = 0;
+                    _buttonReIndex.BackColor = SystemColors.Control;
+                }
+            }
+        }
+
+        void cleanAll()
+        {
+            mList.Clear();
+            _pictureBox.Controls.Clear();
+            _buttonSave.Enabled = false;
+            index = -1;
+            COUNTER_REINDEX = 0;
+            x = 0;
+            y = 0;
+        }
+
+
+        private void _pictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (IS_MODE_EDIT)
+            {
+                x = e.X;
+                y = e.Y;
+
+                var l = new UiSelectRectangle(mList.Count + 1)
+                {
+                    Width = 1,
+                    Height = 1,
+                    Location = new Point(x, y)
+                };
+                l.MouseDoubleClick += (sv, ev) =>
+                {
+                    if (IS_MODE_EDIT)
+                    {
+                        int i = mList.FindIndex(x => x == l);
+                        if (i != -1) mList.RemoveAt(i);
+                        _pictureBox.Controls.Remove(l);
+                        if (mList.Count == 0)
+                        {
+                            _buttonSave.Enabled = false;
+                        }
+                    }
+                };
+                l.MouseClick += (sv, ev) =>
+                {
+                    if (IS_MODE_EDIT && IS_MODE_REINDEX)
+                    {
+                        COUNTER_REINDEX++;
+                        l.Index = COUNTER_REINDEX;
+                        if (mList.Count == COUNTER_REINDEX) IS_MODE_REINDEX = false;
+                    }
+                };
+                mList.Add(l);
+                index = mList.Count - 1;
+                _pictureBox.Controls.Add(l);
+                l.BringToFront();
+            }
+        }
+
+        private void _pictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (IS_MODE_EDIT && mList.Count > 0 && index != -1)
+            {
+                int w = Math.Abs(x - x1), h = Math.Abs(y - y1);
+
+                Rectangle rec = new Rectangle(x, y, w, h);
+                mList[index].Tag = rec;
+                mList[index].Width = w;
+                mList[index].Height = h;
+                //mList[index].SetOpacity(50);
+
+                index = -1;
+                x = 0;
+                y = 0;
+
+                _buttonSave.Enabled = true;
+            }
+        }
+
+        private void _pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (IS_MODE_EDIT)
+            {
+                x1 = e.X;
+                y1 = e.Y;
+                if (index != -1)
+                {
+                    int w = Math.Abs(x - x1), h = Math.Abs(y - y1);
+                    mList[index].Width = w;
+                    mList[index].Height = h;
+                }
+            }
+        }
+
+
+        #endregion
+
         private void _menuOpen_Click(object sender, System.EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -226,6 +388,7 @@ namespace EBook
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     openFile(openFileDialog.FileName);
+
                     RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System", true);
                     key = key.CreateSubKey(FOLDER_DATA);
                     key.SetValue("File", DocumentFile, RegistryValueKind.String);
@@ -274,7 +437,6 @@ namespace EBook
                 }
 
                 _labelPage.Text = (page + 1).ToString();
-                //_labelPage.Left = _pictureBox.Width - _labelPage.Width;
 
                 this.Text = string.Format("{0}|{1}", PageNumber, DocumentName);
                 this.Width = _pictureBox.Width;// + 45;
@@ -290,8 +452,8 @@ namespace EBook
             //var img = Image.FromFile(file);
             int w0 = img.Width, h0 = img.Height;
 
-            const int _top = 10;
-            const int _bottom = 30;
+            const int _top = 0;
+            const int _bottom = 0;
 
             h = this.Height + _top + _bottom;
             w = h * w0 / h0;
@@ -351,7 +513,8 @@ namespace EBook
 
         private void _pictureBox_Click(object sender, System.EventArgs e)
         {
-            if (DocumentName.Length == 0) return;
+            if (DocumentName.Length == 0
+                || IsCropMode || IsExtractTextSelection) return;
 
             MouseEventArgs me = (MouseEventArgs)e;
             if (me.Button == MouseButtons.Right)
@@ -364,6 +527,16 @@ namespace EBook
                 int page = PageNumber - 1;
                 pageOpen(page);
             }
+        }
+
+        private void _menuSetIndex_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _menuSaveSelection_Click(object sender, EventArgs e)
+        {
+
         }
 
         public bool IsCropMode
