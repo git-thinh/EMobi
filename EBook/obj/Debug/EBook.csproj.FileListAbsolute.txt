@@ -1,0 +1,9 @@
+C:\EMobi\EBook\obj\Debug\EBook.csprojAssemblyReference.cache
+C:\EMobi\EBook\obj\Debug\EBook.fMain.resources
+C:\EMobi\EBook\obj\Debug\EBook.Properties.Resources.resources
+C:\EMobi\EBook\obj\Debug\EBook.csproj.GenerateResource.cache
+C:\EMobi\EBook\obj\Debug\EBook.csproj.CoreCompileInputs.cache
+C:\EMobi\EBook\obj\Debug\EBook.exe
+C:\EMobi\EBook\obj\Debug\EBook.pdb
+C:\EMobi\EBook.exe
+C:\EMobi\EBook.pdb

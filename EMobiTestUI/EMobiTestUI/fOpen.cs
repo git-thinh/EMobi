@@ -1,4 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
+﻿using Ionic.Zip;
 using PdfiumViewer;
 using System;
 using System.Collections.Generic;
@@ -131,22 +131,38 @@ namespace EMobiTestUI
                         //m_redis.Hash[docName].Clear();
                         //m_redis.Hash[docName].Set(dic);
                         //m_redis.WaitComplete(m_redis.SendCommand(RedisCommand.BGSAVE));
-                        using (var fileStream = File.Create(zipFile))
+
+                        using (var fs = File.Create(zipFile))
                         {
-                            using (ZipOutputStream zipStream = new ZipOutputStream(fileStream))
+                            using (var zipStream = new ZipOutputStream(fs))
                             {
-                                zipStream.SetLevel(9); // 0 - store only to 9 - means best compression
+                                zipStream.CompressionLevel = Ionic.Zlib.CompressionLevel.Level9;
                                 zipStream.Password = m_app.FOLDER_DATA;
 
                                 foreach (var kv in dic)
                                 {
-                                    var entry = new ZipEntry(kv.Key.ToString() + ".jpg");
-                                    entry.DateTime = DateTime.Now;
-                                    zipStream.PutNextEntry(entry);
+                                    zipStream.PutNextEntry(kv.Key.ToString() + ".jpg");
                                     zipStream.Write(kv.Value, 0, kv.Value.Length);
                                 }
                             }
                         }
+
+                        //using (var fileStream = File.Create(zipFile))
+                        //{
+                        //    using (ZipOutputStream zipStream = new ZipOutputStream(fileStream))
+                        //    {
+                        //        zipStream.SetLevel(9); // 0 - store only to 9 - means best compression
+                        //        zipStream.Password = m_app.FOLDER_DATA;
+
+                        //        foreach (var kv in dic)
+                        //        {
+                        //            var entry = new ZipEntry(kv.Key.ToString() + ".jpg");
+                        //            entry.DateTime = DateTime.Now;
+                        //            zipStream.PutNextEntry(entry);
+                        //            zipStream.Write(kv.Value, 0, kv.Value.Length);
+                        //        }
+                        //    }
+                        //}
 
                         m_app.DocumentFile = file;
                         m_app.DocumentName = docName;

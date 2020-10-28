@@ -42,7 +42,7 @@ namespace EMobiTestUI
                 var REDIS_PROCESS = app.REDIS_PROCESS;
 
                 REDIS_PROCESS.StartInfo.WorkingDirectory = app.PATH_DATA;
-                REDIS_PROCESS.StartInfo.Arguments = "--port " + app.REDIS_PORT.ToString() + " --bind 127.0.0.1";
+                REDIS_PROCESS.StartInfo.Arguments = "--port " + app.REDIS_PORT.ToString() + " --bind 127.0.0.1 --dbfilename _data.bin";
                 REDIS_PROCESS.StartInfo.FileName = REDIS_PATH;
 
                 REDIS_PROCESS.StartInfo.UseShellExecute = false;

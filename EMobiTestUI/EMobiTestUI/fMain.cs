@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace EMobiTestUI
@@ -22,25 +24,69 @@ namespace EMobiTestUI
             m_app = app;
 
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized;
             Control.CheckForIllegalCrossThreadCalls = false;
+
+            //this.WindowState = FormWindowState.Normal;
+            _panelLeft.Width = 0;
+            _panelRight.Width = 45;
+            _buttonSave.Enabled = false;
+
+            _menuDocNew.Click += _menuDocNew_Click;
+            _menuPageNew.Click += _menuPageNew_Click;
+            _menuAttach.Click += _menuAttach_Click;
+            _menuMedia.Click += _menuMedia_Click;
+            _menuOpen.Click += _menuOpen_Click;
+
         }
 
         private void fMain_Load(object sender, EventArgs e)
         {
-            _buttonSave.Enabled = false;
-            _panelLeft.Width = 0;
-            _panelRight.Width = 45;
-
             this.KeyPreview = true;
             this.KeyUp += form_KeyUp;
+            this.Shown += (se, ev) =>
+            {
+                this.Height = Screen.PrimaryScreen.WorkingArea.Height;
+                this.Top = 0;
+                this.Left = 0;
 
-            var dic = m_app.doc_recentOpen();
-            doc_Open(dic);
+                try
+                {
+                    if (File.Exists("config.json"))
+                    {
+                        var app = JsonConvert.DeserializeObject<AppInfo>(File.ReadAllText("config.json"));
+                        var dic = m_app.ebk_Read(app.DocumentFile);
+                        doc_Open(dic, app.PageNumber);
+                        //new fPageAttach(m_app, this).ShowDialog();
+                    }
+                }
+                catch { }
+            };
+        }
+
+        private void _menuOpen_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void _menuMedia_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void _menuAttach_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void _menuPageNew_Click(object sender, EventArgs e)
+        {
+            new fPageAttach(m_app, this).ShowDialog();
+        }
+
+        private void _menuDocNew_Click(object sender, EventArgs e)
+        {
         }
 
         private void _buttonClose_Click(object sender, EventArgs e)
         {
+            m_app.redis_writeFile();
             var confirmResult = MessageBox.Show("Are you sure to exit program?",
                                      "Confirm Exit",
                                      MessageBoxButtons.YesNo);
@@ -214,8 +260,7 @@ namespace EMobiTestUI
 
         private void fMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            m_app.redis_writeFile();
-            m_app.redis_Exit();
+            m_app.close();
         }
 
         private void _buttonSave_Click(object sender, EventArgs e)
@@ -345,21 +390,27 @@ namespace EMobiTestUI
             w0 = img.Width;
             h0 = img.Height;
 
-            if (w0 > h0)
-            {
-                h = _panelBody.Height;
-                w = h * w0 / h0;
-            }
-            else
-            {
-                w = _panelBody.Width;
-                h = (w * h0) / w0;
-                if (h > h0)
-                {
-                    h = _panelBody.Height;
-                    w = h * w0 / h0;
-                }
-            }
+            const int _top = 10;
+            const int _bottom = 30;
+
+            h = this.Height + _top + _bottom;
+            w = h * w0 / h0;
+
+            //if (w0 > h0)
+            //{
+            //    h = _panelBody.Height;
+            //    w = h * w0 / h0;
+            //}
+            //else
+            //{
+            //    w = _panelBody.Width;
+            //    h = (w * h0) / w0;
+            //    if (h > h0)
+            //    {
+            //        h = _panelBody.Height;
+            //        w = h * w0 / h0;
+            //    }
+            //}
 
             _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
@@ -367,14 +418,38 @@ namespace EMobiTestUI
             _pictureBox.Height = h;
 
             _pictureBox.Image = img;
-            //_pictureBox.Image = Image.FromFile(file);
-            //_pictureBox.Tag = file;
-            //this.DocumentFile = file;
+            _pictureBox.Tag = new Point(w0, h0);
+
+            _pictureBox.Top = (-1) * _top;
         }
-         
+
+        private void _pictureBox_DoubleClick(object sender, EventArgs e)
+        {
+            //if (_pictureBox.Tag != null)
+            //{
+            //    Point p0 = (Point)_pictureBox.Tag;
+            //    int w0 = p0.X, h0 = p0.Y,
+            //        w1 = _pictureBox.Width, h1 = _pictureBox.Height;
+
+            //    var buf = m_images[m_app.PageNumber];
+            //    Image img = null;
+            //    using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
+            //    {
+            //        ms.Write(buf, 0, buf.Length);
+            //        img = Image.FromStream(ms, true);
+
+            //        _pictureBox.Width = w0;
+            //        _pictureBox.Height = h0;
+
+            //        _pictureBox.Image = img;
+            //    }
+            //}
+        }
+
         private void form_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Right) {
+            if (e.KeyData == Keys.Right)
+            {
                 _buttonNext_Click(null, null);
             }
             else if (e.KeyData == Keys.Left)
@@ -395,9 +470,8 @@ namespace EMobiTestUI
             }
         }
 
-
-
-        //Standard high quality thumbnail generation from http://weblogs.asp.net/gunnarpeipman/archive/2009/04/02/resizing-images-without-loss-of-quality.aspx
+        // Standard high quality thumbnail generation from 
+        // http://weblogs.asp.net/gunnarpeipman/archive/2009/04/02/resizing-images-without-loss-of-quality.aspx
         static System.Drawing.Image ShrinkImage(System.Drawing.Image sourceImage, float scaleFactor)
         {
             int newWidth = Convert.ToInt32(sourceImage.Width * scaleFactor);
@@ -415,11 +489,12 @@ namespace EMobiTestUI
             return thumbnailBitmap;
         }
 
-        public void pageOpen(int page) {
+        public void pageOpen(int page)
+        {
             if (m_images.ContainsKey(page))
             {
                 m_app.PageNumber = page;
-                
+
                 var buf = m_images[page];
                 Image img = null;
                 using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
@@ -433,19 +508,20 @@ namespace EMobiTestUI
                 _labelPageNumber.Left = _pictureBox.Width - 42;
 
                 this.Text = string.Format("{0}|{1}", m_app.PageNumber, m_app.DocumentName);
+                this.Width = _pictureBox.Width + 45;
             }
         }
 
-        public void doc_Open(Dictionary<int, byte[]> dic)
+        public void doc_Open(Dictionary<int, byte[]> dic, int page = 0)
         {
             if (dic.Count == 0) return;
             m_images = dic;
-            pageOpen(0);
+            pageOpen(page);
         }
     }
 
     public interface IMain
     {
-        void doc_Open(Dictionary<int, byte[]> dic);
+        void doc_Open(Dictionary<int, byte[]> dic, int page = 0);
     }
 }

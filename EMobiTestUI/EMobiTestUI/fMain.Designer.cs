@@ -41,6 +41,13 @@
             this._panelRight = new System.Windows.Forms.Panel();
             this._buttonNext = new System.Windows.Forms.Button();
             this._buttonPrev = new System.Windows.Forms.Button();
+            this._menu = new System.Windows.Forms.MenuStrip();
+            this._menuMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuDocNew = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuPageNew = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuAttach = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuMedia = new System.Windows.Forms.ToolStripMenuItem();
             this._buttonView = new System.Windows.Forms.Button();
             this._buttonPageOpen = new System.Windows.Forms.Button();
             this._buttonOpen = new System.Windows.Forms.Button();
@@ -50,6 +57,7 @@
             this._panelBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).BeginInit();
             this._panelRight.SuspendLayout();
+            this._menu.SuspendLayout();
             this.SuspendLayout();
             // 
             // _buttonSelection
@@ -125,9 +133,10 @@
             this._pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this._pictureBox.Location = new System.Drawing.Point(3, 1);
             this._pictureBox.Name = "_pictureBox";
-            this._pictureBox.Size = new System.Drawing.Size(45, 46);
+            this._pictureBox.Size = new System.Drawing.Size(264, 225);
             this._pictureBox.TabIndex = 0;
             this._pictureBox.TabStop = false;
+            this._pictureBox.DoubleClick += new System.EventHandler(this._pictureBox_DoubleClick);
             this._pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseDoubleClick);
             this._pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseDown);
             this._pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseMove);
@@ -157,6 +166,7 @@
             this._panelRight.BackColor = System.Drawing.Color.Black;
             this._panelRight.Controls.Add(this._buttonNext);
             this._panelRight.Controls.Add(this._buttonPrev);
+            this._panelRight.Controls.Add(this._menu);
             this._panelRight.Controls.Add(this._buttonView);
             this._panelRight.Controls.Add(this._buttonPageOpen);
             this._panelRight.Controls.Add(this._buttonOpen);
@@ -178,7 +188,7 @@
             this._buttonNext.BackColor = System.Drawing.SystemColors.Control;
             this._buttonNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonNext.ForeColor = System.Drawing.Color.Black;
-            this._buttonNext.Location = new System.Drawing.Point(23, 780);
+            this._buttonNext.Location = new System.Drawing.Point(23, 758);
             this._buttonNext.Name = "_buttonNext";
             this._buttonNext.Size = new System.Drawing.Size(22, 23);
             this._buttonNext.TabIndex = 16;
@@ -192,7 +202,7 @@
             this._buttonPrev.BackColor = System.Drawing.SystemColors.Control;
             this._buttonPrev.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonPrev.ForeColor = System.Drawing.Color.Black;
-            this._buttonPrev.Location = new System.Drawing.Point(-2, 780);
+            this._buttonPrev.Location = new System.Drawing.Point(-2, 758);
             this._buttonPrev.Name = "_buttonPrev";
             this._buttonPrev.Size = new System.Drawing.Size(23, 23);
             this._buttonPrev.TabIndex = 15;
@@ -200,13 +210,67 @@
             this._buttonPrev.UseVisualStyleBackColor = false;
             this._buttonPrev.Click += new System.EventHandler(this._buttonPrev_Click);
             // 
+            // _menu
+            // 
+            this._menu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._menu.Dock = System.Windows.Forms.DockStyle.None;
+            this._menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuMenu});
+            this._menu.Location = new System.Drawing.Point(-10, 784);
+            this._menu.Name = "_menu";
+            this._menu.Size = new System.Drawing.Size(58, 24);
+            this._menu.TabIndex = 17;
+            this._menu.Text = "menuStrip1";
+            // 
+            // _menuMenu
+            // 
+            this._menuMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuDocNew,
+            this._menuPageNew,
+            this._menuOpen,
+            this._menuAttach,
+            this._menuMedia});
+            this._menuMenu.Name = "_menuMenu";
+            this._menuMenu.Size = new System.Drawing.Size(50, 20);
+            this._menuMenu.Text = "&Menu";
+            // 
+            // _menuDocNew
+            // 
+            this._menuDocNew.Name = "_menuDocNew";
+            this._menuDocNew.Size = new System.Drawing.Size(157, 22);
+            this._menuDocNew.Text = "&Document New";
+            // 
+            // _menuPageNew
+            // 
+            this._menuPageNew.Name = "_menuPageNew";
+            this._menuPageNew.Size = new System.Drawing.Size(157, 22);
+            this._menuPageNew.Text = "&Page New";
+            // 
+            // _menuOpen
+            // 
+            this._menuOpen.Name = "_menuOpen";
+            this._menuOpen.Size = new System.Drawing.Size(157, 22);
+            this._menuOpen.Text = "&Open";
+            // 
+            // _menuAttach
+            // 
+            this._menuAttach.Name = "_menuAttach";
+            this._menuAttach.Size = new System.Drawing.Size(157, 22);
+            this._menuAttach.Text = "&Attach";
+            // 
+            // _menuMedia
+            // 
+            this._menuMedia.Name = "_menuMedia";
+            this._menuMedia.Size = new System.Drawing.Size(157, 22);
+            this._menuMedia.Text = "&Media";
+            // 
             // _buttonView
             // 
             this._buttonView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._buttonView.BackColor = System.Drawing.SystemColors.Control;
             this._buttonView.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonView.ForeColor = System.Drawing.Color.Black;
-            this._buttonView.Location = new System.Drawing.Point(-2, 739);
+            this._buttonView.Location = new System.Drawing.Point(-2, 733);
             this._buttonView.Name = "_buttonView";
             this._buttonView.Size = new System.Drawing.Size(49, 23);
             this._buttonView.TabIndex = 14;
@@ -220,7 +284,7 @@
             this._buttonPageOpen.BackColor = System.Drawing.SystemColors.Control;
             this._buttonPageOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonPageOpen.ForeColor = System.Drawing.Color.Black;
-            this._buttonPageOpen.Location = new System.Drawing.Point(-2, 714);
+            this._buttonPageOpen.Location = new System.Drawing.Point(-2, 708);
             this._buttonPageOpen.Name = "_buttonPageOpen";
             this._buttonPageOpen.Size = new System.Drawing.Size(49, 23);
             this._buttonPageOpen.TabIndex = 13;
@@ -234,7 +298,7 @@
             this._buttonOpen.BackColor = System.Drawing.SystemColors.Control;
             this._buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._buttonOpen.ForeColor = System.Drawing.Color.Black;
-            this._buttonOpen.Location = new System.Drawing.Point(-1, 688);
+            this._buttonOpen.Location = new System.Drawing.Point(-1, 682);
             this._buttonOpen.Name = "_buttonOpen";
             this._buttonOpen.Size = new System.Drawing.Size(47, 23);
             this._buttonOpen.TabIndex = 12;
@@ -295,6 +359,7 @@
             this.Controls.Add(this._panelRight);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this._menu;
             this.Name = "fMain";
             this.Text = "English";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fMain_FormClosing);
@@ -302,6 +367,9 @@
             this._panelBody.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).EndInit();
             this._panelRight.ResumeLayout(false);
+            this._panelRight.PerformLayout();
+            this._menu.ResumeLayout(false);
+            this._menu.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -325,5 +393,12 @@
         private System.Windows.Forms.Button _buttonNext;
         private System.Windows.Forms.Button _buttonPrev;
         private System.Windows.Forms.Label _labelPageNumber;
+        private System.Windows.Forms.MenuStrip _menu;
+        private System.Windows.Forms.ToolStripMenuItem _menuMenu;
+        private System.Windows.Forms.ToolStripMenuItem _menuDocNew;
+        private System.Windows.Forms.ToolStripMenuItem _menuOpen;
+        private System.Windows.Forms.ToolStripMenuItem _menuAttach;
+        private System.Windows.Forms.ToolStripMenuItem _menuMedia;
+        private System.Windows.Forms.ToolStripMenuItem _menuPageNew;
     }
 }

@@ -1,4 +1,5 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
+﻿using Ionic.Zip;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -11,6 +12,21 @@ using TeamDev.Redis;
 
 namespace EMobiTestUI
 {
+    public class AppInfo {
+        public int PageNumber { set; get; }
+        public string DocumentFile { set; get; }
+        public string DocumentName { set; get; }
+        public string PathBrowserLastest { set; get; }
+
+        public AppInfo() { }
+        public AppInfo(IApp app) {
+            this.DocumentFile = app.DocumentFile;
+            this.DocumentName = app.DocumentName;
+            this.PathBrowserLastest = app.PathBrowserLastest;
+            this.PageNumber = app.PageNumber;
+        }
+    }
+
     class App : IApp
     {
         public App()
@@ -57,6 +73,12 @@ namespace EMobiTestUI
         #endregion
 
         #region [ METHOD ]
+
+        public void close() {
+            string json = JsonConvert.SerializeObject(new AppInfo(this));
+            File.WriteAllText("config.json", json);
+            redis_Exit();
+        }
 
         public int redis_getInt(string key) {
             int v = 0;
@@ -126,43 +148,74 @@ namespace EMobiTestUI
             return new Dictionary<int, byte[]>();
         }
 
+        public int doc_recentOpenPageNumber() {
+            return redis_getInt("PAGE_NUMBER");
+        }
+
         public Dictionary<int, byte[]> ebk_Read(string fileEBK)
         {
             string docName = doc_formatName(Path.GetFileName(fileEBK));
             var dic = new Dictionary<int, byte[]>() { };
-
-            using (ZipInputStream zstream = new ZipInputStream(File.OpenRead(fileEBK)))
+            
+            using (ZipFile zip = ZipFile.Read(fileEBK))
             {
-                zstream.Password = FOLDER_DATA;
-
-                ZipEntry entry;
-                while ((entry = zstream.GetNextEntry()) != null)
+                foreach (ZipEntry entry in zip)
                 {
-                    int i = int.Parse(entry.Name.Substring(0, entry.Name.Length - 4));
+                    int i = int.Parse(entry.FileName.Substring(0, entry.FileName.Length - 4));
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        byte[] data = new byte[4096];
-                        int size = zstream.Read(data, 0, data.Length);
-                        ms.Write(data, 0, size);
-                        while (size > 0)
-                        {
-                            size = zstream.Read(data, 0, data.Length);
-                            if (size > 0)
-                                ms.Write(data, 0, size);
-                            else
-                            {
-                                dic.Add(i, ms.ToArray());
-                            }
-                        }
+                        entry.ExtractWithPassword(ms, FOLDER_DATA);
+                        dic.Add(i, ms.ToArray());
                     }
                 }
             }
+
+            //using (ZipInputStream zstream = new ZipInputStream(File.OpenRead(fileEBK)))
+            //{
+            //    zstream.Password = FOLDER_DATA;
+
+            //    ZipEntry entry;
+            //    while ((entry = zstream.GetNextEntry()) != null)
+            //    {
+            //        int i = int.Parse(entry.Name.Substring(0, entry.Name.Length - 4));
+            //        using (MemoryStream ms = new MemoryStream())
+            //        {
+            //            byte[] data = new byte[4096];
+            //            int size = zstream.Read(data, 0, data.Length);
+            //            ms.Write(data, 0, size);
+            //            while (size > 0)
+            //            {
+            //                size = zstream.Read(data, 0, data.Length);
+            //                if (size > 0)
+            //                    ms.Write(data, 0, size);
+            //                else
+            //                {
+            //                    dic.Add(i, ms.ToArray());
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
 
             PageNumber = 0;
             DocumentFile = fileEBK;
             DocumentName = docName;
 
             return dic;
+        }
+
+        public void ebk_updateAttach(string fileName,string filePath)
+        {
+            var file = Path.Combine(PATH_DATA, DocumentName + ".ebk");
+            if (File.Exists(file))
+            {
+                using (ZipFile zip = ZipFile.Read(file))
+                {
+                    var buf = File.ReadAllText(filePath);
+                    zip.UpdateEntry(fileName, buf);
+                    zip.Save();
+                }
+            }
         }
 
         #endregion
@@ -189,6 +242,8 @@ namespace EMobiTestUI
 
     public interface IApp
     {
+        void close();
+
         void redis_Exit();
         void redis_writeFile();
         int redis_getInt(string key);
@@ -197,6 +252,7 @@ namespace EMobiTestUI
         void redis_Update(string key, string value, bool writeFile = false);
         string doc_formatName(string name);
 
+        int doc_recentOpenPageNumber();
         Dictionary<int, byte[]> doc_recentOpen();
         Dictionary<int, byte[]> ebk_Read(string fileEBK);
 
