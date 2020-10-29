@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -14,8 +15,13 @@ namespace EBook
         private int PageNumber = 0;
         private string DocumentFile = string.Empty;
         private string DocumentName = string.Empty;
-        const string FOLDER_DATA = "Mr.Thinh's Gifts";
-        private Dictionary<int, byte[]> m_images = new Dictionary<int, byte[]>() { };
+        const string PASSWORD = "Mr.Thinh's Gifts";
+        const string FOLDER_DATA = "book.data";
+        private string PATH_DATA = Application.StartupPath[0] + @":\" + FOLDER_DATA;
+        private Dictionary<int, byte[]> m_pages = new Dictionary<int, byte[]>() { };
+        private Dictionary<int, byte[]> m_page_crops = new Dictionary<int, byte[]>() { };
+
+        #region [ MAIN ]
 
         private MenuStrip _menuStrip;
         private ToolStripMenuItem _menuOpen;
@@ -23,12 +29,16 @@ namespace EBook
         private ToolStripMenuItem _menuExit;
         private Label _labelPage;
         private PictureBox _pictureBox;
-        private ToolStripMenuItem _menuCropMode;
-        private ToolStripMenuItem _menuExtractTextSelection;
-        private ToolStripMenuItem _menuSetIndex;
-        private ToolStripMenuItem _menuSaveSelection;
+        private ToolStripMenuItem _menuSave;
         private ToolStripSeparator _menuHr1;
         private ToolStripSeparator _menuHr0;
+        private CheckBox _checkSelection;
+        private ToolStripMenuItem _menuSelection;
+        private ToolStripMenuItem _menuCropSelection;
+        private ToolStripMenuItem _menuExtracTextSelection;
+        private ToolStripMenuItem _menuSetIndex;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem _menuAutoCropPageSelected;
         private ToolStripMenuItem _menuMain;
 
         private void InitializeComponent()
@@ -37,43 +47,48 @@ namespace EBook
             this._menuStrip = new System.Windows.Forms.MenuStrip();
             this._menuMain = new System.Windows.Forms.ToolStripMenuItem();
             this._menuOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuExtractTextSelection = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuCropMode = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuHr0 = new System.Windows.Forms.ToolStripSeparator();
+            this._menuSelection = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuCropSelection = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuExtracTextSelection = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuSetIndex = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this._menuAutoCropPageSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuHr1 = new System.Windows.Forms.ToolStripSeparator();
+            this._menuSave = new System.Windows.Forms.ToolStripMenuItem();
             this._menuHr2 = new System.Windows.Forms.ToolStripSeparator();
             this._menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this._labelPage = new System.Windows.Forms.Label();
             this._pictureBox = new System.Windows.Forms.PictureBox();
-            this._menuSetIndex = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuSaveSelection = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuHr1 = new System.Windows.Forms.ToolStripSeparator();
-            this._menuHr0 = new System.Windows.Forms.ToolStripSeparator();
+            this._checkSelection = new System.Windows.Forms.CheckBox();
             this._menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // _menuStrip
             // 
+            this._menuStrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._menuStrip.BackColor = System.Drawing.Color.White;
             this._menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this._menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuMain});
-            this._menuStrip.Location = new System.Drawing.Point(-8, -9);
+            this._menuStrip.Location = new System.Drawing.Point(477, 741);
             this._menuStrip.Name = "_menuStrip";
-            this._menuStrip.Size = new System.Drawing.Size(156, 34);
+            this._menuStrip.Padding = new System.Windows.Forms.Padding(0);
+            this._menuStrip.Size = new System.Drawing.Size(30, 30);
             this._menuStrip.TabIndex = 0;
             this._menuStrip.Text = "menuStrip1";
             // 
             // _menuMain
             // 
+            this._menuMain.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this._menuMain.AutoSize = false;
             this._menuMain.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuOpen,
             this._menuHr0,
-            this._menuCropMode,
-            this._menuSetIndex,
+            this._menuSelection,
             this._menuHr1,
-            this._menuExtractTextSelection,
-            this._menuSaveSelection,
+            this._menuSave,
             this._menuHr2,
             this._menuExit});
             this._menuMain.Font = new System.Drawing.Font("Segoe UI", 15F);
@@ -83,39 +98,91 @@ namespace EBook
             this._menuMain.Size = new System.Drawing.Size(28, 30);
             this._menuMain.Text = "≡";
             this._menuMain.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-            this._menuMain.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this._menuMain.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
             // 
             // _menuOpen
             // 
             this._menuOpen.Font = new System.Drawing.Font("Segoe UI", 13F);
             this._menuOpen.Name = "_menuOpen";
-            this._menuOpen.Size = new System.Drawing.Size(267, 32);
+            this._menuOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this._menuOpen.Size = new System.Drawing.Size(193, 32);
             this._menuOpen.Text = "&Open";
             this._menuOpen.Click += new System.EventHandler(this._menuOpen_Click);
             // 
-            // _menuExtractTextSelection
+            // _menuHr0
             // 
-            this._menuExtractTextSelection.Name = "_menuExtractTextSelection";
-            this._menuExtractTextSelection.Size = new System.Drawing.Size(267, 32);
-            this._menuExtractTextSelection.Text = "Extract Text Selection";
-            this._menuExtractTextSelection.Click += new System.EventHandler(this._menuExtractTextSelection_Click);
+            this._menuHr0.Name = "_menuHr0";
+            this._menuHr0.Size = new System.Drawing.Size(190, 6);
             // 
-            // _menuCropMode
+            // _menuSelection
             // 
-            this._menuCropMode.Name = "_menuCropMode";
-            this._menuCropMode.Size = new System.Drawing.Size(267, 32);
-            this._menuCropMode.Text = "Crop Mode";
-            this._menuCropMode.Click += new System.EventHandler(this._menuCropMode_Click);
+            this._menuSelection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuCropSelection,
+            this._menuExtracTextSelection,
+            this._menuSetIndex,
+            this.toolStripSeparator1,
+            this._menuAutoCropPageSelected});
+            this._menuSelection.Name = "_menuSelection";
+            this._menuSelection.Size = new System.Drawing.Size(193, 32);
+            this._menuSelection.Text = "Selection";
+            // 
+            // _menuCropSelection
+            // 
+            this._menuCropSelection.Name = "_menuCropSelection";
+            this._menuCropSelection.ShortcutKeys = System.Windows.Forms.Keys.F12;
+            this._menuCropSelection.Size = new System.Drawing.Size(301, 32);
+            this._menuCropSelection.Text = "&Crop";
+            this._menuCropSelection.Click += new System.EventHandler(this._menuCropSelection_Click);
+            // 
+            // _menuExtracTextSelection
+            // 
+            this._menuExtracTextSelection.Name = "_menuExtracTextSelection";
+            this._menuExtracTextSelection.Size = new System.Drawing.Size(301, 32);
+            this._menuExtracTextSelection.Text = "&Extract Text";
+            this._menuExtracTextSelection.Click += new System.EventHandler(this._menuExtracTextSelection_Click);
+            // 
+            // _menuSetIndex
+            // 
+            this._menuSetIndex.Name = "_menuSetIndex";
+            this._menuSetIndex.Size = new System.Drawing.Size(301, 32);
+            this._menuSetIndex.Text = "Set &Index";
+            this._menuSetIndex.Click += new System.EventHandler(this._menuSetIndex_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(298, 6);
+            // 
+            // _menuAutoCropPageSelected
+            // 
+            this._menuAutoCropPageSelected.Checked = true;
+            this._menuAutoCropPageSelected.CheckState = System.Windows.Forms.CheckState.Checked;
+            this._menuAutoCropPageSelected.Name = "_menuAutoCropPageSelected";
+            this._menuAutoCropPageSelected.Size = new System.Drawing.Size(301, 32);
+            this._menuAutoCropPageSelected.Text = "Auto Crop Page Selected";
+            // 
+            // _menuHr1
+            // 
+            this._menuHr1.Name = "_menuHr1";
+            this._menuHr1.Size = new System.Drawing.Size(190, 6);
+            // 
+            // _menuSave
+            // 
+            this._menuSave.Name = "_menuSave";
+            this._menuSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this._menuSave.Size = new System.Drawing.Size(193, 32);
+            this._menuSave.Text = "Save";
+            this._menuSave.Click += new System.EventHandler(this._menuSave_Click);
             // 
             // _menuHr2
             // 
             this._menuHr2.Name = "_menuHr2";
-            this._menuHr2.Size = new System.Drawing.Size(264, 6);
+            this._menuHr2.Size = new System.Drawing.Size(190, 6);
             // 
             // _menuExit
             // 
             this._menuExit.Name = "_menuExit";
-            this._menuExit.Size = new System.Drawing.Size(267, 32);
+            this._menuExit.Size = new System.Drawing.Size(193, 32);
             this._menuExit.Text = "&Exit";
             this._menuExit.Click += new System.EventHandler(this._menuExit_Click);
             // 
@@ -134,46 +201,35 @@ namespace EBook
             // 
             // _pictureBox
             // 
-            this._pictureBox.Location = new System.Drawing.Point(0, 0);
+            this._pictureBox.BackColor = System.Drawing.Color.White;
+            this._pictureBox.Location = new System.Drawing.Point(-1, -1);
             this._pictureBox.Name = "_pictureBox";
-            this._pictureBox.Size = new System.Drawing.Size(623, 735);
+            this._pictureBox.Size = new System.Drawing.Size(215, 334);
             this._pictureBox.TabIndex = 4;
             this._pictureBox.TabStop = false;
-            this._pictureBox.Click += new System.EventHandler(this._pictureBox_Click);
+            this._pictureBox.DoubleClick += new System.EventHandler(this._pictureBox_DoubleClick);
             this._pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseDown);
             this._pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseMove);
             this._pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseUp);
             // 
-            // _menuSetIndex
+            // _checkSelection
             // 
-            this._menuSetIndex.Name = "_menuSetIndex";
-            this._menuSetIndex.Size = new System.Drawing.Size(267, 32);
-            this._menuSetIndex.Text = "Set Index";
-            this._menuSetIndex.Click += new System.EventHandler(this._menuSetIndex_Click);
-            // 
-            // _menuSaveSelection
-            // 
-            this._menuSaveSelection.Name = "_menuSaveSelection";
-            this._menuSaveSelection.Size = new System.Drawing.Size(267, 32);
-            this._menuSaveSelection.Text = "Save Selection";
-            this._menuSaveSelection.Click += new System.EventHandler(this._menuSaveSelection_Click);
-            // 
-            // _menuHr1
-            // 
-            this._menuHr1.Name = "_menuHr1";
-            this._menuHr1.Size = new System.Drawing.Size(264, 6);
-            // 
-            // _menuHr0
-            // 
-            this._menuHr0.Name = "_menuHr0";
-            this._menuHr0.Size = new System.Drawing.Size(264, 6);
+            this._checkSelection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._checkSelection.AutoSize = true;
+            this._checkSelection.BackColor = System.Drawing.Color.White;
+            this._checkSelection.Location = new System.Drawing.Point(463, 748);
+            this._checkSelection.Name = "_checkSelection";
+            this._checkSelection.Size = new System.Drawing.Size(15, 14);
+            this._checkSelection.TabIndex = 5;
+            this._checkSelection.UseVisualStyleBackColor = false;
             // 
             // fMain
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(754, 762);
-            this.Controls.Add(this._labelPage);
+            this.ClientSize = new System.Drawing.Size(497, 762);
             this.Controls.Add(this._menuStrip);
+            this.Controls.Add(this._checkSelection);
+            this.Controls.Add(this._labelPage);
             this.Controls.Add(this._pictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -191,6 +247,7 @@ namespace EBook
         public fMain()
         {
             InitializeComponent();
+            if (!Directory.Exists(PATH_DATA)) Directory.CreateDirectory(PATH_DATA);
         }
 
         private void fMain_Load(object sender, System.EventArgs e)
@@ -202,12 +259,14 @@ namespace EBook
                 this.Top = 0;
                 this.Left = 0;
                 this.Height = Screen.PrimaryScreen.WorkingArea.Height;
-                IsCropMode = true;
+                IS_SELECTION = true;
 
                 RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System\" + FOLDER_DATA, false);
-                if (key != null){
+                if (key != null)
+                {
                     var file = key.GetValue("File") as string;
-                    if (!string.IsNullOrEmpty(file)) {
+                    if (!string.IsNullOrEmpty(file))
+                    {
                         if (File.Exists(file))
                         {
                             var page = key.GetValue("Page") as string;
@@ -226,16 +285,10 @@ namespace EBook
             switch (e.KeyData)
             {
                 case Keys.F1:
-                    if (IsCropMode)
-                        IsCropMode = false;
+                    if (IS_SELECTION)
+                        IS_SELECTION = false;
                     else
-                        IsCropMode = true;
-                    break;
-                case Keys.F5:
-                    if (IsExtractTextSelection)
-                        IsExtractTextSelection = false;
-                    else
-                        IsExtractTextSelection = true;
+                        IS_SELECTION = true;
                     break;
                 case Keys.Right:
                     pageOpen(PageNumber + 1);
@@ -247,7 +300,7 @@ namespace EBook
                     pageOpen(0);
                     break;
                 case Keys.PageDown:
-                    pageOpen(m_images.Count - 1);
+                    pageOpen(m_pages.Count - 1);
                     break;
                 case Keys.Escape:
                     this.WindowState = FormWindowState.Minimized;
@@ -255,19 +308,19 @@ namespace EBook
             }
         }
 
-        #region [ CROP ]
+        #endregion
+
+        #region [ PICTURE_BOX ]
 
         int COUNTER_REINDEX = 0;
-        int w0 = 0, h0 = 0;
         int x = 0, y = 0, x1 = 0, y1 = 0;
-        int index = -1;
-        List<UiSelectRectangle> mList = new List<UiSelectRectangle>() { };
+        List<UiSelectRectangle> m_selections = new List<UiSelectRectangle>() { };
 
         bool IS_MODE_REINDEX
         {
             get
             {
-                return _buttonReIndex.BackColor == Color.Orange;
+                return _menuSetIndex.Checked;
             }
 
             set
@@ -275,112 +328,134 @@ namespace EBook
                 if (value)
                 {
                     foreach (var l in _pictureBox.Controls) (l as UiSelectRectangle).Index = 0;
-                    _buttonReIndex.BackColor = Color.Orange;
+                    _menuSetIndex.Checked = true;
                 }
                 else
                 {
                     COUNTER_REINDEX = 0;
-                    _buttonReIndex.BackColor = SystemColors.Control;
+                    _menuSetIndex.Checked = false;
                 }
             }
         }
 
-        void cleanAll()
-        {
-            mList.Clear();
-            _pictureBox.Controls.Clear();
-            _buttonSave.Enabled = false;
-            index = -1;
-            COUNTER_REINDEX = 0;
-            x = 0;
-            y = 0;
-        }
-
-
         private void _pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            if (IS_MODE_EDIT)
+            if (IS_SELECTION)
             {
                 x = e.X;
                 y = e.Y;
 
-                var l = new UiSelectRectangle(mList.Count + 1)
+                var sel = new UiSelectRectangle(m_selections.Count + 1)
                 {
                     Width = 1,
                     Height = 1,
                     Location = new Point(x, y)
                 };
-                l.MouseDoubleClick += (sv, ev) =>
+                sel.MouseDoubleClick += (sv, ev) =>
                 {
-                    if (IS_MODE_EDIT)
+                    if (IS_SELECTION)
                     {
-                        int i = mList.FindIndex(x => x == l);
-                        if (i != -1) mList.RemoveAt(i);
-                        _pictureBox.Controls.Remove(l);
-                        if (mList.Count == 0)
+                        int i = m_selections.FindIndex(x => x == sel);
+                        if (i != -1) m_selections.RemoveAt(i);
+                        _pictureBox.Controls.Remove(sel);
+                        if (m_selections.Count == 0)
                         {
-                            _buttonSave.Enabled = false;
+                            _menuSave.Enabled = false;
                         }
                     }
                 };
-                l.MouseClick += (sv, ev) =>
+                sel.MouseClick += (sv, ev) =>
                 {
-                    if (IS_MODE_EDIT && IS_MODE_REINDEX)
+                    if (IS_SELECTION && IS_MODE_REINDEX)
                     {
                         COUNTER_REINDEX++;
-                        l.Index = COUNTER_REINDEX;
-                        if (mList.Count == COUNTER_REINDEX) IS_MODE_REINDEX = false;
+                        sel.Index = COUNTER_REINDEX;
+                        if (m_selections.Count == COUNTER_REINDEX) IS_MODE_REINDEX = false;
                     }
                 };
-                mList.Add(l);
-                index = mList.Count - 1;
-                _pictureBox.Controls.Add(l);
-                l.BringToFront();
+                _pictureBox.Tag = sel;
+                _pictureBox.Controls.Add(sel);
+                sel.BringToFront();
             }
         }
 
         private void _pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            if (IS_MODE_EDIT && mList.Count > 0 && index != -1)
+            bool IS_SELECTING = false;
+            if (IS_SELECTION && _pictureBox.Tag != null)
             {
-                int w = Math.Abs(x - x1), h = Math.Abs(y - y1);
-
+                int w = Math.Abs(x - x1),
+                    h = Math.Abs(y - y1);
                 Rectangle rec = new Rectangle(x, y, w, h);
-                mList[index].Tag = rec;
-                mList[index].Width = w;
-                mList[index].Height = h;
-                //mList[index].SetOpacity(50);
+                if (w > 99 && h > 32)
+                {
+                    var sel = (UiSelectRectangle)_pictureBox.Tag;
+                    sel.Tag = rec;
+                    sel.Width = w;
+                    sel.Height = h;
+                    //sel.SetOpacity(50);
+                    m_selections.Add(sel);
+                    IS_SELECTING = true;
+                    _menuSave.Enabled = true;
+                }
 
-                index = -1;
                 x = 0;
                 y = 0;
+            }
 
-                _buttonSave.Enabled = true;
+            if (IS_SELECTING == false)
+            {
+                MouseEventArgs me = (MouseEventArgs)e;
+                if (me.Button == MouseButtons.Right)
+                {
+                    int page = PageNumber + 1;
+                    pageOpen(page);
+                }
+                else if (me.Button == MouseButtons.Left)
+                {
+                    int page = PageNumber - 1;
+                    pageOpen(page);
+                }
             }
         }
 
         private void _pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (IS_MODE_EDIT)
+            if (IS_SELECTION && x > 0 && y > 0)
             {
                 x1 = e.X;
                 y1 = e.Y;
-                if (index != -1)
+
+                if (_pictureBox.Tag != null)
                 {
+                    var sel = (UiSelectRectangle)_pictureBox.Tag;
                     int w = Math.Abs(x - x1), h = Math.Abs(y - y1);
-                    mList[index].Width = w;
-                    mList[index].Height = h;
+                    sel.Width = w;
+                    sel.Height = h;
                 }
             }
         }
 
+        private void _pictureBox_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _pictureBox_Click(object sender, System.EventArgs e)
+        {
+            //if (DocumentName.Length == 0 || IS_SELECTION) return;
+
+        }
 
         #endregion
+
+        #region [ MENU ]
 
         private void _menuOpen_Click(object sender, System.EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
+                openFileDialog.InitialDirectory = PATH_DATA;
                 openFileDialog.Filter = "EBook Files (*.ebk)|*.ebk";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
@@ -397,12 +472,64 @@ namespace EBook
             }
         }
 
-        void openFile(string file,int page = 0) {
+        private void _menuSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _menuCropSelection_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _menuExtracTextSelection_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _menuSetIndex_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _menuExit_Click(object sender, System.EventArgs e)
+        {
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System", true);
+            key = key.CreateSubKey(FOLDER_DATA);
+            key.SetValue("Page", PageNumber.ToString(), RegistryValueKind.String);
+            key.Close();
+            this.Close();
+        }
+
+        #endregion
+
+        #region [ FUNCTIONS ]
+
+        public bool IS_SELECTION
+        {
+            get { return _checkSelection.Checked; }
+            set
+            {
+                if (value)
+                {
+                    _checkSelection.Checked = true;
+                }
+                else
+                {
+                    _checkSelection.Checked = false;
+                }
+            }
+        }
+
+        void openFile(string file, int page = 0)
+        {
             _pictureBox.Visible = false;
 
             DocumentFile = file;
             DocumentName = doc_formatName(Path.GetFileName(DocumentFile));
-            m_images.Clear();
+
+            m_pages.Clear();
+            m_page_crops.Clear();
 
             using (ZipFile zip = ZipFile.Read(DocumentFile))
             {
@@ -411,8 +538,8 @@ namespace EBook
                     int i = int.Parse(entry.FileName.Substring(0, entry.FileName.Length - 4));
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        entry.ExtractWithPassword(ms, FOLDER_DATA);
-                        m_images.Add(i, ms.ToArray());
+                        entry.ExtractWithPassword(ms, PASSWORD);
+                        m_pages.Add(i, ms.ToArray());
                     }
                 }
             }
@@ -423,11 +550,20 @@ namespace EBook
 
         void pageOpen(int page)
         {
-            if (m_images.Count > 0 && m_images.ContainsKey(page))
+            if (m_pages.Count > 0
+                //&& PageNumber != page 
+                && m_pages.ContainsKey(page))
             {
+                if (IS_SELECTION && _menuAutoCropPageSelected.Checked && m_selections.Count > 0)
+                    cropPageUpdate();
+
+                m_selections.Clear();
                 PageNumber = page;
 
-                var buf = m_images[page];
+                byte[] buf;
+                if (m_page_crops.ContainsKey(page)) buf = m_page_crops[page];
+                else buf = m_pages[page];
+
                 Image img = null;
                 using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
                 {
@@ -445,44 +581,35 @@ namespace EBook
 
         void openImage(Image img)
         {
-            //cleanAll();
+            m_selections.Clear();
+            _pictureBox.Controls.Clear();
 
-            int w = 0, h = 0;
+            int w = 0, h = 0, _left = 0, _top = 0, _bottom = 0;
 
-            //var img = Image.FromFile(file);
             int w0 = img.Width, h0 = img.Height;
+            if (w0 < 1366 && h0 < 768)
+            {
+                w = w0;
+                h = h0;
+                _top = (this.Height - h) / 2;
+            }
+            else
+            {
+                h = this.Height + _top + _bottom;
+                w = h * w0 / h0;
+            }
 
-            const int _top = 0;
-            const int _bottom = 0;
-
-            h = this.Height + _top + _bottom;
-            w = h * w0 / h0;
-
-            //if (w0 > h0)
-            //{
-            //    h = _panelBody.Height;
-            //    w = h * w0 / h0;
-            //}
-            //else
-            //{
-            //    w = _panelBody.Width;
-            //    h = (w * h0) / w0;
-            //    if (h > h0)
-            //    {
-            //        h = _panelBody.Height;
-            //        w = h * w0 / h0;
-            //    }
-            //}
-
-            _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Width = w + _left;
 
             _pictureBox.Width = w;
             _pictureBox.Height = h;
-
+            //_pictureBox.Top = (-1) * _top;
+            _pictureBox.Location = new Point(_left, _top);
             _pictureBox.Image = img;
-            _pictureBox.Tag = new Point(w0, h0);
+            //_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            _pictureBox.Top = (-1) * _top;
+            this.Tag = new Size(w0, h0);
         }
 
         string doc_formatName(string name)
@@ -502,103 +629,56 @@ namespace EBook
             return name;
         }
 
-        private void _menuExit_Click(object sender, System.EventArgs e)
+        void cropPageUpdate()
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System", true);
-            key = key.CreateSubKey(FOLDER_DATA);
-            key.SetValue("Page", PageNumber.ToString(), RegistryValueKind.String);
-            key.Close();
-            this.Close();
-        }
-
-        private void _pictureBox_Click(object sender, System.EventArgs e)
-        {
-            if (DocumentName.Length == 0
-                || IsCropMode || IsExtractTextSelection) return;
-
-            MouseEventArgs me = (MouseEventArgs)e;
-            if (me.Button == MouseButtons.Right)
+            if (m_selections.Count > 0)
             {
-                int page = PageNumber + 1;
-                pageOpen(page);
-            }
-            else if (me.Button == MouseButtons.Left)
-            {
-                int page = PageNumber - 1;
-                pageOpen(page);
-            }
-        }
-
-        private void _menuSetIndex_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void _menuSaveSelection_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        public bool IsCropMode
-        {
-            get { return _menuCropMode.Checked; }
-            set
-            {
-                if (value)
+                for (var i = 0; i < m_selections.Count; i++)
                 {
-                    IsExtractTextSelection = false;
-                    _menuCropMode.Checked = true;
-                    _menuMain.BackColor = Color.Orange;
-                }
-                else
-                {
-                    _menuCropMode.Checked = false;
-                    _menuMain.BackColor = Color.White;
+                    var tag = m_selections[i].Tag;
+                    if (tag != null)
+                    {
+                        var rec = (Rectangle)tag;
+                        var oriSize = (Size)this.Tag;
+                        int w0 = oriSize.Width, h0 = oriSize.Height;
+
+                        int w1 = _pictureBox.Width,
+                            h1 = _pictureBox.Height,
+
+                            wc = rec.Width * w0 / w1,
+                            hc = rec.Height * h0 / h1,
+
+                            xc = rec.X * w0 / w1,
+                            yc = rec.Y * h0 / h1;
+
+                        var cropRec = new Rectangle(xc, yc, wc, hc);
+                        var target = new Bitmap(wc, hc);
+
+                        using (Graphics g = Graphics.FromImage(target))
+                        {
+                            g.DrawImage(_pictureBox.Image, new Rectangle(0, 0, wc, hc), cropRec, GraphicsUnit.Pixel);
+                        }
+
+                        target.Save(@"C:\test\" + DocumentName + "." + (PageNumber + 1) + "." + (i + 1) + ".jpg", ImageFormat.Jpeg);
+                        using (var ms = new MemoryStream())
+                        {
+                            target.Save(ms, ImageFormat.Jpeg);
+                            if (m_page_crops.ContainsKey(PageNumber))
+                                m_page_crops[PageNumber] = ms.ToArray();
+                            else m_page_crops.Add(PageNumber, ms.ToArray());
+                        }
+                    }
                 }
             }
+
+            //_buttonSave.Enabled = false;
         }
 
-        public bool IsExtractTextSelection
+        void saveSelections()
         {
-            get { return _menuExtractTextSelection.Checked; }
-            set
-            {
-                if (value)
-                {
-                    IsCropMode = false;
-                    _menuExtractTextSelection.Checked = true;
-                    _menuMain.BackColor = Color.DeepSkyBlue;
-                }
-                else
-                {
-                    _menuExtractTextSelection.Checked = false;
-                    _menuMain.BackColor = Color.White;
-                }
-            }
+
         }
 
-        private void _menuCropMode_Click(object sender, System.EventArgs e)
-        {
-            if (IsCropMode)
-            {
-                IsCropMode = false;
-            }
-            else
-            {
-                IsCropMode = true;
-            }
-        }
-
-        private void _menuExtractTextSelection_Click(object sender, System.EventArgs e)
-        {
-            if (IsExtractTextSelection)
-            {
-                IsExtractTextSelection = false;
-            }
-            else
-            {
-                IsExtractTextSelection = true;
-            }
-        }
+        #endregion
     }
 }
