@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -189,7 +190,7 @@ namespace EBook
             // _labelPage
             // 
             this._labelPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._labelPage.BackColor = System.Drawing.SystemColors.Control;
+            this._labelPage.BackColor = System.Drawing.Color.Transparent;
             this._labelPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._labelPage.ForeColor = System.Drawing.Color.Black;
             this._labelPage.Location = new System.Drawing.Point(-2, 739);
@@ -201,10 +202,11 @@ namespace EBook
             // 
             // _pictureBox
             // 
+            this._pictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this._pictureBox.BackColor = System.Drawing.Color.White;
             this._pictureBox.Location = new System.Drawing.Point(-1, -1);
             this._pictureBox.Name = "_pictureBox";
-            this._pictureBox.Size = new System.Drawing.Size(215, 334);
+            this._pictureBox.Size = new System.Drawing.Size(295, 419);
             this._pictureBox.TabIndex = 4;
             this._pictureBox.TabStop = false;
             this._pictureBox.DoubleClick += new System.EventHandler(this._pictureBox_DoubleClick);
@@ -236,6 +238,7 @@ namespace EBook
             this.MainMenuStrip = this._menuStrip;
             this.Name = "fMain";
             this.Load += new System.EventHandler(this.fMain_Load);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fMain_MouseClick);
             this._menuStrip.ResumeLayout(false);
             this._menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).EndInit();
@@ -296,6 +299,32 @@ namespace EBook
                 case Keys.Left:
                     pageOpen(PageNumber - 1);
                     break;
+                case Keys.Up:
+                    if (IS_SELECTION && _pictureBox.Tag != null)
+                    {
+                        var sel = (UiSelectRectangle)_pictureBox.Tag;
+                        sel.Top = sel.Top - 1;
+                        sel.Height = sel.Height + 1;
+
+                        var rec = (Rectangle)sel.Tag;
+                        rec.Y = rec.Y - 1;
+                        rec.Height = rec.Height + 1;
+                        sel.Tag = rec;
+                    }
+                    break;
+                case Keys.Down:
+                    if (IS_SELECTION && _pictureBox.Tag != null)
+                    {
+                        var sel = (UiSelectRectangle)_pictureBox.Tag;
+                        sel.Top = sel.Top + 1;
+                        sel.Height = sel.Height - 1;
+
+                        var rec = (Rectangle)sel.Tag;
+                        rec.Y = rec.Y + 1;
+                        rec.Height = rec.Height - 1;
+                        sel.Tag = rec;
+                    }
+                    break;
                 case Keys.PageUp:
                     pageOpen(0);
                     break;
@@ -305,6 +334,21 @@ namespace EBook
                 case Keys.Escape:
                     this.WindowState = FormWindowState.Minimized;
                     break;
+            }
+        }
+
+        private void fMain_MouseClick(object sender, MouseEventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            if (me.Button == MouseButtons.Right)
+            {
+                int page = PageNumber + 1;
+                pageOpen(page);
+            }
+            else if (me.Button == MouseButtons.Left)
+            {
+                int page = PageNumber - 1;
+                pageOpen(page);
             }
         }
 
@@ -474,7 +518,7 @@ namespace EBook
 
         private void _menuSave_Click(object sender, EventArgs e)
         {
-
+            updateDocument();
         }
 
         private void _menuCropSelection_Click(object sender, EventArgs e)
@@ -494,10 +538,17 @@ namespace EBook
 
         private void _menuExit_Click(object sender, System.EventArgs e)
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System", true);
-            key = key.CreateSubKey(FOLDER_DATA);
-            key.SetValue("Page", PageNumber.ToString(), RegistryValueKind.String);
-            key.Close();
+            try
+            {
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System", true);
+                key = key.CreateSubKey(FOLDER_DATA);
+                key.SetValue("Page", PageNumber.ToString(), RegistryValueKind.String);
+                key.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
             this.Close();
         }
 
@@ -584,30 +635,37 @@ namespace EBook
             m_selections.Clear();
             _pictureBox.Controls.Clear();
 
-            int w = 0, h = 0, _left = 0, _top = 0, _bottom = 0;
+            int w = 0, h = 0, _top = 0;
 
             int w0 = img.Width, h0 = img.Height;
-            if (w0 < 1366 && h0 < 768)
+            if (w0 < Screen.PrimaryScreen.WorkingArea.Width && h0 < this.Height)
             {
                 w = w0;
                 h = h0;
                 _top = (this.Height - h) / 2;
+
+                this.Width = w;
+
+                _pictureBox.Width = w;
+                _pictureBox.Height = h;
+                _pictureBox.Location = new Point(0, _top);
+                _pictureBox.Image = img;
+                _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             }
             else
             {
-                h = this.Height + _top + _bottom;
+                h = this.Height;
                 w = h * w0 / h0;
+
+                this.Width = w;
+
+                _pictureBox.Width = w;
+                _pictureBox.Height = h;
+                _pictureBox.Location = new Point(0, _top);
+                _pictureBox.Image = img;
+                _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             }
 
-            this.Width = w + _left;
-
-            _pictureBox.Width = w;
-            _pictureBox.Height = h;
-            //_pictureBox.Top = (-1) * _top;
-            _pictureBox.Location = new Point(_left, _top);
-            _pictureBox.Image = img;
-            //_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
-            _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
             this.Tag = new Size(w0, h0);
         }
@@ -659,7 +717,7 @@ namespace EBook
                             g.DrawImage(_pictureBox.Image, new Rectangle(0, 0, wc, hc), cropRec, GraphicsUnit.Pixel);
                         }
 
-                        target.Save(@"C:\test\" + DocumentName + "." + (PageNumber + 1) + "." + (i + 1) + ".jpg", ImageFormat.Jpeg);
+                        //target.Save(@"C:\test\" + DocumentName + "." + (PageNumber + 1) + "." + (i + 1) + ".jpg", ImageFormat.Jpeg);
                         using (var ms = new MemoryStream())
                         {
                             target.Save(ms, ImageFormat.Jpeg);
@@ -674,9 +732,22 @@ namespace EBook
             //_buttonSave.Enabled = false;
         }
 
-        void saveSelections()
+        void updateDocument()
         {
+            if (m_page_crops.Count > 0)
+            {
+                using (ZipFile zip = ZipFile.Read(DocumentFile))
+                {
+                    foreach (int key in m_page_crops.Keys)
+                        zip.UpdateEntry(key.ToString() + ".jpg", m_page_crops[key]);
+                    zip.Save();
+                }
 
+                foreach (int key in m_page_crops.Keys)
+                    m_pages[key] = m_page_crops[key];
+
+                m_page_crops.Clear();
+            }
         }
 
         #endregion
