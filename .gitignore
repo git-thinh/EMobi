@@ -15,3 +15,5 @@ EBook/obj/Debug/EBook.csproj.CoreCompileInputs.cache
 EBook/obj/Debug/EBook.csproj.GenerateResource.cache
 EBook/obj/Debug/EBook.csprojAssemblyReference.cache
 EBook/obj/Debug/EBook.pdb
+/.vs
+/EBook/obj
