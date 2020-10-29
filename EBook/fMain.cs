@@ -10,11 +10,14 @@ using System.Windows.Forms;
 using System.Linq;
 using Tesseract;
 using Salar.Bois;
+using PdfiumViewer;
 
 namespace EBook
 {
     class fMain : Form
     {
+        const int IMG_WIDTH_BIG = 2400;
+        const int IMG_WIDTH_NORMAL = 1200;
         private int PageNumber = 0;
         private string DocumentFile = string.Empty;
         private string DocumentName = string.Empty;
@@ -49,6 +52,9 @@ namespace EBook
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem _menuAutoRun;
         private ToolStripMenuItem menuAutoRun_updateIndex;
+        private ToolStripMenuItem _menuCleanAllCacheBefore;
+        private ToolStripSeparator toolStripSeparator3;
+        private Label label1;
         private ToolStripMenuItem _menuMain;
 
         private void InitializeComponent()
@@ -59,6 +65,8 @@ namespace EBook
             this._menuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this._menuHr0 = new System.Windows.Forms.ToolStripSeparator();
             this._menuSelection = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuCleanAllCacheBefore = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this._menuCropSelection = new System.Windows.Forms.ToolStripMenuItem();
             this._menuExtracTextSelection = new System.Windows.Forms.ToolStripMenuItem();
             this._menuSetIndex = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,6 +75,8 @@ namespace EBook
             this._menuKeepSelectChangePage = new System.Windows.Forms.ToolStripMenuItem();
             this._menuDisplayPageCropping = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this._menuAutoRun = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAutoRun_updateIndex = new System.Windows.Forms.ToolStripMenuItem();
             this._menuHr1 = new System.Windows.Forms.ToolStripSeparator();
             this._menuBackupDocument = new System.Windows.Forms.ToolStripMenuItem();
             this._menuSave = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,8 +85,7 @@ namespace EBook
             this._labelPage = new System.Windows.Forms.Label();
             this._pictureBox = new System.Windows.Forms.PictureBox();
             this._checkSelection = new System.Windows.Forms.CheckBox();
-            this._menuAutoRun = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuAutoRun_updateIndex = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             this._menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).BeginInit();
             this.SuspendLayout();
@@ -88,10 +97,10 @@ namespace EBook
             this._menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this._menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuMain});
-            this._menuStrip.Location = new System.Drawing.Point(357, 276);
+            this._menuStrip.Location = new System.Drawing.Point(477, 276);
             this._menuStrip.Name = "_menuStrip";
             this._menuStrip.Padding = new System.Windows.Forms.Padding(0);
-            this._menuStrip.Size = new System.Drawing.Size(150, 30);
+            this._menuStrip.Size = new System.Drawing.Size(30, 30);
             this._menuStrip.TabIndex = 0;
             this._menuStrip.Text = "menuStrip1";
             // 
@@ -134,6 +143,8 @@ namespace EBook
             // _menuSelection
             // 
             this._menuSelection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuCleanAllCacheBefore,
+            this.toolStripSeparator3,
             this._menuCropSelection,
             this._menuExtracTextSelection,
             this._menuSetIndex,
@@ -146,6 +157,18 @@ namespace EBook
             this._menuSelection.Name = "_menuSelection";
             this._menuSelection.Size = new System.Drawing.Size(243, 32);
             this._menuSelection.Text = "Selection";
+            // 
+            // _menuCleanAllCacheBefore
+            // 
+            this._menuCleanAllCacheBefore.Name = "_menuCleanAllCacheBefore";
+            this._menuCleanAllCacheBefore.Size = new System.Drawing.Size(331, 32);
+            this._menuCleanAllCacheBefore.Text = "Clean All Cache Before";
+            this._menuCleanAllCacheBefore.Click += new System.EventHandler(this._menuCleanAllCacheBefore_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(328, 6);
             // 
             // _menuCropSelection
             // 
@@ -203,6 +226,21 @@ namespace EBook
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(328, 6);
             // 
+            // _menuAutoRun
+            // 
+            this._menuAutoRun.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuAutoRun_updateIndex});
+            this._menuAutoRun.Name = "_menuAutoRun";
+            this._menuAutoRun.Size = new System.Drawing.Size(331, 32);
+            this._menuAutoRun.Text = "Auto Run";
+            // 
+            // menuAutoRun_updateIndex
+            // 
+            this.menuAutoRun_updateIndex.Name = "menuAutoRun_updateIndex";
+            this.menuAutoRun_updateIndex.Size = new System.Drawing.Size(206, 32);
+            this.menuAutoRun_updateIndex.Text = "Update Index ";
+            this.menuAutoRun_updateIndex.Click += new System.EventHandler(this.menuAutoRun_updateIndex_Click);
+            // 
             // _menuHr1
             // 
             this._menuHr1.Name = "_menuHr1";
@@ -254,7 +292,7 @@ namespace EBook
             this._pictureBox.BackColor = System.Drawing.Color.White;
             this._pictureBox.Location = new System.Drawing.Point(-1, -234);
             this._pictureBox.Name = "_pictureBox";
-            this._pictureBox.Size = new System.Drawing.Size(295, 419);
+            this._pictureBox.Size = new System.Drawing.Size(132, 406);
             this._pictureBox.TabIndex = 4;
             this._pictureBox.TabStop = false;
             this._pictureBox.DoubleClick += new System.EventHandler(this._pictureBox_DoubleClick);
@@ -273,20 +311,19 @@ namespace EBook
             this._checkSelection.TabIndex = 5;
             this._checkSelection.UseVisualStyleBackColor = false;
             // 
-            // _menuAutoRun
+            // label1
             // 
-            this._menuAutoRun.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuAutoRun_updateIndex});
-            this._menuAutoRun.Name = "_menuAutoRun";
-            this._menuAutoRun.Size = new System.Drawing.Size(331, 32);
-            this._menuAutoRun.Text = "Auto Run";
-            // 
-            // menuAutoRun_updateIndex
-            // 
-            this.menuAutoRun_updateIndex.Name = "menuAutoRun_updateIndex";
-            this.menuAutoRun_updateIndex.Size = new System.Drawing.Size(206, 32);
-            this.menuAutoRun_updateIndex.Text = "Update Index ";
-            this.menuAutoRun_updateIndex.Click += new System.EventHandler(this.menuAutoRun_updateIndex_Click);
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(157, 126);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(175, 46);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "LOADING .....";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // fMain
             // 
@@ -296,6 +333,7 @@ namespace EBook
             this.Controls.Add(this._checkSelection);
             this.Controls.Add(this._labelPage);
             this.Controls.Add(this._pictureBox);
+            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this._menuStrip;
@@ -345,16 +383,25 @@ namespace EBook
                 this.Top = 0;
                 this.Left = 0;
                 this.Height = Screen.PrimaryScreen.WorkingArea.Height;
-                if (ok) openFile(file, p);
+                if (ok) openFileEBK(file, p);
                 else this.Width = 235;
                 IS_SELECTION = true;
             };
         }
 
+        private bool IS_CROP_ENTERING = false;
         private void form_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyData)
             {
+                case Keys.Enter:
+                    if (IS_SELECTION && _menuAutoCropPageSelected.Checked && m_selections.Count > 0)
+                    {
+                        cropPageUpdate();
+                        IS_CROP_ENTERING = true;
+                    }
+                    pageOpen(PageNumber);
+                    break;
                 case Keys.F1:
                     if (IS_SELECTION)
                         IS_SELECTION = false;
@@ -558,6 +605,11 @@ namespace EBook
 
         #region [ MENU ]
 
+        private void _menuCleanAllCacheBefore_Click(object sender, EventArgs e)
+        {
+            selection_cleanAllCache();
+        }
+
         private void _menuBackupDocument_Click(object sender, EventArgs e)
         {
 
@@ -568,18 +620,24 @@ namespace EBook
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = PATH_DATA;
-                openFileDialog.Filter = "EBook Files (*.ebk)|*.ebk";
+                openFileDialog.Filter = "PDF Files (*.pdf)|*.pdf|EBook Files (*.ebk)|*.ebk";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    openFile(openFileDialog.FileName);
+                    string file = openFileDialog.FileName;
+                    if (file.EndsWith(".ebk"))
+                        openFileEBK(file);
+                    else
+                    {
+                        openFilePdf(file);
 
-                    RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System", true);
-                    key = key.CreateSubKey(FOLDER_DATA);
-                    key.SetValue("File", DocumentFile, RegistryValueKind.String);
-                    key.Close();
+                        RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System", true);
+                        key = key.CreateSubKey(FOLDER_DATA);
+                        key.SetValue("File", DocumentFile, RegistryValueKind.String);
+                        key.Close();
+                    }
                 }
             }
         }
@@ -685,16 +743,115 @@ namespace EBook
             }
         }
 
-        void openFile(string file, int page = 0)
+        void openFilePdf(string file, int page = 0)
         {
+            this.Enabled = false;
+            _pictureBox.Visible = false;
+            page_cleanAll();
+            try
+            {
+                DocumentName = doc_formatName(Path.GetFileName(file));
+                DocumentFile = Path.Combine(PATH_DATA, DocumentName + ".ebk");
+
+                if (File.Exists(DocumentFile)) {
+                    openFileEBK(DocumentFile);
+                    return;
+                }
+
+                using (var document = PdfDocument.Load(file))
+                {
+                    int dpi = 150,
+                        max = document.PageCount,
+                        wi = Screen.PrimaryScreen.WorkingArea.Width,
+                        hi = Screen.PrimaryScreen.WorkingArea.Height;
+                    string time = DateTime.Now.ToString("yyMMdd.HHmmss");
+                    int wp = 0, hp = 0, w = 0, h = 0;
+
+
+                    for (int i = 0; i < max; i++)
+                    {
+                        //if (i != 5 && i != 7) continue;
+
+                        wp = (int)document.PageSizes[i].Width;
+                        hp = (int)document.PageSizes[i].Height;
+
+                        if (wp > hp)
+                        {
+                            w = IMG_WIDTH_BIG;
+                            h = w * hp / wp;
+                        }
+                        else
+                        {
+                            w = IMG_WIDTH_NORMAL;
+                            h = w * hp / wp;
+                        }
+
+                        using (var image = document.Render(i, w, h, dpi, dpi, PdfRenderFlags.Annotations))
+                        {
+                            //image.Save(stream, ImageFormat.Jpeg);
+                            using (MemoryStream ms = new MemoryStream())
+                            {
+                                image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                var buf = ms.ToArray();
+                                m_pages.Add(i, buf);
+                            }
+                        }
+                    }//end for
+
+                    using (var fs = File.Create(DocumentFile))
+                    {
+                        using (var zipStream = new ZipOutputStream(fs))
+                        {
+                            zipStream.CompressionLevel = Ionic.Zlib.CompressionLevel.Level9;
+                            zipStream.Password = PASSWORD;
+
+                            foreach (var kv in m_pages)
+                            {
+                                zipStream.PutNextEntry(kv.Key.ToString() + ".jpg");
+                                zipStream.Write(kv.Value, 0, kv.Value.Length);
+                            }
+                        }
+                    }
+
+                    //using (var fileStream = File.Create(zipFile))
+                    //{
+                    //    using (ZipOutputStream zipStream = new ZipOutputStream(fileStream))
+                    //    {
+                    //        zipStream.SetLevel(9); // 0 - store only to 9 - means best compression
+                    //        zipStream.Password = m_app.FOLDER_DATA;
+
+                    //        foreach (var kv in dic)
+                    //        {
+                    //            var entry = new ZipEntry(kv.Key.ToString() + ".jpg");
+                    //            entry.DateTime = DateTime.Now;
+                    //            zipStream.PutNextEntry(entry);
+                    //            zipStream.Write(kv.Value, 0, kv.Value.Length);
+                    //        }
+                    //    }
+                    //}
+
+                    pageOpen(0);
+
+                    this.Enabled = true;
+                }
+            }
+            catch(Exception err)
+            {
+                this.Enabled = true;
+                _pictureBox.Visible = true;
+                page_cleanAll();
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        void openFileEBK(string file, int page = 0)
+        {
+            page_cleanAll();
+
             _pictureBox.Visible = false;
 
             DocumentFile = file;
             DocumentName = doc_formatName(Path.GetFileName(DocumentFile));
-
-            m_infos.Clear();
-            m_pages.Clear();
-            m_page_crops.Clear();
 
             using (ZipFile zip = ZipFile.Read(DocumentFile))
             {
@@ -743,10 +900,12 @@ namespace EBook
                 PageNumber = page;
 
                 byte[] buf;
-                if (m_page_crops.ContainsKey(page) && _menuDisplayPageCropping.Checked)
+                if (m_page_crops.ContainsKey(page) &&
+                    (_menuDisplayPageCropping.Checked || IS_CROP_ENTERING))
                 {
                     buf = m_page_crops[page];
                     _labelPage.BackColor = Color.Orange;
+                    IS_CROP_ENTERING = false;
                 }
                 else
                 {
@@ -814,7 +973,8 @@ namespace EBook
 
 
             this.Tag = new Size(w0, h0);
-            this.BackColor = Color.Black;
+            //this.BackColor = Color.Black;
+            _pictureBox.Visible = true;
         }
 
         string doc_formatName(string name)
@@ -895,6 +1055,21 @@ namespace EBook
                 if (hasUpdate)
                     infoSave();
             }
+        }
+
+        void page_cleanAll() {
+            selection_cleanAllCache();
+
+            m_infos.Clear();
+            m_pages.Clear();
+            m_page_crops.Clear();
+        }
+
+        void selection_cleanAllCache()
+        {
+            m_page_crops.Clear();
+            m_selections.Clear();
+            _pictureBox.Controls.Clear();
         }
 
         byte[] getImageSelection(Image image, Rectangle rec)

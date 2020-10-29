@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,6 +53,495 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Core\NAudio\CachedSound.cs" />
+    <Compile Include="Core\NAudio\Codecs\ALawDecoder.cs" />
+    <Compile Include="Core\NAudio\Codecs\ALawEncoder.cs" />
+    <Compile Include="Core\NAudio\Codecs\G722Codec.cs" />
+    <Compile Include="Core\NAudio\Codecs\MuLawDecoder.cs" />
+    <Compile Include="Core\NAudio\Codecs\MuLawEncoder.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioCaptureClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientBufferFlags.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientProperties.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientShareMode.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientStreamFlags.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClientStreamOptions.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioClockClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeCallback.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeChannel.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeChannels.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeNotificationDelegate.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeStepInformation.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioEndpointVolumeVolumeRange.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioMeterInformation.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioMeterInformationChannels.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioRenderClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioSessionControl.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioSessionEventsCallback.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioSessionManager.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioSessionNotification.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioStreamCategory.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioStreamVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\AudioVolumeNotificationData.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\DataFlow.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\DeviceState.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\EEndpointHardwareSupport.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\AudioVolumeNotificationDataStruct.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\Blob.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\ClsCtx.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\ErrorCodes.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioCaptureClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioClock2.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioEndpointVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioEndpointVolumeCallback.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioMeterInformation.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioRenderClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionControl.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionEnumerator.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionEvents.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionEventsHandler.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionManager.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioSessionNotification.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IAudioStreamVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMDevice.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMDeviceCollection.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMDeviceEnumerator.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMEndpoint.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IMMNotificationClient.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\IPropertyStore.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\ISimpleAudioVolume.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\MMDeviceEnumeratorComObject.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Interfaces\StorageAccessMode.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\MMDevice.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\MMDeviceCollection.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\MMDeviceEnumerator.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropertyKey.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropertyKeys.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropertyStore.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropertyStoreProperty.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropVariant.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\PropVariantNative.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\Role.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\SessionCollection.cs" />
+    <Compile Include="Core\NAudio\CoreAudioApi\SimpleAudioVolume.cs" />
+    <Compile Include="Core\NAudio\Dmo\AudioMediaSubtypes.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoDescriptor.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoEnumerator.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoEnumFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoGuids.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoHResults.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoInputDataBufferFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoInputStatusFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoInterop.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoMediaType.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoOutputDataBuffer.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoOutputDataBufferFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoPartialMediaType.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoProcessOutputFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\DmoSetTypeFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\IEnumDmo.cs" />
+    <Compile Include="Core\NAudio\Dmo\IMediaBuffer.cs" />
+    <Compile Include="Core\NAudio\Dmo\IMediaObject.cs" />
+    <Compile Include="Core\NAudio\Dmo\IMediaParamInfo.cs" />
+    <Compile Include="Core\NAudio\Dmo\InputStreamInfoFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\IWMResamplerProps.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaBuffer.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaObject.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaObjectSizeInfo.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaParamInfo.cs" />
+    <Compile Include="Core\NAudio\Dmo\MediaTypes.cs" />
+    <Compile Include="Core\NAudio\Dmo\OutputStreamInfoFlags.cs" />
+    <Compile Include="Core\NAudio\Dmo\ResamplerMediaObject.cs" />
+    <Compile Include="Core\NAudio\Dmo\WindowsMediaMp3Decoder.cs" />
+    <Compile Include="Core\NAudio\Dsp\BiQuadFilter.cs" />
+    <Compile Include="Core\NAudio\Dsp\Complex.cs" />
+    <Compile Include="Core\NAudio\Dsp\EnvelopeDetector.cs" />
+    <Compile Include="Core\NAudio\Dsp\EnvelopeGenerator.cs" />
+    <Compile Include="Core\NAudio\Dsp\FastFourierTransform.cs" />
+    <Compile Include="Core\NAudio\Dsp\ImpulseResponseConvolution.cs" />
+    <Compile Include="Core\NAudio\Dsp\SimpleCompressor.cs" />
+    <Compile Include="Core\NAudio\Dsp\SimpleGate.cs" />
+    <Compile Include="Core\NAudio\Dsp\SmbPitchShifter.cs" />
+    <Compile Include="Core\NAudio\Dsp\WdlResampler.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\ChannelMode.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\DmoMp3FrameDecompressor.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\Id3v2Tag.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\IMp3FrameDecompressor.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\Mp3Frame.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\Mp3FrameDecompressor.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\MpegLayer.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\MpegVersion.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Mp3\XingHeader.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Generator.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\GeneratorBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\GeneratorEnum.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\InfoChunk.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Instrument.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\InstrumentBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Modulator.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\ModulatorBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\ModulatorType.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Preset.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\PresetBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\PresetsChunk.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\RiffChunk.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SampleDataChunk.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SampleHeader.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SampleHeaderBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SampleMode.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SFSampleLink.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SFVersion.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SFVersionBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\SoundFont.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\StructureBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\Zone.cs" />
+    <Compile Include="Core\NAudio\FileFormats\SoundFont\ZoneBuilder.cs" />
+    <Compile Include="Core\NAudio\FileFormats\Wav\WaveFileChunkReader.cs" />
+    <Compile Include="Core\NAudio\Gui\Fader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\PanSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\Pot.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\Pot.Designer.cs">
+      <DependentUpon>Pot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\VolumeMeter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\VolumeMeter.Designer.cs">
+      <DependentUpon>VolumeMeter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\VolumeSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\WaveformPainter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\WaveformPainter.Designer.cs">
+      <DependentUpon>WaveformPainter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\NAudio\Gui\WaveViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\LoopStream.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\AudioSubtypes.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFActivate.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFAttributes.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFByteStream.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFCollection.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFMediaBuffer.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFMediaEvent.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFMediaType.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFReadWriteClassFactory.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFSample.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFSinkWriter.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFSourceReader.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\IMFTransform.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaEventType.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationAttributes.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationErrors.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationHelpers.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationInterop.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationTransform.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaFoundationTransformCategories.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaType.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MediaTypes.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_INPUT_STREAM_INFO.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_MESSAGE_TYPE.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_OUTPUT_DATA_BUFFER.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_OUTPUT_STREAM_INFO.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MFT_REGISTER_TYPE_INFO.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\MF_SINK_WRITER_STATISTICS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_ENUM_FLAG.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_INPUT_STATUS_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_INPUT_STREAM_INFO_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_OUTPUT_DATA_BUFFER_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_OUTPUT_STATUS_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_OUTPUT_STREAM_INFO_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_PROCESS_OUTPUT_FLAGS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_PROCESS_OUTPUT_STATUS.cs" />
+    <Compile Include="Core\NAudio\MediaFoundation\_MFT_SET_TYPE_FLAGS.cs" />
+    <Compile Include="Core\NAudio\Midi\ChannelAfterTouchEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\ControlChangeEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\KeySignatureEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\MetaEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\MetaEventType.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiCommandCode.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiController.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiEventCollection.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiEventComparer.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiFile.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiIn.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiInCapabilities.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiInMessageEventArgs.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiInterop.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiMessage.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiOut.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiOutCapabilities.cs" />
+    <Compile Include="Core\NAudio\Midi\MidiOutTechnology.cs" />
+    <Compile Include="Core\NAudio\Midi\NoteEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\NoteOnEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\PatchChangeEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\PitchWheelChangeEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\RawMetaEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\SequencerSpecificEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\SmpteOffsetEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\SysexEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\TempoEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\TextEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\TimeSignatureEvent.cs" />
+    <Compile Include="Core\NAudio\Midi\TrackSequenceNumberEvent.cs" />
+    <Compile Include="Core\NAudio\Mixer\BooleanMixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\CustomMixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\ListTextMixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\Mixer.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerControlType.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerFlags.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerInterop.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerLine.cs" />
+    <Compile Include="Core\NAudio\Mixer\MixerLineComponentType.cs" />
+    <Compile Include="Core\NAudio\Mixer\SignedMixerControl.cs" />
+    <Compile Include="Core\NAudio\Mixer\UnsignedMixerControl.cs" />
+    <Compile Include="Core\NAudio\Utils\BufferHelpers.cs" />
+    <Compile Include="Core\NAudio\Utils\ByteArrayExtensions.cs" />
+    <Compile Include="Core\NAudio\Utils\ByteEncoding.cs" />
+    <Compile Include="Core\NAudio\Utils\ChunkIdentifier.cs" />
+    <Compile Include="Core\NAudio\Utils\CircularBuffer.cs" />
+    <Compile Include="Core\NAudio\Utils\Decibels.cs" />
+    <Compile Include="Core\NAudio\Utils\FieldDescriptionAttribute.cs" />
+    <Compile Include="Core\NAudio\Utils\FieldDescriptionHelper.cs" />
+    <Compile Include="Core\NAudio\Utils\HResult.cs" />
+    <Compile Include="Core\NAudio\Utils\IEEE.cs" />
+    <Compile Include="Core\NAudio\Utils\IgnoreDisposeStream.cs" />
+    <Compile Include="Core\NAudio\Utils\MarshalHelpers.cs" />
+    <Compile Include="Core\NAudio\Utils\MergeSort.cs" />
+    <Compile Include="Core\NAudio\Utils\NativeMethods.cs" />
+    <Compile Include="Core\NAudio\Utils\ProgressLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\NAudio\Utils\ProgressLog.Designer.cs">
+      <DependentUpon>ProgressLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\NAudio\Utils\WavePositionExtensions.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\Asio64Bit.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioCallbacks.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioChannelInfo.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\ASIODriver.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioDriverCapability.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\ASIODriverExt.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioError.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioMessageSelector.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\ASIOSampleConvertor.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\AsioSampleType.cs" />
+    <Compile Include="Core\NAudio\Wave\Asio\ASIOStructures.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriver.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriverAddFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriverDetails.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriverDetailsSupportFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmDriverEnumFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatChoose.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatChooseStyleFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatDetails.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatEnumFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatSuggestFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatTag.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmFormatTagDetails.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmInterop.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmMetrics.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStream.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamConvertFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamHeader.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamHeaderStatusFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamHeaderStruct.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamOpenFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\AcmStreamSizeFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\Compression\WaveFilter.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\Manufacturers.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\MmException.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\MmResult.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\MmTime.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveCallbackInfo.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveCallbackStrategy.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveHeader.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveHeaderFlags.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveInCapabilities.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveInEventArgs.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveInterop.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveOutCapabilities.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveOutSupport.cs" />
+    <Compile Include="Core\NAudio\Wave\MmeInterop\WaveWindow.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\ISampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Mono16SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Mono24SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Mono8SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\MonoFloatSampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Stereo16SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Stereo24SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\Stereo8SampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleChunkConverters\StereoFloatSampleChunkConverter.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\AdsrSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\ConcatenatingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\FadeInOutSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\MeteringSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\MixingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\MonoToStereoSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\MultiplexingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\NotifyingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\OffsetSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\PanningSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\Pcm16BitToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\Pcm24BitToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\Pcm32BitToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\Pcm8BitToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleChannel.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleProviderConverterBase.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleProviderConverters.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleToWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleToWaveProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SampleToWaveProvider24.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SignalGenerator.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\SMBPitchShiftingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\StereoToMonoSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\VolumeSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\WaveToSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\WaveToSampleProvider64.cs" />
+    <Compile Include="Core\NAudio\Wave\SampleProviders\WdlResamplingSampleProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveExtensionMethods.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\AdpcmWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\Gsm610WaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\ImaAdpcmWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\Mp3WaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\OggWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\TrueSpeechWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormatCustomMarshaler.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormatEncoding.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormatExtensible.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WaveFormatExtraData.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveFormats\WmaWaveFormat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\IWaveIn.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\WasapiCapture.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\WasapiLoopbackCapture.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\WaveIn.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveInputs\WaveInEvent.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\AiffFileWriter.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\AsioAudioAvailableEventArgs.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\AsioOut.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\BextChunkInfo.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\BwfWriter.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\CueWaveFileWriter.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\DirectSoundOut.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\IWaveBuffer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\IWavePlayer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\IWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\IWaveProviderFloat.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\MediaFoundationEncoder.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\PlaybackState.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\StoppedEventArgs.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WasapiOut.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WaveBuffer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WaveFileWriter.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WaveOut.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveOutputs\WaveOutEvent.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\BufferedWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\MediaFoundationResampler.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\MixingWaveProvider32.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\MonoToStereoProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\MultiplexingWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\SilenceWaveProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\StereoToMonoProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\VolumeWaveProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\Wave16toFloatProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveFloatTo16Provider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveInProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveProvider16.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveProvider32.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveProviders\WaveRecorder.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\AiffFileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\AudioFileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\BlockAlignReductionStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\ComStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\CueList.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\CueWaveFileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\ISampleNotifier.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\MediaFoundationReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\Mp3FileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\RawSourceWaveStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\ResamplerDmoStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\RiffChunk.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\SimpleCompressorStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\StreamMediaFoundationReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\Wave32To16Stream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveChannel32.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveFileReader.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveFormatConversionProvider.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveFormatConversionStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveInBuffer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveMixerStream32.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOffsetStream.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveOutBuffer.cs" />
+    <Compile Include="Core\NAudio\Wave\WaveStreams\WaveStream.cs" />
+    <Compile Include="Core\PdfiumViewer\CustomScrollControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\HitTest.cs" />
+    <Compile Include="Core\PdfiumViewer\IPdfDocument.cs" />
+    <Compile Include="Core\PdfiumViewer\IPdfMarker.cs" />
+    <Compile Include="Core\PdfiumViewer\LinkClickEventHandler.cs" />
+    <Compile Include="Core\PdfiumViewer\MouseWheelMode.cs" />
+    <Compile Include="Core\PdfiumViewer\NativeMethods.cs" />
+    <Compile Include="Core\PdfiumViewer\NativeMethods.Pdfium.cs" />
+    <Compile Include="Core\PdfiumViewer\NativeTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PanningZoomingScrollControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PdfBookmarkCollection.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfDocument.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfError.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfException.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfFile.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfInformation.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfiumResolveEventHandler.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfiumResolver.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfLibrary.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfMarker.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfMarkerCollection.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfMatch.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfMatches.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPageLink.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPageLinks.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPoint.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPrintDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PdfPrintMode.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPrintMultiplePages.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfPrintSettings.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfRectangle.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfRenderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\PdfiumViewer\PdfRenderFlags.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfRotation.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfSearchManager.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfTextSpan.cs" />
+    <Compile Include="Core\PdfiumViewer\PdfViewerZoomMode.cs" />
+    <Compile Include="Core\PdfiumViewer\ScrollAction.cs" />
+    <Compile Include="Core\PdfiumViewer\SetCursorEventHandler.cs" />
+    <Compile Include="Core\PdfiumViewer\ShadeBorder.cs" />
+    <Compile Include="Core\PdfiumViewer\StreamExtensions.cs" />
+    <Compile Include="Core\PdfiumViewer\StreamManager.cs" />
     <Compile Include="Core\Salar.Bois\BoisContractAttribute.cs" />
     <Compile Include="Core\Salar.Bois\BoisMemberAttribute.cs" />
     <Compile Include="Core\Salar.Bois\BoisMemberInfo.cs" />
@@ -137,6 +627,24 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Core\NAudio\Gui\Fader.resx">
+      <DependentUpon>Fader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Gui\PanSlider.resx">
+      <DependentUpon>PanSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Gui\Pot.resx">
+      <DependentUpon>Pot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Gui\VolumeSlider.resx">
+      <DependentUpon>VolumeSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Gui\WaveViewer.resx">
+      <DependentUpon>WaveViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\NAudio\Utils\ProgressLog.resx">
+      <DependentUpon>ProgressLog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DLL\DotNetZip.dll" />
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
@@ -161,6 +669,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Core\PdfiumViewer\pan.cur" />
+    <Content Include="Core\NAudio\Changes.xml" />
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
