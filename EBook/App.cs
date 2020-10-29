@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -6,6 +7,28 @@ using System.Windows.Forms;
 
 namespace EBook
 {
+    public class oSelection {
+        public int X { set; get; }
+        public int Y { set; get; }
+        public int Width { set; get; }
+        public int Height { set; get; }
+    }
+
+    public class oPage
+    {
+        public int Id { set; get; }
+        public string Indexing { set; get; }
+        public string Title { set; get; }
+        public List<oSelection> Selections { set; get; }
+
+        public oPage() {
+            Id = -1;
+            Indexing = string.Empty;
+            Title = string.Empty;
+            Selections = new List<oSelection>() { };
+        }
+    }
+
     static class App
     {
         static App()

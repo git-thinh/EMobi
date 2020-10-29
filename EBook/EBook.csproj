@@ -52,6 +52,84 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Core\Salar.Bois\BoisContractAttribute.cs" />
+    <Compile Include="Core\Salar.Bois\BoisMemberAttribute.cs" />
+    <Compile Include="Core\Salar.Bois\BoisMemberInfo.cs" />
+    <Compile Include="Core\Salar.Bois\BoisSerializer.cs" />
+    <Compile Include="Core\Salar.Bois\BoisTypeCache.cs" />
+    <Compile Include="Core\Salar.Bois\BoisTypeInfo.cs" />
+    <Compile Include="Core\Salar.Bois\EnBoisKnownType.cs" />
+    <Compile Include="Core\Salar.Bois\EnBoisMemberType.cs" />
+    <Compile Include="Core\Salar.Bois\PrimitivesConvertion.cs" />
+    <Compile Include="Core\Salar.Bois\ReflectionHelper.cs" />
+    <Compile Include="Core\System.Linq\DeepCopy.Assign.cs" />
+    <Compile Include="Core\System.Linq\IsNumber.cs" />
+    <Compile Include="Core\System.Linq\Lucene.Net.cs" />
+    <Compile Include="Core\System.Linq\ReaderWriterLockSlim.cs" />
+    <Compile Include="Core\System.Linq\System.Collections.Generic\HashSet.cs" />
+    <Compile Include="Core\System.Linq\System.Collections.Generic\ISet.cs" />
+    <Compile Include="Core\System.Linq\System.Data.Linq\MonoTODOAttribute.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Dynamic\System.Linq.Dynamic.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\BinaryExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ConditionalExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ConstantExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ElementInit.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\EmitContext.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\Expression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ExpressionPrinter.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ExpressionTransformer.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ExpressionType.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ExpressionVisitor.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\Expression_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\Extensions.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\InvocationExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\LambdaExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ListInitExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberAssignment.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberBinding.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberBindingType.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberInitExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberListBinding.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MemberMemberBinding.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\MethodCallExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\NewArrayExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\NewExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\ParameterExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\TypeBinaryExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Expressions\UnaryExpression.cs" />
+    <Compile Include="Core\System.Linq\System.Linq.Ext.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Check.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Enumerable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Grouping.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IGrouping.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\ILookup_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IOrderedEnumerable_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IOrderedQueryable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IOrderedQueryable_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IQueryable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IQueryable_T.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\IQueryProvider.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Lookup.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\OrderedEnumerable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\OrderedSequence.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\Queryable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\QueryableEnumerable.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\QueryableTransformer.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\QuickSort.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\SortContext.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\SortDirection.cs" />
+    <Compile Include="Core\System.Linq\System.Linq\SortSequenceContext.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\DynamicAttribute.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\ExecutionScope.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\ExtensionAttribute.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\IStrongBox.cs" />
+    <Compile Include="Core\System.Linq\System.Runtime.CompilerServices\StrongBox_T.cs" />
+    <Compile Include="Core\System.Linq\System\Action.cs" />
+    <Compile Include="Core\System.Linq\System\Func.cs" />
+    <Compile Include="Core\System.Linq\Tuple\IStructuralComparable.cs" />
+    <Compile Include="Core\System.Linq\Tuple\IStructuralEquatable.cs" />
+    <Compile Include="Core\System.Linq\Tuple\Tuple.cs" />
     <Compile Include="Core\UiSelectRectangle.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -84,6 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\System.Linq\_demo\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
