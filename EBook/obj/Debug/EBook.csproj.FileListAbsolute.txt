@@ -1,4 +1,3 @@
-C:\EMobi\EBook\obj\Debug\EBook.csprojAssemblyReference.cache
 C:\EMobi\EBook\obj\Debug\EBook.fMain.resources
 C:\EMobi\EBook\obj\Debug\EBook.Properties.Resources.resources
 C:\EMobi\EBook\obj\Debug\EBook.csproj.GenerateResource.cache
@@ -16,3 +15,7 @@ D:\EMobi\EBook\obj\Debug\EBook.exe
 D:\EMobi\EBook\obj\Debug\EBook.pdb
 D:\EMobi\EBook.exe
 D:\EMobi\EBook.pdb
+C:\EMobi\Binary\EBook.exe
+C:\EMobi\Binary\EBook.pdb
+C:\EMobi\EBook\obj\Debug\EBook.csproj.CopyComplete
+C:\EMobi\EBook\obj\Debug\EBook.csprojAssemblyReference.cache
