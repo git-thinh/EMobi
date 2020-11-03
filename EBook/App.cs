@@ -7,7 +7,8 @@ using System.Windows.Forms;
 
 namespace EBook
 {
-    public class oSelection {
+    public class oSelection
+    {
         public int X { set; get; }
         public int Y { set; get; }
         public int Width { set; get; }
@@ -21,7 +22,8 @@ namespace EBook
         public string Title { set; get; }
         public List<oSelection> Selections { set; get; }
 
-        public oPage() {
+        public oPage()
+        {
             Id = -1;
             Indexing = string.Empty;
             Title = string.Empty;
@@ -68,7 +70,23 @@ namespace EBook
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new fMain());
+            Application.Run(new fMedia());
+            //Application.Run(new fMain());
         }
+    }
+
+    public interface IMain
+    {
+        int PageNumber { get; set; }
+        string DocumentFile { get; set; }
+        string DocumentName { get; set; }
+
+        string PASSWORD { get; }
+        string FOLDER_DATA { get; }
+        string PATH_DATA { get; }
+
+        Dictionary<int, byte[]> m_pages { get;  }
+        Dictionary<int, byte[]> m_page_crops { get;  }
+        Dictionary<int, oPage> m_infos { get; set; }
     }
 }

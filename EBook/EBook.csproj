@@ -53,6 +53,53 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Combination.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Hook.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\HotKeys\HotKeyArgs.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\HotKeys\HotKeySet.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\HotKeys\HotKeySetCollection.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\HotKeys\HotKeySetsListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\IKeyboardEvents.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\IKeyboardMouseEvents.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\IMouseEvents.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\AppEventFacade.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\AppKeyListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\AppMouseListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\BaseListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\ButtonSet.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\Callback.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\Chord.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\EventFacade.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\GlobalEventFacade.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\GlobalKeyListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\GlobalMouseListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\KeyboardState.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\KeyListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\KeysExtensions.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\MouseListener.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Implementation\Subscribe.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\KeyCombinationExtensions.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\KeyEventArgsExt.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\KeyPressEventArgsExt.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\MouseEventExtArgs.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\Sequence.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\SequenceBase.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\AppMouseStruct.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\CallbackData.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookHelper.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookIds.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookNativeMethods.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookProcedure.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookProcedureHandle.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HookResult.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\HotkeysNativeMethods.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\KeyboardHookStruct.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\KeyboardNativeMethods.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\Messages.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\MouseNativeMethods.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\MouseStruct.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\Point.cs" />
+    <Compile Include="Core\Gma.System.MouseKeyHook\WinApi\ThreadNativeMethods.cs" />
     <Compile Include="Core\NAudio\CachedSound.cs" />
     <Compile Include="Core\NAudio\Codecs\ALawDecoder.cs" />
     <Compile Include="Core\NAudio\Codecs\ALawEncoder.cs" />
@@ -623,8 +670,17 @@
     <Compile Include="Core\UiSelectRectangle.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Core\UiTransparent.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="fMain.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fMedia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fMedia.Designer.cs">
+      <DependentUpon>fMedia.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Core\NAudio\Gui\Fader.resx">
@@ -649,6 +705,9 @@
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fMedia.resx">
+      <DependentUpon>fMedia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -657,6 +716,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -669,12 +729,33 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\play.png" />
     <EmbeddedResource Include="Core\PdfiumViewer\pan.cur" />
+    <Content Include="Core\Gma.System.MouseKeyHook\HotKeys\ReadMe.txt" />
     <Content Include="Core\NAudio\Changes.xml" />
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\System.Linq\_demo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

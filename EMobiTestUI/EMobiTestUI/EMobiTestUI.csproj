@@ -59,6 +59,12 @@
     <Compile Include="fDocNew.Designer.cs">
       <DependentUpon>fDocNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="fMedia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fMedia.Designer.cs">
+      <DependentUpon>fMedia.cs</DependentUpon>
+    </Compile>
     <Compile Include="fPageAttach.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1003,6 +1009,9 @@
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fMedia.resx">
+      <DependentUpon>fMedia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fPageAttach.resx">
       <DependentUpon>fPageAttach.cs</DependentUpon>
     </EmbeddedResource>
@@ -1040,7 +1049,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\NAudio\Changes.xml" />
+    <Content Include="DLL\AxInterop.WMPLib.dll" />
     <Content Include="DLL\DotNetZip.dll" />
+    <Content Include="DLL\Interop.WMPLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="icon.ico" />
     <EmbeddedResource Include="Core\PdfiumViewer\pan.cur" />
     <Content Include="DLL\CefSharp.dll" />
