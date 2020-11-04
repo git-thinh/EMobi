@@ -729,6 +729,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\backward.png" />
+    <Content Include="Images\bottom.png" />
+    <Content Include="Images\forward.png" />
+    <Content Include="Images\LanguageCreator.png" />
+    <Content Include="Images\pause.png" />
+    <Content Include="Images\play.png" />
     <None Include="Resources\play.png" />
     <EmbeddedResource Include="Core\PdfiumViewer\pan.cur" />
     <Content Include="Core\Gma.System.MouseKeyHook\HotKeys\ReadMe.txt" />

@@ -70,8 +70,8 @@ namespace EBook
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new fMedia());
-            //Application.Run(new fMain());
+            //Application.Run(new fMedia());
+            Application.Run(new fMain());
         }
     }
 
