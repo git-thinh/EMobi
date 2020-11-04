@@ -10,6 +10,7 @@ using Tesseract;
 using Salar.Bois;
 using PdfiumViewer;
 using Newtonsoft.Json;
+using System.Security.Cryptography.X509Certificates;
 
 namespace EBook
 {
@@ -28,7 +29,7 @@ namespace EBook
                 if (value)
                 {
                     _menuIsSelectionMode.Checked = true;
-                    _labelPage.BackColor = Color.Blue;
+                    _labelPage.BackColor = Color.OrangeRed;
                     _labelPage.ForeColor = Color.White;
                 }
                 else
@@ -96,9 +97,42 @@ namespace EBook
         private ToolStripSeparator toolStripSeparator6;
         private ToolStripMenuItem searchYoutubeOnlineToolStripMenuItem;
         private ToolStripMenuItem searchAdvancedToolStripMenuItem;
-        private ToolStripMenuItem _menuHide;
         private ToolStripSeparator toolStripSeparator7;
         private ToolStripMenuItem _menuIsSelectionMode;
+        private ToolStripMenuItem _menuAlwaysOnTop;
+        private ToolStripMenuItem _menuPageAttachFiles;
+        private Panel _panelPageExtend;
+        private ToolStripMenuItem _menuShowPageExtend;
+        private TabControl _tabPageExtend;
+        private TabPage _tabAttach;
+        private TabPage _tabMedia;
+        private ToolStrip _mediaPlayer;
+        private PictureBox pictureBox1;
+        private TextBox textBox1;
+        private ToolStripButton _mediaPrev;
+        private ToolStripButton _mediaNext;
+        private ToolStripButton _mediaPause;
+        private ToolStripButton _mediaPlay;
+        private ToolStripButton _mediaRecordOn;
+        private PictureBox _iconMenu;
+        private ToolStripButton _mediaRepeatAll;
+        private ToolStripButton _mediaRepeatOne;
+        private ToolStripButton _mediaRecordOff;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private TabPage tabPage3;
+        private Panel _panelMediaPlayer;
+        private Label label5;
+        private Label label4;
+        private Label label3;
+        private Label label2;
+        private Label label6;
+        private Label label7;
+        private ToolStripButton _pageUnLock;
+        private ToolStripButton _pageLock;
+        private ToolStripSeparator toolStripSeparator8;
+        private ToolStripSeparator toolStripSeparator9;
+        private TabPage tabPage4;
         private ToolStripMenuItem _menuMain;
 
         private void InitializeComponent()
@@ -106,24 +140,7 @@ namespace EBook
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fMain));
             this._menuStrip = new System.Windows.Forms.MenuStrip();
             this._menuMain = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuHide = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this._menuOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuMedia = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuSelectionAttachMedia = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuOpenMediaWindow = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuGoPage = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchInPageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchInDocumentToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchInAllDocumentToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.searchOnlyAudioToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchOnlyAudioWordToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchOnlyMovieToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.searchYoutubeOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchAdvancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._menuHr0 = new System.Windows.Forms.ToolStripSeparator();
             this._menuIsSelectionMode = new System.Windows.Forms.ToolStripMenuItem();
             this._menuSelection = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,15 +157,71 @@ namespace EBook
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this._menuAutoRun = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAutoRun_updateIndex = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuShowPageExtend = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuPageAttachFiles = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this._menuMedia = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuSelectionAttachMedia = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuOpenMediaWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuGoPage = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchInPageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchInDocumentToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchInAllDocumentToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.searchOnlyAudioToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchOnlyAudioWordToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchOnlyMovieToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.searchYoutubeOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchAdvancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this._menuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this._menuBackupDocument = new System.Windows.Forms.ToolStripMenuItem();
             this._menuSave = new System.Windows.Forms.ToolStripMenuItem();
             this._menuHr2 = new System.Windows.Forms.ToolStripSeparator();
             this._menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this._labelPage = new System.Windows.Forms.Label();
-            this._pictureBox = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this._panelPageExtend = new System.Windows.Forms.Panel();
+            this._tabPageExtend = new System.Windows.Forms.TabControl();
+            this._tabAttach = new System.Windows.Forms.TabPage();
+            this._tabMedia = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this._panelMediaPlayer = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this._iconMenu = new System.Windows.Forms.PictureBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this._mediaPlayer = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this._mediaNext = new System.Windows.Forms.ToolStripButton();
+            this._mediaPause = new System.Windows.Forms.ToolStripButton();
+            this._mediaPlay = new System.Windows.Forms.ToolStripButton();
+            this._mediaPrev = new System.Windows.Forms.ToolStripButton();
+            this._mediaRecordOff = new System.Windows.Forms.ToolStripButton();
+            this._mediaRecordOn = new System.Windows.Forms.ToolStripButton();
+            this._mediaRepeatAll = new System.Windows.Forms.ToolStripButton();
+            this._mediaRepeatOne = new System.Windows.Forms.ToolStripButton();
+            this._pageUnLock = new System.Windows.Forms.ToolStripButton();
+            this._pageLock = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.label4 = new System.Windows.Forms.Label();
+            this._pictureBox = new System.Windows.Forms.PictureBox();
             this._menuStrip.SuspendLayout();
+            this._panelPageExtend.SuspendLayout();
+            this._tabPageExtend.SuspendLayout();
+            this._panelMediaPlayer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._iconMenu)).BeginInit();
+            this._mediaPlayer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -159,27 +232,29 @@ namespace EBook
             this._menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this._menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuMain});
-            this._menuStrip.Location = new System.Drawing.Point(290, 212);
+            this._menuStrip.Location = new System.Drawing.Point(325, 20);
             this._menuStrip.Name = "_menuStrip";
             this._menuStrip.Padding = new System.Windows.Forms.Padding(0);
             this._menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this._menuStrip.Size = new System.Drawing.Size(150, 28);
+            this._menuStrip.Size = new System.Drawing.Size(28, 28);
             this._menuStrip.TabIndex = 0;
             // 
             // _menuMain
             // 
             this._menuMain.AutoSize = false;
             this._menuMain.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._menuHide,
-            this.toolStripSeparator7,
             this._menuOpen,
-            this._menuMedia,
-            this._menuGoPage,
-            this.searchToolStripMenuItem,
             this._menuHr0,
             this._menuIsSelectionMode,
             this._menuSelection,
+            this._menuShowPageExtend,
+            this._menuPageAttachFiles,
+            this.toolStripSeparator7,
+            this._menuMedia,
+            this._menuGoPage,
+            this.searchToolStripMenuItem,
             this.toolStripSeparator4,
+            this._menuAlwaysOnTop,
             this._menuBackupDocument,
             this._menuSave,
             this._menuHr2,
@@ -188,22 +263,11 @@ namespace EBook
             this._menuMain.ForeColor = System.Drawing.Color.Black;
             this._menuMain.Name = "_menuMain";
             this._menuMain.Padding = new System.Windows.Forms.Padding(0);
-            this._menuMain.Size = new System.Drawing.Size(28, 28);
+            this._menuMain.Size = new System.Drawing.Size(26, 28);
             this._menuMain.Text = "≡";
             this._menuMain.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this._menuMain.Click += new System.EventHandler(this._menuMain_Click);
-            // 
-            // _menuHide
-            // 
-            this._menuHide.Name = "_menuHide";
-            this._menuHide.Size = new System.Drawing.Size(199, 30);
-            this._menuHide.Text = "Hide Menu";
-            this._menuHide.Click += new System.EventHandler(this._menuHide_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(196, 6);
+            this._menuMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this._menuMain_MouseDown);
+            this._menuMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this._menuMain_MouseUp);
             // 
             // _menuOpen
             // 
@@ -213,113 +277,6 @@ namespace EBook
             this._menuOpen.Size = new System.Drawing.Size(199, 30);
             this._menuOpen.Text = "&Open";
             this._menuOpen.Click += new System.EventHandler(this._menuOpen_Click);
-            // 
-            // _menuMedia
-            // 
-            this._menuMedia.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._menuSelectionAttachMedia,
-            this._menuOpenMediaWindow});
-            this._menuMedia.Name = "_menuMedia";
-            this._menuMedia.Size = new System.Drawing.Size(199, 30);
-            this._menuMedia.Text = "Media";
-            // 
-            // _menuSelectionAttachMedia
-            // 
-            this._menuSelectionAttachMedia.Name = "_menuSelectionAttachMedia";
-            this._menuSelectionAttachMedia.Size = new System.Drawing.Size(252, 24);
-            this._menuSelectionAttachMedia.Text = "Selection To Attach Media";
-            this._menuSelectionAttachMedia.Click += new System.EventHandler(this._menuSelectionAttachMedia_Click);
-            // 
-            // _menuOpenMediaWindow
-            // 
-            this._menuOpenMediaWindow.Name = "_menuOpenMediaWindow";
-            this._menuOpenMediaWindow.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this._menuOpenMediaWindow.Size = new System.Drawing.Size(252, 24);
-            this._menuOpenMediaWindow.Text = "Open Media Window";
-            this._menuOpenMediaWindow.Click += new System.EventHandler(this._menuOpenMediaWindow_Click);
-            // 
-            // _menuGoPage
-            // 
-            this._menuGoPage.Name = "_menuGoPage";
-            this._menuGoPage.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this._menuGoPage.Size = new System.Drawing.Size(199, 30);
-            this._menuGoPage.Text = "&Go Page";
-            this._menuGoPage.Click += new System.EventHandler(this._menuGoPage_Click);
-            // 
-            // searchToolStripMenuItem
-            // 
-            this.searchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.searchInPageToolStripMenuItem1,
-            this.searchInDocumentToolStripMenuItem1,
-            this.searchInAllDocumentToolStripMenuItem1,
-            this.toolStripSeparator5,
-            this.searchOnlyAudioToolStripMenuItem1,
-            this.searchOnlyAudioWordToolStripMenuItem1,
-            this.searchOnlyMovieToolStripMenuItem1,
-            this.toolStripSeparator6,
-            this.searchYoutubeOnlineToolStripMenuItem,
-            this.searchAdvancedToolStripMenuItem});
-            this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(199, 30);
-            this.searchToolStripMenuItem.Text = "&Search";
-            // 
-            // searchInPageToolStripMenuItem1
-            // 
-            this.searchInPageToolStripMenuItem1.Name = "searchInPageToolStripMenuItem1";
-            this.searchInPageToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
-            this.searchInPageToolStripMenuItem1.Text = "Search In Page";
-            // 
-            // searchInDocumentToolStripMenuItem1
-            // 
-            this.searchInDocumentToolStripMenuItem1.Name = "searchInDocumentToolStripMenuItem1";
-            this.searchInDocumentToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
-            this.searchInDocumentToolStripMenuItem1.Text = "Search In Document";
-            // 
-            // searchInAllDocumentToolStripMenuItem1
-            // 
-            this.searchInAllDocumentToolStripMenuItem1.Name = "searchInAllDocumentToolStripMenuItem1";
-            this.searchInAllDocumentToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
-            this.searchInAllDocumentToolStripMenuItem1.Text = "Search In All Document";
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(237, 6);
-            // 
-            // searchOnlyAudioToolStripMenuItem1
-            // 
-            this.searchOnlyAudioToolStripMenuItem1.Name = "searchOnlyAudioToolStripMenuItem1";
-            this.searchOnlyAudioToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
-            this.searchOnlyAudioToolStripMenuItem1.Text = "Search Only Audio";
-            // 
-            // searchOnlyAudioWordToolStripMenuItem1
-            // 
-            this.searchOnlyAudioWordToolStripMenuItem1.Name = "searchOnlyAudioWordToolStripMenuItem1";
-            this.searchOnlyAudioWordToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
-            this.searchOnlyAudioWordToolStripMenuItem1.Text = "Search Only Audio Word";
-            // 
-            // searchOnlyMovieToolStripMenuItem1
-            // 
-            this.searchOnlyMovieToolStripMenuItem1.Name = "searchOnlyMovieToolStripMenuItem1";
-            this.searchOnlyMovieToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
-            this.searchOnlyMovieToolStripMenuItem1.Text = "Search Only Movie";
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(237, 6);
-            // 
-            // searchYoutubeOnlineToolStripMenuItem
-            // 
-            this.searchYoutubeOnlineToolStripMenuItem.Name = "searchYoutubeOnlineToolStripMenuItem";
-            this.searchYoutubeOnlineToolStripMenuItem.Size = new System.Drawing.Size(240, 24);
-            this.searchYoutubeOnlineToolStripMenuItem.Text = "Search Youtube Online";
-            // 
-            // searchAdvancedToolStripMenuItem
-            // 
-            this.searchAdvancedToolStripMenuItem.Name = "searchAdvancedToolStripMenuItem";
-            this.searchAdvancedToolStripMenuItem.Size = new System.Drawing.Size(240, 24);
-            this.searchAdvancedToolStripMenuItem.Text = "Search Advanced";
             // 
             // _menuHr0
             // 
@@ -442,10 +399,143 @@ namespace EBook
             this.menuAutoRun_updateIndex.Text = "Update Index ";
             this.menuAutoRun_updateIndex.Click += new System.EventHandler(this.menuAutoRun_updateIndex_Click);
             // 
+            // _menuShowPageExtend
+            // 
+            this._menuShowPageExtend.Name = "_menuShowPageExtend";
+            this._menuShowPageExtend.Size = new System.Drawing.Size(199, 30);
+            this._menuShowPageExtend.Text = "Show Page Extend";
+            this._menuShowPageExtend.Click += new System.EventHandler(this._menuShowPageExtend_Click);
+            // 
+            // _menuPageAttachFiles
+            // 
+            this._menuPageAttachFiles.Name = "_menuPageAttachFiles";
+            this._menuPageAttachFiles.Size = new System.Drawing.Size(199, 30);
+            this._menuPageAttachFiles.Text = "Attach to Page";
+            this._menuPageAttachFiles.Click += new System.EventHandler(this._menuPageAttachFiles_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(196, 6);
+            // 
+            // _menuMedia
+            // 
+            this._menuMedia.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuSelectionAttachMedia,
+            this._menuOpenMediaWindow});
+            this._menuMedia.Name = "_menuMedia";
+            this._menuMedia.Size = new System.Drawing.Size(199, 30);
+            this._menuMedia.Text = "Media";
+            // 
+            // _menuSelectionAttachMedia
+            // 
+            this._menuSelectionAttachMedia.Name = "_menuSelectionAttachMedia";
+            this._menuSelectionAttachMedia.Size = new System.Drawing.Size(252, 24);
+            this._menuSelectionAttachMedia.Text = "Selection To Attach Media";
+            this._menuSelectionAttachMedia.Click += new System.EventHandler(this._menuSelectionAttachMedia_Click);
+            // 
+            // _menuOpenMediaWindow
+            // 
+            this._menuOpenMediaWindow.Name = "_menuOpenMediaWindow";
+            this._menuOpenMediaWindow.ShortcutKeys = System.Windows.Forms.Keys.F12;
+            this._menuOpenMediaWindow.Size = new System.Drawing.Size(252, 24);
+            this._menuOpenMediaWindow.Text = "Open Media Window";
+            this._menuOpenMediaWindow.Click += new System.EventHandler(this._menuOpenMediaWindow_Click);
+            // 
+            // _menuGoPage
+            // 
+            this._menuGoPage.Name = "_menuGoPage";
+            this._menuGoPage.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this._menuGoPage.Size = new System.Drawing.Size(199, 30);
+            this._menuGoPage.Text = "&Go Page";
+            this._menuGoPage.Click += new System.EventHandler(this._menuGoPage_Click);
+            // 
+            // searchToolStripMenuItem
+            // 
+            this.searchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.searchInPageToolStripMenuItem1,
+            this.searchInDocumentToolStripMenuItem1,
+            this.searchInAllDocumentToolStripMenuItem1,
+            this.toolStripSeparator5,
+            this.searchOnlyAudioToolStripMenuItem1,
+            this.searchOnlyAudioWordToolStripMenuItem1,
+            this.searchOnlyMovieToolStripMenuItem1,
+            this.toolStripSeparator6,
+            this.searchYoutubeOnlineToolStripMenuItem,
+            this.searchAdvancedToolStripMenuItem});
+            this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(199, 30);
+            this.searchToolStripMenuItem.Text = "&Search";
+            // 
+            // searchInPageToolStripMenuItem1
+            // 
+            this.searchInPageToolStripMenuItem1.Name = "searchInPageToolStripMenuItem1";
+            this.searchInPageToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
+            this.searchInPageToolStripMenuItem1.Text = "Search In Page";
+            // 
+            // searchInDocumentToolStripMenuItem1
+            // 
+            this.searchInDocumentToolStripMenuItem1.Name = "searchInDocumentToolStripMenuItem1";
+            this.searchInDocumentToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
+            this.searchInDocumentToolStripMenuItem1.Text = "Search In Document";
+            // 
+            // searchInAllDocumentToolStripMenuItem1
+            // 
+            this.searchInAllDocumentToolStripMenuItem1.Name = "searchInAllDocumentToolStripMenuItem1";
+            this.searchInAllDocumentToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
+            this.searchInAllDocumentToolStripMenuItem1.Text = "Search In All Document";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(237, 6);
+            // 
+            // searchOnlyAudioToolStripMenuItem1
+            // 
+            this.searchOnlyAudioToolStripMenuItem1.Name = "searchOnlyAudioToolStripMenuItem1";
+            this.searchOnlyAudioToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
+            this.searchOnlyAudioToolStripMenuItem1.Text = "Search Only Audio";
+            // 
+            // searchOnlyAudioWordToolStripMenuItem1
+            // 
+            this.searchOnlyAudioWordToolStripMenuItem1.Name = "searchOnlyAudioWordToolStripMenuItem1";
+            this.searchOnlyAudioWordToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
+            this.searchOnlyAudioWordToolStripMenuItem1.Text = "Search Only Audio Word";
+            // 
+            // searchOnlyMovieToolStripMenuItem1
+            // 
+            this.searchOnlyMovieToolStripMenuItem1.Name = "searchOnlyMovieToolStripMenuItem1";
+            this.searchOnlyMovieToolStripMenuItem1.Size = new System.Drawing.Size(240, 24);
+            this.searchOnlyMovieToolStripMenuItem1.Text = "Search Only Movie";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(237, 6);
+            // 
+            // searchYoutubeOnlineToolStripMenuItem
+            // 
+            this.searchYoutubeOnlineToolStripMenuItem.Name = "searchYoutubeOnlineToolStripMenuItem";
+            this.searchYoutubeOnlineToolStripMenuItem.Size = new System.Drawing.Size(240, 24);
+            this.searchYoutubeOnlineToolStripMenuItem.Text = "Search Youtube Online";
+            // 
+            // searchAdvancedToolStripMenuItem
+            // 
+            this.searchAdvancedToolStripMenuItem.Name = "searchAdvancedToolStripMenuItem";
+            this.searchAdvancedToolStripMenuItem.Size = new System.Drawing.Size(240, 24);
+            this.searchAdvancedToolStripMenuItem.Text = "Search Advanced";
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(196, 6);
+            // 
+            // _menuAlwaysOnTop
+            // 
+            this._menuAlwaysOnTop.Name = "_menuAlwaysOnTop";
+            this._menuAlwaysOnTop.Size = new System.Drawing.Size(199, 30);
+            this._menuAlwaysOnTop.Text = "Always On Top";
+            this._menuAlwaysOnTop.Click += new System.EventHandler(this._menuAlwaysOnTop_Click);
             // 
             // _menuBackupDocument
             // 
@@ -477,29 +567,16 @@ namespace EBook
             // 
             // _labelPage
             // 
-            this._labelPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._labelPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._labelPage.BackColor = System.Drawing.Color.Transparent;
             this._labelPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._labelPage.ForeColor = System.Drawing.Color.Silver;
-            this._labelPage.Location = new System.Drawing.Point(462, 283);
+            this._labelPage.Location = new System.Drawing.Point(0, 549);
             this._labelPage.Name = "_labelPage";
             this._labelPage.Size = new System.Drawing.Size(35, 14);
             this._labelPage.TabIndex = 3;
             this._labelPage.Text = "0";
             this._labelPage.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // _pictureBox
-            // 
-            this._pictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this._pictureBox.BackColor = System.Drawing.Color.White;
-            this._pictureBox.Location = new System.Drawing.Point(-1, -234);
-            this._pictureBox.Name = "_pictureBox";
-            this._pictureBox.Size = new System.Drawing.Size(190, 422);
-            this._pictureBox.TabIndex = 4;
-            this._pictureBox.TabStop = false;
-            this._pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseDown);
-            this._pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseMove);
-            this._pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseUp);
             // 
             // label1
             // 
@@ -508,19 +585,399 @@ namespace EBook
             this.label1.BackColor = System.Drawing.Color.DodgerBlue;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(157, 126);
+            this.label1.Location = new System.Drawing.Point(212, 193);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(175, 46);
+            this.label1.Size = new System.Drawing.Size(189, 46);
             this.label1.TabIndex = 6;
             this.label1.Text = "LOADING .....";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // _panelPageExtend
+            // 
+            this._panelPageExtend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._panelPageExtend.BackColor = System.Drawing.Color.White;
+            this._panelPageExtend.Controls.Add(this._tabPageExtend);
+            this._panelPageExtend.Controls.Add(this._panelMediaPlayer);
+            this._panelPageExtend.Location = new System.Drawing.Point(428, -1);
+            this._panelPageExtend.Margin = new System.Windows.Forms.Padding(0);
+            this._panelPageExtend.Name = "_panelPageExtend";
+            this._panelPageExtend.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this._panelPageExtend.Size = new System.Drawing.Size(269, 564);
+            this._panelPageExtend.TabIndex = 7;
+            // 
+            // _tabPageExtend
+            // 
+            this._tabPageExtend.Controls.Add(this._tabAttach);
+            this._tabPageExtend.Controls.Add(this._tabMedia);
+            this._tabPageExtend.Controls.Add(this.tabPage1);
+            this._tabPageExtend.Controls.Add(this.tabPage2);
+            this._tabPageExtend.Controls.Add(this.tabPage3);
+            this._tabPageExtend.Controls.Add(this.tabPage4);
+            this._tabPageExtend.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._tabPageExtend.Location = new System.Drawing.Point(0, 143);
+            this._tabPageExtend.Margin = new System.Windows.Forms.Padding(0);
+            this._tabPageExtend.Multiline = true;
+            this._tabPageExtend.Name = "_tabPageExtend";
+            this._tabPageExtend.Padding = new System.Drawing.Point(0, 0);
+            this._tabPageExtend.SelectedIndex = 0;
+            this._tabPageExtend.Size = new System.Drawing.Size(269, 421);
+            this._tabPageExtend.TabIndex = 0;
+            // 
+            // _tabAttach
+            // 
+            this._tabAttach.BackColor = System.Drawing.Color.White;
+            this._tabAttach.Location = new System.Drawing.Point(4, 22);
+            this._tabAttach.Margin = new System.Windows.Forms.Padding(0);
+            this._tabAttach.Name = "_tabAttach";
+            this._tabAttach.Size = new System.Drawing.Size(261, 395);
+            this._tabAttach.TabIndex = 0;
+            this._tabAttach.Text = "Attach";
+            // 
+            // _tabMedia
+            // 
+            this._tabMedia.BackColor = System.Drawing.Color.White;
+            this._tabMedia.Location = new System.Drawing.Point(4, 22);
+            this._tabMedia.Name = "_tabMedia";
+            this._tabMedia.Padding = new System.Windows.Forms.Padding(3);
+            this._tabMedia.Size = new System.Drawing.Size(261, 395);
+            this._tabMedia.TabIndex = 1;
+            this._tabMedia.Text = "Media";
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(261, 395);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "List";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(261, 395);
+            this.tabPage2.TabIndex = 3;
+            this.tabPage2.Text = "Note";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(261, 395);
+            this.tabPage3.TabIndex = 4;
+            this.tabPage3.Text = "Record";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(261, 395);
+            this.tabPage4.TabIndex = 5;
+            this.tabPage4.Text = "Task";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // _panelMediaPlayer
+            // 
+            this._panelMediaPlayer.Controls.Add(this.pictureBox1);
+            this._panelMediaPlayer.Controls.Add(this._iconMenu);
+            this._panelMediaPlayer.Controls.Add(this.textBox1);
+            this._panelMediaPlayer.Controls.Add(this.label7);
+            this._panelMediaPlayer.Controls.Add(this.label6);
+            this._panelMediaPlayer.Controls.Add(this.label2);
+            this._panelMediaPlayer.Controls.Add(this.label3);
+            this._panelMediaPlayer.Controls.Add(this.label5);
+            this._panelMediaPlayer.Controls.Add(this._mediaPlayer);
+            this._panelMediaPlayer.Controls.Add(this.label4);
+            this._panelMediaPlayer.Dock = System.Windows.Forms.DockStyle.Top;
+            this._panelMediaPlayer.Location = new System.Drawing.Point(0, 3);
+            this._panelMediaPlayer.Name = "_panelMediaPlayer";
+            this._panelMediaPlayer.Size = new System.Drawing.Size(269, 140);
+            this._panelMediaPlayer.TabIndex = 1;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::EBook.Properties.Resources.search_small;
+            this.pictureBox1.Location = new System.Drawing.Point(190, 108);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(18, 18);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
+            // _iconMenu
+            // 
+            this._iconMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._iconMenu.BackColor = System.Drawing.Color.White;
+            this._iconMenu.Image = global::EBook.Properties.Resources.app_small;
+            this._iconMenu.Location = new System.Drawing.Point(240, -3);
+            this._iconMenu.Name = "_iconMenu";
+            this._iconMenu.Size = new System.Drawing.Size(32, 43);
+            this._iconMenu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this._iconMenu.TabIndex = 3;
+            this._iconMenu.TabStop = false;
+            this._iconMenu.Click += new System.EventHandler(this._iconMenu_Click);
+            this._iconMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this._iconMenu_MouseDown);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox1.Location = new System.Drawing.Point(50, 107);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(160, 20);
+            this.textBox1.TabIndex = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.OrangeRed;
+            this.label7.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Linen;
+            this.label7.Location = new System.Drawing.Point(125, 47);
+            this.label7.Name = "label7";
+            this.label7.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.label7.Size = new System.Drawing.Size(35, 17);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "00:15";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.OrangeRed;
+            this.label6.Location = new System.Drawing.Point(43, 54);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(82, 5);
+            this.label6.TabIndex = 10;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.BackColor = System.Drawing.Color.DodgerBlue;
+            this.label2.Location = new System.Drawing.Point(43, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(188, 5);
+            this.label2.TabIndex = 9;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(5, 73);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(257, 23);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "How are you today?";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(235, 50);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "00:00";
+            // 
+            // _mediaPlayer
+            // 
+            this._mediaPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._mediaPlayer.AutoSize = false;
+            this._mediaPlayer.BackColor = System.Drawing.Color.Transparent;
+            this._mediaPlayer.Dock = System.Windows.Forms.DockStyle.None;
+            this._mediaPlayer.GripMargin = new System.Windows.Forms.Padding(5, 2, 2, 2);
+            this._mediaPlayer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this._mediaPlayer.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this._mediaPlayer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator8,
+            this._mediaNext,
+            this._mediaPause,
+            this._mediaPlay,
+            this._mediaPrev,
+            this._mediaRecordOff,
+            this._mediaRecordOn,
+            this._mediaRepeatAll,
+            this._mediaRepeatOne,
+            this._pageUnLock,
+            this._pageLock,
+            this.toolStripSeparator9});
+            this._mediaPlayer.Location = new System.Drawing.Point(-65, -1);
+            this._mediaPlayer.Name = "_mediaPlayer";
+            this._mediaPlayer.Size = new System.Drawing.Size(313, 43);
+            this._mediaPlayer.TabIndex = 4;
+            this._mediaPlayer.Text = "toolStrip1";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 43);
+            // 
+            // _mediaNext
+            // 
+            this._mediaNext.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._mediaNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._mediaNext.Image = global::EBook.Properties.Resources.next_small;
+            this._mediaNext.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._mediaNext.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._mediaNext.Name = "_mediaNext";
+            this._mediaNext.Size = new System.Drawing.Size(23, 40);
+            this._mediaNext.Text = "toolStripButton3";
+            this._mediaNext.Click += new System.EventHandler(this._mediaNext_Click);
+            // 
+            // _mediaPause
+            // 
+            this._mediaPause.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._mediaPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._mediaPause.Image = global::EBook.Properties.Resources.pause_;
+            this._mediaPause.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._mediaPause.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this._mediaPause.Name = "_mediaPause";
+            this._mediaPause.Size = new System.Drawing.Size(40, 40);
+            this._mediaPause.Text = "toolStripButton2";
+            this._mediaPause.Click += new System.EventHandler(this._mediaPause_Click);
+            // 
+            // _mediaPlay
+            // 
+            this._mediaPlay.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._mediaPlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._mediaPlay.Image = global::EBook.Properties.Resources.play_arrow;
+            this._mediaPlay.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._mediaPlay.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._mediaPlay.Name = "_mediaPlay";
+            this._mediaPlay.Size = new System.Drawing.Size(40, 40);
+            this._mediaPlay.Text = "toolStripButton4";
+            this._mediaPlay.Click += new System.EventHandler(this._mediaPlay_Click);
+            // 
+            // _mediaPrev
+            // 
+            this._mediaPrev.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._mediaPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._mediaPrev.Image = global::EBook.Properties.Resources.prev_small;
+            this._mediaPrev.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._mediaPrev.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this._mediaPrev.Name = "_mediaPrev";
+            this._mediaPrev.Size = new System.Drawing.Size(23, 40);
+            this._mediaPrev.Text = "toolStripButton1";
+            this._mediaPrev.Click += new System.EventHandler(this._mediaPrev_Click);
+            // 
+            // _mediaRecordOff
+            // 
+            this._mediaRecordOff.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._mediaRecordOff.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._mediaRecordOff.Image = global::EBook.Properties.Resources.record_off_small;
+            this._mediaRecordOff.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._mediaRecordOff.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._mediaRecordOff.Name = "_mediaRecordOff";
+            this._mediaRecordOff.Size = new System.Drawing.Size(23, 40);
+            this._mediaRecordOff.Text = "toolStripButton1";
+            this._mediaRecordOff.Click += new System.EventHandler(this._mediaRecordOff_Click);
+            // 
+            // _mediaRecordOn
+            // 
+            this._mediaRecordOn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._mediaRecordOn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._mediaRecordOn.Image = global::EBook.Properties.Resources.record_on_small;
+            this._mediaRecordOn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._mediaRecordOn.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this._mediaRecordOn.Name = "_mediaRecordOn";
+            this._mediaRecordOn.Size = new System.Drawing.Size(23, 40);
+            this._mediaRecordOn.Text = "toolStripButton5";
+            this._mediaRecordOn.Click += new System.EventHandler(this._mediaRecordOn_Click);
+            // 
+            // _mediaRepeatAll
+            // 
+            this._mediaRepeatAll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._mediaRepeatAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._mediaRepeatAll.Image = global::EBook.Properties.Resources.repeat_all_small;
+            this._mediaRepeatAll.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._mediaRepeatAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._mediaRepeatAll.Name = "_mediaRepeatAll";
+            this._mediaRepeatAll.Size = new System.Drawing.Size(23, 40);
+            this._mediaRepeatAll.Text = "toolStripButton4";
+            this._mediaRepeatAll.Click += new System.EventHandler(this._mediaRepeatAll_Click);
+            // 
+            // _mediaRepeatOne
+            // 
+            this._mediaRepeatOne.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._mediaRepeatOne.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._mediaRepeatOne.Image = global::EBook.Properties.Resources.repeat_one_small;
+            this._mediaRepeatOne.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._mediaRepeatOne.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._mediaRepeatOne.Name = "_mediaRepeatOne";
+            this._mediaRepeatOne.Size = new System.Drawing.Size(23, 40);
+            this._mediaRepeatOne.Text = "toolStripButton5";
+            this._mediaRepeatOne.Click += new System.EventHandler(this._mediaRepeatOne_Click);
+            // 
+            // _pageUnLock
+            // 
+            this._pageUnLock.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._pageUnLock.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._pageUnLock.Image = global::EBook.Properties.Resources.unlock_small;
+            this._pageUnLock.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._pageUnLock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._pageUnLock.Name = "_pageUnLock";
+            this._pageUnLock.Size = new System.Drawing.Size(23, 40);
+            this._pageUnLock.Text = "toolStripButton1";
+            this._pageUnLock.Click += new System.EventHandler(this._pageUnLock_Click);
+            // 
+            // _pageLock
+            // 
+            this._pageLock.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._pageLock.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._pageLock.Image = global::EBook.Properties.Resources.lock_small;
+            this._pageLock.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._pageLock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._pageLock.Name = "_pageLock";
+            this._pageLock.Size = new System.Drawing.Size(23, 40);
+            this._pageLock.Text = "toolStripButton2";
+            this._pageLock.Click += new System.EventHandler(this._pageLock_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 43);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(4, 51);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(34, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "00:00";
+            // 
+            // _pictureBox
+            // 
+            this._pictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._pictureBox.BackColor = System.Drawing.Color.White;
+            this._pictureBox.Location = new System.Drawing.Point(-1, 0);
+            this._pictureBox.Name = "_pictureBox";
+            this._pictureBox.Size = new System.Drawing.Size(190, 180);
+            this._pictureBox.TabIndex = 4;
+            this._pictureBox.TabStop = false;
+            this._pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseDown);
+            this._pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseMove);
+            this._pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseUp);
+            // 
             // fMain
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(497, 297);
-            this.Controls.Add(this._menuStrip);
+            this.ClientSize = new System.Drawing.Size(696, 563);
             this.Controls.Add(this._labelPage);
+            this.Controls.Add(this._panelPageExtend);
+            this.Controls.Add(this._menuStrip);
             this.Controls.Add(this._pictureBox);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -532,6 +989,14 @@ namespace EBook
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fMain_MouseClick);
             this._menuStrip.ResumeLayout(false);
             this._menuStrip.PerformLayout();
+            this._panelPageExtend.ResumeLayout(false);
+            this._tabPageExtend.ResumeLayout(false);
+            this._panelMediaPlayer.ResumeLayout(false);
+            this._panelMediaPlayer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._iconMenu)).EndInit();
+            this._mediaPlayer.ResumeLayout(false);
+            this._mediaPlayer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -567,6 +1032,7 @@ namespace EBook
 
         private void fMain_MouseClick(object sender, MouseEventArgs e)
         {
+            menuHide();
             app_click(e);
         }
 
@@ -607,6 +1073,7 @@ namespace EBook
 
         private void _pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
+            menuHide();
             if (IS_SELECTION)
             {
                 x = e.X;
@@ -650,9 +1117,9 @@ namespace EBook
                 int w = Math.Abs(x - x1),
                     h = Math.Abs(y - y1);
                 Rectangle rec = new Rectangle(x, y, w, h);
-                if (w > 99 && h > 32)
+                var sel = (UiSelectRectangle)_pictureBox.Tag;
+                if (w > 18 && h > 9)
                 {
-                    var sel = (UiSelectRectangle)_pictureBox.Tag;
                     sel.Tag = rec;
                     sel.Width = w;
                     sel.Height = h;
@@ -660,12 +1127,17 @@ namespace EBook
                     m_selections.Add(sel);
                     IS_SELECTING = true;
                 }
-
+                else
+                {
+                    _pictureBox.Controls.Remove(sel);
+                    _pictureBox.Tag = null;
+                    if (w > 3 || h > 3) IS_SELECTING = true;
+                }
                 x = 0;
                 y = 0;
             }
 
-            if (IS_SELECTING == false) 
+            if (IS_SELECTING == false)
                 app_click(e);
         }
 
@@ -688,7 +1160,33 @@ namespace EBook
 
         #endregion
 
-        #region [ MENU ]
+        #region [ MENU | BUTTON ]
+
+        private void _buttonClosePageExtend_Click(object sender, EventArgs e)
+        {
+            pageExtendHide();
+        }
+
+        private void _menuAlwaysOnTop_Click(object sender, EventArgs e)
+        {
+            menuHide();
+            if (_menuAlwaysOnTop.Checked)
+            {
+                _menuAlwaysOnTop.Checked = false;
+                this.TopMost = false;
+            }
+            else
+            {
+                _menuAlwaysOnTop.Checked = true;
+                this.TopMost = true;
+            }
+        }
+
+        private void _menuPageAttachFiles_Click(object sender, EventArgs e)
+        {
+            menuHide();
+            attachFilesToPage();
+        }
 
         private void _menuSelectionAttachMedia_Click(object sender, EventArgs e)
         {
@@ -712,20 +1210,17 @@ namespace EBook
             new fMedia(this).ShowDialog();
         }
 
-        private void _menuHide_Click(object sender, EventArgs e)
-        {
-            menuHide();
-        }
-
         private void _menuGoPage_Click(object sender, EventArgs e)
         {
             menuHide();
 
-            if (!string.IsNullOrEmpty(this.DocumentFile)) {
+            if (!string.IsNullOrEmpty(this.DocumentFile))
+            {
                 string input = Microsoft.VisualBasic.Interaction.InputBox("Go to page", "Input number page you want to go?", string.Empty);
                 int page = 0;
                 int.TryParse(input, out page);
-                if (page > 0) {
+                if (page > 0)
+                {
                     pageOpen(page);
                 }
             }
@@ -752,8 +1247,8 @@ namespace EBook
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = PATH_DATA;
-                openFileDialog.Filter = "PDF Files (*.pdf)|*.pdf|EBook Files (*.ebk)|*.ebk";
-                openFileDialog.FilterIndex = 2;
+                openFileDialog.Filter = "EBook Files (*.ebk)|*.ebk|PDF Files (*.pdf)|*.pdf";
+                //openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -871,7 +1366,11 @@ namespace EBook
                 IS_SELECTION = true;
         }
 
-        private void _menuMain_Click(object sender, EventArgs e)
+        private void _menuMain_MouseDown(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void _menuMain_MouseUp(object sender, MouseEventArgs e)
         {
             menuHide();
         }
@@ -880,8 +1379,17 @@ namespace EBook
 
         #region [ FUNCTIONS ]
 
-        void app_Load() {
+        void app_Load()
+        {
             menuHide();
+
+            _panelPageExtend.Visible = false;
+            _mediaPause.Visible = false;
+            _mediaRepeatOne.Visible = false;
+            _mediaRecordOn.Visible = false;
+            _pageLock.Visible = false;
+
+            _panelPageExtend.Visible = true;
 
             this.Width = 0;
             this.KeyPreview = true;
@@ -914,7 +1422,8 @@ namespace EBook
         }
 
         private bool IS_CROP_ENTERING = false;
-        void app_keyPress(KeyEventArgs ev) {
+        void app_keyPress(KeyEventArgs ev)
+        {
 
             switch (ev.KeyData)
             {
@@ -971,7 +1480,7 @@ namespace EBook
                     pageOpen(m_pages.Count - 1);
                     break;
                 case Keys.Escape:
-                    if(_menuStrip.Visible)
+                    if (_menuStrip.Visible)
                     {
                         menuHide();
                     }
@@ -983,30 +1492,41 @@ namespace EBook
             }
         }
 
-        void app_click(MouseEventArgs ev) {
+        void app_click(MouseEventArgs ev)
+        {
             MouseEventArgs e = (MouseEventArgs)ev;
             if (e.Button == MouseButtons.Right)
             {
-                _menuStrip.Location = new Point(e.X, e.Y);
-                _menuStrip.Visible = true;
-                _menuMain.ShowDropDown();
+                menuShow(e.X - 9, e.Y - 9);
             }
             else if (e.Button == MouseButtons.Left)
             {
-                int x = (this.Location.X + this.Width) / 2, 
+                int x = (this.Location.X + this.Width) / 2,
                     page = 0;
 
                 if (e.X > x)
                     page = PageNumber + 1;
                 else
                     page = PageNumber - 1;
-                    
+                
                 pageOpen(page);
             }
         }
 
-        void menuHide() {
-            _menuStrip.Visible = false;
+        void menuShow(int x, int y)
+        {
+            _menuStrip.Location = new Point(x, y);
+            _menuStrip.Visible = true;
+            _menuMain.ShowDropDown();
+        }
+
+        void menuHide()
+        {
+            if (_menuStrip.Visible)
+            {
+                _menuMain.HideDropDown();
+                _menuStrip.Visible = false;
+            }
         }
 
         void extractSelectionText()
@@ -1216,8 +1736,12 @@ namespace EBook
 
                 string spage = (page + 1).ToString();
                 _labelPage.Text = spage;
+                _labelPage.Left = _pictureBox.Width - 28;
 
                 this.Text = string.Format("{0}.{1}", spage, DocumentName);
+
+                //pageExtendHide();
+                if (_panelPageExtend.Visible) pageExtendShow();
             }
         }
 
@@ -1442,6 +1966,7 @@ namespace EBook
             //_buttonSave.Enabled = false;
         }
 
+
         void updateDocument()
         {
             if (m_page_crops.Count > 0)
@@ -1458,6 +1983,162 @@ namespace EBook
 
                 m_page_crops.Clear();
             }
+        }
+
+        void attachFilesToPage()
+        {
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                //openFileDialog.InitialDirectory = PATH_DATA;
+                openFileDialog.Filter = "MP3 Files (*.mp3)|*.mp3|Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                //openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.Multiselect = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var files = openFileDialog.FileNames;
+                    if (files.Length > 0)
+                    {
+
+                    }
+                }
+            }
+        }
+
+        private void _menuShowPageExtend_Click(object sender, EventArgs e)
+        {
+            menuHide();
+
+            if (_menuShowPageExtend.Checked)
+            {
+                pageExtendHide();
+            }
+            else
+            {
+                pageExtendShow();
+            }
+        }
+
+        private void _iconMenu_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_menuStrip.Visible) menuHide();
+            else
+            {
+                int x = this.Width - 24;
+                menuShow(x, 1);
+            }
+        }
+
+        private void _mediaPrev_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _mediaPause_Click(object sender, EventArgs e)
+        {
+            mediaPlayOrPause(0);
+        }
+
+        private void _mediaPlay_Click(object sender, EventArgs e)
+        {
+            mediaPlayOrPause(1);
+        }
+
+        private void _mediaNext_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _mediaRecord_Click(object sender, EventArgs e)
+        {
+
+        }
+         
+        private void _mediaRepeatOne_Click(object sender, EventArgs e)
+        {
+            mediaRepeatAllOrOne(0);
+        }
+
+        void mediaPlayOrPause(int type)
+        {
+            // Play click
+            if (type == 1)
+            {
+                _mediaPlay.Visible = false;
+                _mediaPause.Visible = true;
+            }
+            else
+            {
+                // Pause click
+                _mediaPlay.Visible = true;
+                _mediaPause.Visible = false;
+
+            }
+        }
+        void mediaRepeatAllOrOne(int type)
+        {
+
+            // All click
+            if (type == 1)
+            {
+                _mediaRepeatOne.Visible = true;
+                _mediaRepeatAll.Visible = false;
+            }
+            else
+            {
+                // One click
+                _mediaRepeatOne.Visible = false;
+                _mediaRepeatAll.Visible = true;
+            }
+        }
+
+        private void _mediaRepeatAll_Click(object sender, EventArgs e)
+        {
+            mediaRepeatAllOrOne(1);
+        }
+
+        private void _mediaRecordOn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _pageLock_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _pageUnLock_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _mediaRecordOff_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _iconMenu_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        void pageExtendShow()
+        {
+            _menuShowPageExtend.Checked = true;
+            int w = this.Width;
+            this.Width = w + _panelPageExtend.Width;
+            _pictureBox.Location = new Point(0, 0);
+            _panelPageExtend.Visible = true;
+        }
+
+        void pageExtendHide()
+        {
+            _menuShowPageExtend.Checked = false;
+            _panelPageExtend.Visible = false;
+            this.Width = _pictureBox.Width;
+            _pictureBox.Location = new Point(0, 0);
         }
 
         void closing()

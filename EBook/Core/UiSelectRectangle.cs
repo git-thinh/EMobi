@@ -36,13 +36,14 @@ namespace System
 
             _labelIndex = new Label()
             {
+                Visible = false,
                 Text = index.ToString(),
                 BackColor = BORDER_COLOR,
                 AutoSize = true,
                 Dock = DockStyle.None,
                 Location = new Point(0, 0),
                 ForeColor = Color.White,
-                Font = new Font("Arial", 15f, FontStyle.Bold)
+                Font = new Font("Arial", 11f, FontStyle.Bold)
             };
 
             this.Controls.AddRange(new Control[]{

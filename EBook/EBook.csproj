@@ -735,13 +735,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Images\unlock_small.png" />
+    <None Include="Images\lock_small.png" />
+    <None Include="Images\repeat_one_small.png" />
+    <None Include="Images\repeat_all_small.png" />
+    <None Include="Images\prev_small.png" />
+    <None Include="Images\next_small.png" />
+    <None Include="Images\record_on_small.png" />
+    <None Include="Images\record_off_small.png" />
+    <None Include="Images\record_on.png" />
+    <None Include="Images\record_off.png" />
+    <None Include="Images\setting_small.png" />
+    <None Include="Images\setting.png" />
+    <None Include="Images\app_small.png" />
+    <None Include="Images\app.png" />
+    <None Include="Images\search_small.png" />
+    <None Include="Images\search.png" />
+    <None Include="Images\menu_h.png" />
+    <None Include="Images\menu.png" />
+    <None Include="Images\menu_v.png" />
+    <None Include="Images\next.png" />
+    <None Include="Images\prev.png" />
+    <None Include="Images\mic.png" />
+    <None Include="Images\pause_.png" />
     <EmbeddedResource Include="DLL\Newtonsoft.Json.dll" />
-    <Content Include="Images\backward.png" />
-    <Content Include="Images\bottom.png" />
-    <Content Include="Images\forward.png" />
-    <Content Include="Images\LanguageCreator.png" />
-    <Content Include="Images\pause.png" />
-    <Content Include="Images\play.png" />
     <None Include="Resources\play.png" />
     <EmbeddedResource Include="Core\PdfiumViewer\pan.cur" />
     <Content Include="Core\Gma.System.MouseKeyHook\HotKeys\ReadMe.txt" />
