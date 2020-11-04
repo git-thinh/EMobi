@@ -77,16 +77,57 @@ namespace EBook
 
     public interface IMain
     {
+        bool IS_SELECTION { get; set; }
+        bool SELECTION_ATTACH_MEDIA { get; set; }
+        bool AUTO_CROP_PAGE_SELECTED { get; set; }
+
         int PageNumber { get; set; }
         string DocumentFile { get; set; }
         string DocumentName { get; set; }
+
 
         string PASSWORD { get; }
         string FOLDER_DATA { get; }
         string PATH_DATA { get; }
 
-        Dictionary<int, byte[]> m_pages { get;  }
-        Dictionary<int, byte[]> m_page_crops { get;  }
+        Dictionary<int, byte[]> m_pages { get; }
+        Dictionary<int, byte[]> m_page_crops { get; }
         Dictionary<int, oPage> m_infos { get; set; }
     }
+
+    public class oSetting
+    {
+        public bool IS_SELECTION { get; set; }
+        public bool SELECTION_ATTACH_MEDIA { get; set; }
+        public bool AUTO_CROP_PAGE_SELECTED { get; set; }
+
+        public int PageNumber { get; set; }
+        public string DocumentFile { get; set; }
+        public string DocumentName { get; set; }
+
+        public oSetting()
+        {
+            this.IS_SELECTION = false;
+            this.SELECTION_ATTACH_MEDIA = false;
+            this.AUTO_CROP_PAGE_SELECTED = false;
+
+            this.PageNumber = 0;
+            this.DocumentFile = string.Empty;
+            this.DocumentName = string.Empty;
+        }
+
+        public oSetting(IMain main) : base()
+        {
+            this.IS_SELECTION = main.IS_SELECTION;
+            this.SELECTION_ATTACH_MEDIA = main.SELECTION_ATTACH_MEDIA;
+            this.AUTO_CROP_PAGE_SELECTED = main.AUTO_CROP_PAGE_SELECTED;
+
+            this.PageNumber = main.PageNumber;
+            this.DocumentFile = main.DocumentFile;
+            this.DocumentName = main.DocumentName;
+        }
+    }
+
+
+
 }

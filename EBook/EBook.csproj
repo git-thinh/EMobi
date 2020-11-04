@@ -40,6 +40,12 @@
       <HintPath>DLL\DotNetZip.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -729,6 +735,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DLL\Newtonsoft.Json.dll" />
     <Content Include="Images\backward.png" />
     <Content Include="Images\bottom.png" />
     <Content Include="Images\forward.png" />
