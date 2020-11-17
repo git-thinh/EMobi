@@ -1,0 +1,9 @@
+C:\EMobi\debug\English.exe
+C:\EMobi\debug\English.pdb
+C:\EMobi\English\obj\x86\Debug\English.fMain.resources
+C:\EMobi\English\obj\x86\Debug\English.Properties.Resources.resources
+C:\EMobi\English\obj\x86\Debug\English.csproj.GenerateResource.cache
+C:\EMobi\English\obj\x86\Debug\English.csproj.CoreCompileInputs.cache
+C:\EMobi\English\obj\x86\Debug\English.exe
+C:\EMobi\English\obj\x86\Debug\English.pdb
+C:\EMobi\English\obj\x86\Debug\English.csproj.CopyComplete

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using Tesseract;
 
 namespace EBook
 {
@@ -15,9 +16,23 @@ namespace EBook
         public int Height { set; get; }
     }
 
+    public class oTextOriginAI
+    {
+        public bool Ok { set; get; }
+        public float Version { set; get; }
+        public string TextEn { set; get; }
+        public string TextVi { set; get; }
+    }
+
     public class oPage
     {
         public int Id { set; get; }
+        
+        public int Width { set; get; }
+        public int Height { set; get; }
+
+        public oTextOriginAI TextAI { set; get; }
+
         public string Indexing { set; get; }
         public string Title { set; get; }
         public List<oSelection> Selections { set; get; }
@@ -25,9 +40,25 @@ namespace EBook
         public oPage()
         {
             Id = -1;
+
+            Width = 0;
+            Height = 0;
+
+            TextAI = new oTextOriginAI() {
+                TextEn = string.Empty,
+                TextVi = string.Empty,
+                Version = 0,
+                Ok = false
+            };
+
             Indexing = string.Empty;
             Title = string.Empty;
             Selections = new List<oSelection>() { };
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}.{1}x{2}= {3}", Id, Width, Height, TextAI.TextEn);
         }
     }
 
@@ -72,6 +103,7 @@ namespace EBook
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new fMedia());
             Application.Run(new fMain());
+            //Application.Run(new fDocument());
         }
     }
 
@@ -97,6 +129,8 @@ namespace EBook
 
     public class oSetting
     {
+        public bool SHOW_PAGE_INFO { get; set; }
+
         public bool IS_SELECTION { get; set; }
         public bool SELECTION_ATTACH_MEDIA { get; set; }
         public bool AUTO_CROP_PAGE_SELECTED { get; set; }
@@ -105,8 +139,11 @@ namespace EBook
         public string DocumentFile { get; set; }
         public string DocumentName { get; set; }
 
+        public string ImageBase64 { get; set; }
+
         public oSetting()
         {
+            this.SHOW_PAGE_INFO = false;
             this.IS_SELECTION = false;
             this.SELECTION_ATTACH_MEDIA = false;
             this.AUTO_CROP_PAGE_SELECTED = false;

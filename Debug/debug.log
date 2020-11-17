@@ -1,0 +1,2 @@
+[1117/190104:FATAL:browser_webkit_glue.cc(47)] Check failed: !loaded_locale.empty(). Locale could not be found for en-US
+[1117/191421:FATAL:browser_webkit_glue.cc(47)] Check failed: !loaded_locale.empty(). Locale could not be found for en-US

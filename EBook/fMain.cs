@@ -10,7 +10,7 @@ using Tesseract;
 using Salar.Bois;
 using PdfiumViewer;
 using Newtonsoft.Json;
-using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 
 namespace EBook
 {
@@ -79,7 +79,6 @@ namespace EBook
         private ToolStripMenuItem menuAutoRun_updateIndex;
         private ToolStripMenuItem _menuCleanAllCacheBefore;
         private ToolStripSeparator toolStripSeparator3;
-        private Label label1;
         private ToolStripMenuItem _menuCleanSelectionPageCurrent;
         private ToolStripMenuItem _menuMedia;
         private ToolStripMenuItem _menuGoPage;
@@ -182,7 +181,6 @@ namespace EBook
             this._menuHr2 = new System.Windows.Forms.ToolStripSeparator();
             this._menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this._labelPage = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this._panelPageExtend = new System.Windows.Forms.Panel();
             this._tabPageExtend = new System.Windows.Forms.TabControl();
             this._tabAttach = new System.Windows.Forms.TabPage();
@@ -232,7 +230,7 @@ namespace EBook
             this._menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this._menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuMain});
-            this._menuStrip.Location = new System.Drawing.Point(325, 20);
+            this._menuStrip.Location = new System.Drawing.Point(325, 16);
             this._menuStrip.Name = "_menuStrip";
             this._menuStrip.Padding = new System.Windows.Forms.Padding(0);
             this._menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -578,20 +576,6 @@ namespace EBook
             this._labelPage.Text = "0";
             this._labelPage.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.BackColor = System.Drawing.Color.DodgerBlue;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(212, 193);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(189, 46);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "LOADING .....";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // _panelPageExtend
             // 
             this._panelPageExtend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -812,7 +796,7 @@ namespace EBook
             this._pageUnLock,
             this._pageLock,
             this.toolStripSeparator9});
-            this._mediaPlayer.Location = new System.Drawing.Point(-65, -1);
+            this._mediaPlayer.Location = new System.Drawing.Point(-65, -5);
             this._mediaPlayer.Name = "_mediaPlayer";
             this._mediaPlayer.Size = new System.Drawing.Size(313, 43);
             this._mediaPlayer.TabIndex = 4;
@@ -962,11 +946,12 @@ namespace EBook
             // 
             this._pictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this._pictureBox.BackColor = System.Drawing.Color.White;
-            this._pictureBox.Location = new System.Drawing.Point(-1, 0);
+            this._pictureBox.Location = new System.Drawing.Point(3, 2);
             this._pictureBox.Name = "_pictureBox";
-            this._pictureBox.Size = new System.Drawing.Size(190, 180);
+            this._pictureBox.Size = new System.Drawing.Size(19, 23);
             this._pictureBox.TabIndex = 4;
             this._pictureBox.TabStop = false;
+            this._pictureBox.Visible = false;
             this._pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseDown);
             this._pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseMove);
             this._pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this._pictureBox_MouseUp);
@@ -979,7 +964,6 @@ namespace EBook
             this.Controls.Add(this._panelPageExtend);
             this.Controls.Add(this._menuStrip);
             this.Controls.Add(this._pictureBox);
-            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this._menuStrip;
@@ -1379,23 +1363,29 @@ namespace EBook
 
         #region [ FUNCTIONS ]
 
+        TesseractEngine m_tesseract;
         void app_Load()
         {
+            string traineddata = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "tessdata");
+            Environment.SetEnvironmentVariable("TESSDATA_PREFIX", traineddata);
+            m_tesseract = new TesseractEngine(traineddata, "eng");//eng vie
+
             menuHide();
 
+            this.BackgroundImageLayout = ImageLayout.Stretch;
             _panelPageExtend.Visible = false;
             _mediaPause.Visible = false;
             _mediaRepeatOne.Visible = false;
             _mediaRecordOn.Visible = false;
             _pageLock.Visible = false;
 
-            _panelPageExtend.Visible = true;
 
             this.Width = 0;
             this.KeyPreview = true;
             this.KeyUp += form_KeyUp;
             this.Shown += (se, ev) =>
             {
+                _pictureBox.Location = new Point(0, 0);
                 oSetting setting = null;
                 try
                 {
@@ -1411,13 +1401,22 @@ namespace EBook
                 if (setting == null) setting = new oSetting();
                 if (string.IsNullOrEmpty(setting.DocumentFile) || File.Exists(setting.DocumentFile) == false)
                     setting.DocumentFile = string.Empty;
-                if (setting.DocumentFile.Length > 0)
-                    openFileEBK(setting.DocumentFile, setting.PageNumber);
-                else this.Width = 235;
 
                 IS_SELECTION = setting.IS_SELECTION;
-                //if (_menuAutoCropPageSelected.Checked) _menuMain.BackColor = Color.Red;
+                _panelPageExtend.Visible = setting.SHOW_PAGE_INFO;
 
+                //if (setting.DocumentFile.Length > 0)
+                //    openFileEBK(setting.DocumentFile, setting.PageNumber);
+                //else this.Width = 235;
+
+                if (!string.IsNullOrEmpty(setting.ImageBase64))
+                {
+                    var img = Image.FromStream(new MemoryStream(Convert.FromBase64String(setting.ImageBase64)));
+                    this.Width = img.Width;
+                    this.BackgroundImage = img;
+                }
+
+                //if (_menuAutoCropPageSelected.Checked) _menuMain.BackColor = Color.Red;
             };
         }
 
@@ -1508,7 +1507,7 @@ namespace EBook
                     page = PageNumber + 1;
                 else
                     page = PageNumber - 1;
-                
+
                 pageOpen(page);
             }
         }
@@ -1661,45 +1660,147 @@ namespace EBook
         {
             page_cleanAll();
 
-            _pictureBox.Visible = false;
+            //_pictureBox.Visible = false;
 
             DocumentFile = file;
             DocumentName = doc_formatName(Path.GetFileName(DocumentFile));
 
+            bool hasUpdate = false;
+            m_infos = new Dictionary<int, oPage>();
             using (ZipFile zip = ZipFile.Read(DocumentFile))
             {
-                bool hasInfo = false;
-                foreach (ZipEntry entry in zip)
+                var info = zip.Entries.Where(x => x.FileName == "info.bin").Take(1).SingleOrDefault();
+                if (info != null)
                 {
-                    if (entry.FileName == "info.bin")
+                    try
                     {
-                        hasInfo = true;
-                        m_infos.Clear();
-
                         using (var ms = new MemoryStream())
                         {
-                            entry.ExtractWithPassword(ms, PASSWORD);
-                            //_bois.Serialize(init, ms);
+                            info.ExtractWithPassword(ms, PASSWORD);
                             ms.Seek(0, SeekOrigin.Begin);
-                            BoisSerializer _bois = new BoisSerializer();
-                            m_infos = _bois.Deserialize<Dictionary<int, oPage>>(ms);
+                            //string json = Encoding.UTF8.GetString(ms.ToArray());
+                            //m_infos = JsonConvert.DeserializeObject<Dictionary<int, oPage>>(json);
+
+                            using (var sr = new StreamReader(ms))
+                            using (var reader = new JsonTextReader(sr))
+                            {
+                                if (!reader.Read() || reader.TokenType != JsonToken.StartArray)
+                                {
+                                    //throw new Exception("Expected start of array");
+                                }
+                                else
+                                {
+                                    var ser = new JsonSerializer();
+                                    while (reader.Read())
+                                    {
+                                        if (reader.TokenType == JsonToken.EndArray) break;
+                                        var item = ser.Deserialize<oPage>(reader);
+                                        if (item != null && m_infos.ContainsKey(item.Id) == false)
+                                            m_infos.Add(item.Id, item);
+                                    }
+                                }
+                            }
                         }
                     }
-                    else if (entry.FileName.EndsWith(".jpg"))
+                    catch
+                    {
+                        hasUpdate = true;
+                    }
+                }
+
+                //m_infos.Clear();
+
+                foreach (ZipEntry entry in zip)
+                {
+                    if (entry.FileName.EndsWith(".jpg"))
                     {
                         int i = int.Parse(entry.FileName.Substring(0, entry.FileName.Length - 4));
+
                         using (MemoryStream ms = new MemoryStream())
                         {
                             entry.ExtractWithPassword(ms, PASSWORD);
-                            m_pages.Add(i, ms.ToArray());
-                            if (hasInfo == false) m_infos.Add(i, new oPage() { Id = i });
+                            var buf = ms.ToArray();
+                            m_pages.Add(i, buf);
+
+                            Bitmap img = new Bitmap(ms);
+                            //using (var tms = new MemoryStream())
+                            //{
+                            //    img.Save(tms, System.Drawing.Imaging.ImageFormat.Tiff);
+                            //    tiffs = tms.ToArray();
+                            //}
+
+                            oPage p;
+                            if (m_infos.ContainsKey(i)) p = m_infos[i];
+                            else
+                            {
+                                p = new oPage() { Id = i, Width = img.Width, Height = img.Height };
+                                m_infos.Add(i, p);
+
+                                try
+                                {
+                                    string text = string.Empty;
+
+                                    //using (var pix = Pix.LoadTiffFromMemory(tiffs))
+                                    //using (var pro = m_tesseract.Process(pix))
+                                    //    text = pro.GetText();
+
+                                    //var bitmapConverter = new BitmapToPixConverter();
+                                    //using (var pix = bitmapConverter.Convert(img))
+                                    //using (var pro = m_tesseract.Process(pix))
+                                    //    text = pro.GetText();
+
+                                    p.TextAI.Ok = true;
+                                    p.TextAI.TextEn = text;
+                                }
+                                catch (Exception et)
+                                {
+                                }
+                                hasUpdate = true;
+                            }
+
+                        }
+                    }
+                }
+
+                if (hasUpdate)
+                {
+                    //if (info != null)
+                    //{
+                    //    zip.RemoveEntry(info);
+                    //    zip.Save();
+                    //}
+
+                    if (m_infos.Count > 0)
+                    {
+                        zip.Password = PASSWORD;
+                        using (var ms = new MemoryStream())
+                        {
+                            using (var sw = new StreamWriter(ms))
+                            using (var jw = new JsonTextWriter(sw))
+                            {
+                                //jw.Formatting = Formatting.Indented;
+                                jw.WriteStartArray();
+                                var ser = new JsonSerializer();
+                                foreach (var kv in m_infos)
+                                {
+                                    ser.Serialize(jw, kv.Value);
+                                    jw.Flush();
+                                }
+                                jw.WriteEndArray();
+                            }
+                            var buf = ms.ToArray();
+
+                            //var zn = zip.AddEntry("info.bin", buf);
+                            //zip.Save();
+
+                            zip.UpdateEntry("info.bin", buf);
+                            zip.Save();
                         }
                     }
                 }
             }
 
             pageOpen(page);
-            _pictureBox.Visible = true;
         }
 
         void pageOpen(int page)
@@ -1717,82 +1818,100 @@ namespace EBook
                     (_menuDisplayPageCropping.Checked || IS_CROP_ENTERING))
                 {
                     buf = m_page_crops[page];
-                    //_labelPage.BackColor = Color.Orange;
                     IS_CROP_ENTERING = false;
                 }
                 else
                 {
                     buf = m_pages[page];
-                    //_labelPage.BackColor = Color.Transparent;
                 }
 
-                Image img = null;
-                using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
+                //Image img = null;
+                //using (MemoryStream ms = new MemoryStream(buf, 0, buf.Length))
+                //{
+                //    ms.Write(buf, 0, buf.Length);
+                //    img = Image.FromStream(ms, true);
+                //}
+
+                if (buf != null)
                 {
-                    ms.Write(buf, 0, buf.Length);
-                    img = Image.FromStream(ms, true);
-                    openImage(img);
+                    if (_menuKeepSelectChangePage.Checked == false)
+                    {
+                        m_selections.Clear();
+                        _pictureBox.Controls.Clear();
+                    }
+
+                    int pageExtendWidth = 0, w = 0, h = 0;
+                    if (_panelPageExtend.Visible) pageExtendWidth = _panelPageExtend.Width;
+
+                    var img = Bitmap.FromStream(new MemoryStream(buf));
+
+                    if (img.Height > this.Height) {
+                        h = this.Height;
+                        w = h * img.Width / img.Height;
+                    }
+
+                    this.Width = w + pageExtendWidth;
+                    this.BackgroundImage = img;
+
+                    ////int w = 0, h = 0, w0 = 0, h0 = 0, _top = 0;
+                    //////int w0 = img.Width, h0 = img.Height,
+                    ////int pageExtendWidth = 0;
+
+                    //////if (_panelPageExtend.Visible) pageExtendWidth = _panelPageExtend.Width;
+
+                    //////if (w0 < Screen.PrimaryScreen.WorkingArea.Width && h0 < this.Height)
+                    //////{
+                    //////    w = w0;
+                    //////    this.Width = w + pageExtendWidth;
+
+                    //////    h = h0;
+                    //////    //////_top = (this.Height - h) / 2;
+
+                    //////    //////_pictureBox.Width = w;
+                    //////    //////_pictureBox.Height = h;
+                    //////    //////_pictureBox.Location = new Point(0, _top);
+
+                    //////    //_pictureBox.Image = img;
+                    //////    //_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+
+                    //////    this.BackgroundImage = Bitmap.FromStream(new MemoryStream(buf));
+                    //////}
+                    //////else
+                    //////{
+                    //////    ////_top = 3;
+                    //////    ////int _bottom = 7, _left = 3, _right = 3;
+
+                    //////    ////h = this.Height - (_top + _bottom);
+                    //////    ////w = (h * w0 / h0);
+
+                    //////    ////this.Width = w + _left + _right;
+
+                    //////    ////_pictureBox.Anchor = AnchorStyles.None;
+                    //////    ////_pictureBox.Width = w;
+                    //////    ////_pictureBox.Height = h;
+                    //////    ////_pictureBox.Location = new Point(_left, _top);
+                    //////    ////_pictureBox.Image = img;
+                    //////    ////_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                    //////    this.BackgroundImage = Bitmap.FromStream(new MemoryStream(buf));
+                    //////}
+
+
+                    //////this.Tag = new Size(w0, h0);
+                    ////////this.BackColor = Color.Black;
+                    //////_pictureBox.Visible = true;
                 }
 
-                string spage = (page + 1).ToString();
-                _labelPage.Text = spage;
-                _labelPage.Left = _pictureBox.Width - 28;
+                //string spage = (page + 1).ToString();
+                //_labelPage.Text = spage;
+                //_labelPage.Left = _pictureBox.Width - 28;
 
-                this.Text = string.Format("{0}.{1}", spage, DocumentName);
+                //this.Text = string.Format("{0}.{1}", spage, DocumentName);
 
-                //pageExtendHide();
-                if (_panelPageExtend.Visible) pageExtendShow();
+                //if (_panelPageExtend.Visible) pageExtendShow();
             }
         }
 
-        void openImage(Image img)
-        {
-            if (_menuKeepSelectChangePage.Checked == false)
-            {
-                m_selections.Clear();
-                _pictureBox.Controls.Clear();
-            }
-
-            int w = 0, h = 0, _top = 0;
-
-            int w0 = img.Width, h0 = img.Height;
-            if (w0 < Screen.PrimaryScreen.WorkingArea.Width && h0 < this.Height)
-            {
-                w = w0;
-                h = h0;
-                _top = (this.Height - h) / 2;
-
-                this.Width = w;
-
-                _pictureBox.Width = w;
-                _pictureBox.Height = h;
-                _pictureBox.Location = new Point(0, _top);
-                _pictureBox.Image = img;
-                _pictureBox.SizeMode = PictureBoxSizeMode.Normal;
-            }
-            else
-            {
-                _top = 3;
-                int _bottom = 7, _left = 3, _right = 3;
-
-                h = this.Height - (_top + _bottom);
-                w = (h * w0 / h0);
-
-                this.Width = w + _left + _right;
-
-                _pictureBox.Anchor = AnchorStyles.None;
-                _pictureBox.Width = w;
-                _pictureBox.Height = h;
-                _pictureBox.Location = new Point(_left, _top);
-                _pictureBox.Image = img;
-                _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            }
-
-
-            this.Tag = new Size(w0, h0);
-            //this.BackColor = Color.Black;
-            _pictureBox.Visible = true;
-        }
 
         string doc_formatName(string name)
         {
@@ -2055,7 +2174,7 @@ namespace EBook
         {
 
         }
-         
+
         private void _mediaRepeatOne_Click(object sender, EventArgs e)
         {
             mediaRepeatAllOrOne(0);
@@ -2143,7 +2262,14 @@ namespace EBook
 
         void closing()
         {
-            File.WriteAllText("setting.bin", JsonConvert.SerializeObject(new oSetting(this), Formatting.None));
+            if (m_pages.Count > 0)
+            {
+                var o = new oSetting(this);
+                o.SHOW_PAGE_INFO = _panelPageExtend.Visible;
+                var buf = m_pages[PageNumber];
+                o.ImageBase64 = Convert.ToBase64String(buf);
+                File.WriteAllText("setting.bin", JsonConvert.SerializeObject(o, Formatting.None));
+            }
         }
 
         #endregion
