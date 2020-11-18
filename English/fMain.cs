@@ -31,7 +31,12 @@ namespace English
 
         private void fMain_Load(object sender, EventArgs e)
         {
-
+            this.Shown += (se, ev) =>
+            {
+                this.Top = 0;
+                this.Left = 0;
+                this.Height = Screen.PrimaryScreen.WorkingArea.Height;
+            };
         }
     }
 }

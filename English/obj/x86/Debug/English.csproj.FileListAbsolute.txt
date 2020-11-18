@@ -7,3 +7,4 @@ C:\EMobi\English\obj\x86\Debug\English.csproj.CoreCompileInputs.cache
 C:\EMobi\English\obj\x86\Debug\English.exe
 C:\EMobi\English\obj\x86\Debug\English.pdb
 C:\EMobi\English\obj\x86\Debug\English.csproj.CopyComplete
+C:\EMobi\English\obj\x86\Debug\English.csprojAssemblyReference.cache

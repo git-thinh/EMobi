@@ -69,7 +69,7 @@ namespace English
             this._panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this._panelMain.Location = new System.Drawing.Point(261, 0);
             this._panelMain.Name = "_panelMain";
-            this._panelMain.Size = new System.Drawing.Size(591, 740);
+            this._panelMain.Size = new System.Drawing.Size(747, 740);
             this._panelMain.TabIndex = 1;
             // 
             // splitter1
@@ -84,7 +84,7 @@ namespace English
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(852, 740);
+            this.ClientSize = new System.Drawing.Size(1008, 740);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this._panelMain);
             this.Controls.Add(this._panelExplorer);
