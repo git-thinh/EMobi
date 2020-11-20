@@ -104,21 +104,18 @@ namespace English
 
             };
 
-            if (CEF.Initialize(settings))
-            {
-                CEF.RegisterScheme("local", new SchemeHandlerFactory());
-                //CEF.RegisterJsObject("bound", new BoundObject());
-            }
+            if (CEF.Initialize(settings) == false) return; 
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new fMedia());
-            Application.Run(new fMain());
-            //Application.Run(new fDocument());
+            var f = new fMain();
+            CEF.RegisterScheme("local", new SchemeHandlerFactory());
+            CEF.RegisterScheme("img", new ImageHandlerFactory(f));
+            Application.Run(f);
 
             //model.Dispose();
             CEF.Shutdown();
-            System.Environment.Exit(0);
+            //Environment.Exit(0);
         }
     }
 
@@ -180,6 +177,16 @@ namespace English
         }
     }
 
+    public class ImageHandlerFactory : ISchemeHandlerFactory
+    {
+        readonly ISchemeHandler main;
+        public ImageHandlerFactory(ISchemeHandler _main) : base() {
+            main = _main;
+        }
 
-
+        public ISchemeHandler Create()
+        {
+            return main;
+        }
+    }
 }

@@ -91,7 +91,7 @@ namespace English
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "fMain";
             this.Text = "English";
-            this.Load += new System.EventHandler(this.fMain_Load);
+            this.Load += new System.EventHandler(this.main_Load);
             this._panelExplorer.ResumeLayout(false);
             this.ResumeLayout(false);
 
