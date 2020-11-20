@@ -1,2 +1,36 @@
 [1117/190104:FATAL:browser_webkit_glue.cc(47)] Check failed: !loaded_locale.empty(). Locale could not be found for en-US
 [1117/191421:FATAL:browser_webkit_glue.cc(47)] Check failed: !loaded_locale.empty(). Locale could not be found for en-US
+[1120/215522:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/215526:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/215559:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/215604:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/215606:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/215608:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/215614:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/215709:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/215718:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/215955:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220000:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220002:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220003:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220004:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220006:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220023:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220136:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220143:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220145:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220145:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220146:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220148:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220150:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220154:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220155:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220159:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220205:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220206:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/220208:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/221139:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/221623:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/222539:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/222548:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED
+[1120/223002:ERROR:browser_devtools_client.cc(55)] NOT IMPLEMENTED

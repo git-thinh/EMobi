@@ -17,3 +17,10 @@ EBook/obj/Debug/EBook.csprojAssemblyReference.cache
 EBook/obj/Debug/EBook.pdb
 /.vs
 /EBook/obj
+/English/obj
+Debug/debug.log
+Debug/English.pdb
+/debug/English.pdb
+/debug/debug.log
+/Tesseract/obj
+/Tesseract/bin

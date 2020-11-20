@@ -45,7 +45,7 @@ namespace English
             this._panelExplorer.Dock = System.Windows.Forms.DockStyle.Left;
             this._panelExplorer.Location = new System.Drawing.Point(0, 0);
             this._panelExplorer.Name = "_panelExplorer";
-            this._panelExplorer.Size = new System.Drawing.Size(261, 740);
+            this._panelExplorer.Size = new System.Drawing.Size(200, 740);
             this._panelExplorer.TabIndex = 0;
             // 
             // _panelTree
@@ -53,7 +53,7 @@ namespace English
             this._panelTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this._panelTree.Location = new System.Drawing.Point(0, 113);
             this._panelTree.Name = "_panelTree";
-            this._panelTree.Size = new System.Drawing.Size(261, 627);
+            this._panelTree.Size = new System.Drawing.Size(200, 627);
             this._panelTree.TabIndex = 0;
             // 
             // _panelMedia
@@ -61,20 +61,20 @@ namespace English
             this._panelMedia.Dock = System.Windows.Forms.DockStyle.Top;
             this._panelMedia.Location = new System.Drawing.Point(0, 0);
             this._panelMedia.Name = "_panelMedia";
-            this._panelMedia.Size = new System.Drawing.Size(261, 113);
+            this._panelMedia.Size = new System.Drawing.Size(200, 113);
             this._panelMedia.TabIndex = 0;
             // 
             // _panelMain
             // 
             this._panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._panelMain.Location = new System.Drawing.Point(261, 0);
+            this._panelMain.Location = new System.Drawing.Point(200, 0);
             this._panelMain.Name = "_panelMain";
-            this._panelMain.Size = new System.Drawing.Size(747, 740);
+            this._panelMain.Size = new System.Drawing.Size(1150, 740);
             this._panelMain.TabIndex = 1;
             // 
             // splitter1
             // 
-            this.splitter1.Location = new System.Drawing.Point(261, 0);
+            this.splitter1.Location = new System.Drawing.Point(200, 0);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(3, 740);
             this.splitter1.TabIndex = 2;
@@ -84,7 +84,7 @@ namespace English
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 740);
+            this.ClientSize = new System.Drawing.Size(1350, 740);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this._panelMain);
             this.Controls.Add(this._panelExplorer);

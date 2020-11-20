@@ -27,7 +27,7 @@ namespace English
     public class oPage
     {
         public int Id { set; get; }
-        
+
         public int Width { set; get; }
         public int Height { set; get; }
 
@@ -44,7 +44,8 @@ namespace English
             Width = 0;
             Height = 0;
 
-            TextAI = new oTextOriginAI() {
+            TextAI = new oTextOriginAI()
+            {
                 TextEn = string.Empty,
                 TextVi = string.Empty,
                 Version = 0,
@@ -104,13 +105,14 @@ namespace English
 
             };
 
-            if (CEF.Initialize(settings) == false) return; 
+            if (CEF.Initialize(settings) == false) return;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var f = new fMain();
             CEF.RegisterScheme("local", new SchemeHandlerFactory());
             CEF.RegisterScheme("img", new ImageHandlerFactory(f));
+            CEF.RegisterJsObject("api", f);
             Application.Run(f);
 
             //model.Dispose();
@@ -180,7 +182,8 @@ namespace English
     public class ImageHandlerFactory : ISchemeHandlerFactory
     {
         readonly ISchemeHandler main;
-        public ImageHandlerFactory(ISchemeHandler _main) : base() {
+        public ImageHandlerFactory(ISchemeHandler _main) : base()
+        {
             main = _main;
         }
 
@@ -188,5 +191,12 @@ namespace English
         {
             return main;
         }
+    }
+
+    public interface IBoundObject
+    {
+        void mainInited();
+        Int32 getPageTotal();
+        string getPageInfo(int page);
     }
 }

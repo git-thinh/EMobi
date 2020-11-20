@@ -28,7 +28,7 @@ namespace English
                 string ext = Path.GetExtension(file);
                 mimeType = MimeTypeMap.GetMimeType(ext);
 
-                stream = new FileStream(file, FileMode.Open);
+                stream = new MemoryStream(File.ReadAllBytes(file));
                 return true;
             }
 

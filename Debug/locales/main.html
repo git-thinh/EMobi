@@ -5,11 +5,16 @@
     <title></title>
     <link href="main.css" rel="stylesheet" />
     <script src="main.js"></script>
+    <script src="font.all.min.js"></script>
 </head>
 <body>
-    <img src="img://i1" style="position:absolute;z-index:1;" />
-    <img src="img://i2" style="position:absolute;z-index:2;" />
-    <img src="img://i3" style="position:absolute;z-index:3;" />
-    <img src="img://i4" style="position:absolute;z-index:4;" />
+    <div id="loading"></div>
+
+    <div class="ui-button-page" onmousemove="this.style.opacity = 1;" onmouseout="this.style.opacity = 0;">
+        <i class="fas fa-arrow-left" onclick="pageOpen(m_page - 1);"></i>
+        <i class="fas fa-arrow-right" onclick="pageOpen(m_page + 1);"></i>
+    </div>
+
+    <div id="page"></div>
 </body>
 </html>
