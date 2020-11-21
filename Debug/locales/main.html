@@ -7,14 +7,94 @@
     <script src="main.js"></script>
     <script src="font.all.min.js"></script>
 </head>
-<body>
-    <div id="loading"></div>
+<body onkeydown="pageKeyPress(event);">
+    <img id="loading" src="loading.gif" />
 
     <div class="ui-button-page" onmousemove="this.style.opacity = 1;" onmouseout="this.style.opacity = 0;">
-        <i class="fas fa-arrow-left" onclick="pageOpen(m_page - 1);"></i>
-        <i class="fas fa-arrow-right" onclick="pageOpen(m_page + 1);"></i>
+        <i class="fas fa-arrow-left" onclick="pagePrev();"></i>
+        <i class="fas fa-arrow-right" onclick="pageNext();"></i>
     </div>
 
-    <div id="page"></div>
+    <div id="menu">
+        <ul>
+            <li onclick="menu_search(this);">
+                <i class="fas fa-search"></i>
+                <label>Search</label>
+            </li>
+            <li onclick="menu_open_document(this)">
+                <i class="far fa-file"></i>
+                <label>Open document</label>
+            </li>
+            <li onclick="menu_tree_explorer(this)">
+                <i class="far fa-folder-open"></i>
+                <label>Tree explorer</label>
+            </li>
+            <li class="hr"></li>
+            <li onclick="menu_selection(this)">
+                <i class="far fa-object-ungroup"></i>
+                <label>Selection</label>
+            </li>
+            <li onclick="menu_selection_group(this)">
+                <i class="fas fa-object-group"></i>
+                <label>Selection group</label>
+            </li>
+            <li onclick="menu_selection_note(this)">
+                <i class="fas fa-thumbtack"></i>
+                <label>Selection note</label>
+            </li>
+            <li onclick="menu_selection_comment(this)">
+                <i class="far fa-comment-alt"></i>
+                <label>Selection comment</label>
+            </li>
+            <li onclick="menu_selection_link_other(this)">
+                <i class="fas fa-link"></i>
+                <label>Selection link other</label>
+            </li>
+            <li class="hr"></li>
+            <li onclick="menu_media_explorer(this)">
+                <i class="fab fa-youtube"></i>
+                <label>Media explorer</label>
+            </li>
+            <li onclick="menu_analytic_text(this)">
+                <i class="fas fa-bolt"></i>
+                <label>Analytic text</label>
+            </li>
+            <li onclick="menu_bookmark_this_page(this)">
+                <i class="far fa-bookmark"></i>
+                <label>Bookmark this page</label>
+            </li>
+            <li class="hr"></li>
+            <li onclick="pagePrev()">
+                <i class="fas fa-arrow-left"></i>
+                <label>Page prev</label>
+            </li>
+            <li onclick="pageNext()">
+                <i class="fas fa-arrow-right"></i>
+                <label>Page next</label>
+            </li>
+            <li class="hr"></li>
+            <li onclick="menu_like_this_page(this)">
+                <i class="fas fa-heart"></i>
+                <label>Like this page</label>
+            </li>
+            <li onclick="menu_login_user(this)">
+                <i class="fas fa-user-alt"></i>
+                <label>Login user</label>
+            </li>
+            <li onclick="menu_logout(this)">
+                <i class="fas fa-user-times"></i>
+                <label>Logout</label>
+            </li>
+            <li class="hr"></li>
+            <li onclick="menu_setting(this)">
+                <i class="fas fa-cog"></i>
+                <label>Setting</label>
+            </li>
+            <li onclick="menu_exit(this)">
+                <i class="fas fa-sign-out-alt"></i>
+                <label>Exit</label>
+            </li>
+        </ul>
+    </div>
 </body>
 </html>

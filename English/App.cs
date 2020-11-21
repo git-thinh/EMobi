@@ -198,5 +198,6 @@ namespace English
         void mainInited();
         Int32 getPageTotal();
         string getPageInfo(int page);
+        void setAppWidth(int width, int height);
     }
 }

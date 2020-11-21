@@ -21,33 +21,33 @@ namespace English
         ConcurrentDictionary<int, oPage> m_infos = new ConcurrentDictionary<int, oPage>();
         ConcurrentDictionary<int, byte[]> m_pages = new ConcurrentDictionary<int, byte[]>();
 
-        private readonly WebView web_media;
-        private readonly WebView web_tree;
-        private readonly WebView web_main;
+        private readonly WebView m_web;
 
         public fMain()
         {
             InitializeComponent();
 
+            fMain.CheckForIllegalCrossThreadCalls = true;
+            Control.CheckForIllegalCrossThreadCalls = true;
+
             var setting = new BrowserSettings()
             {
+                UniversalAccessFromFileUrlsAllowed = true,
+                DragDropDisabled = true,
+                FileAccessFromFileUrlsAllowed = true,
+                WebSecurityDisabled = true
             };
-
-            web_media = new WebView("local://media", setting) { Dock = DockStyle.Fill, AllowDrop = false };
-            web_tree = new WebView("local://tree", setting) { Dock = DockStyle.Fill, AllowDrop = false };
-            web_main = new WebView("local://main", setting) { Dock = DockStyle.Fill, AllowDrop = false };
+            m_web = new WebView("local://main", setting) { Dock = DockStyle.Fill, AllowDrop = false };
+            m_web.ContextMenuStrip = null;
 
             this.AllowDrop = false;
-
-            _panelMedia.Controls.Add(web_media);
-            _panelTree.Controls.Add(web_tree);
-            _panelMain.Controls.Add(web_main);
+            this.Controls.Add(m_web);
         }
 
         private void main_Load(object sender, EventArgs e)
         {
-            this.KeyPreview = true;
-            this.KeyUp += form_KeyUp;
+            //this.KeyPreview = true;
+            //this.KeyUp += form_KeyUp;
 
             this.FormClosing += main_formClosing;
             this.Shown += (se, ev) =>
@@ -55,17 +55,13 @@ namespace English
                 this.Top = 0;
                 this.Left = 0;
                 this.Height = Screen.PrimaryScreen.WorkingArea.Height;
-
-                web_main.ShowDevTools();
             };
 
         }
 
         private void main_formClosing(object sender, FormClosingEventArgs e)
         {
-            ((IWebBrowser)web_media).Dispose();
-            ((IWebBrowser)web_tree).Dispose();
-            ((IWebBrowser)web_main).Dispose();
+            ((IWebBrowser)m_web).Dispose();
         }
 
         public bool ProcessRequest(IRequest request, ref string mimeType, ref Stream stream)
@@ -100,12 +96,33 @@ namespace English
 
         public void mainInited()
         {
+            m_web.ShowDevTools();
+
             new Thread(() =>
             {
                 openFileEBK(@"D:\book.data\speakout.ebk");
                 //openFileEBK(@"D:\book.data\english grammar in use 3rd edition.ebk");
-                web_main.ExecuteScript("pageInit();");
+                m_web.ExecuteScript("pageInit();");
             }).Start();
+        }
+        
+        public void setAppWidth(int width, int height) {
+            if (width > Screen.PrimaryScreen.WorkingArea.Width)
+            {
+                width = Screen.PrimaryScreen.WorkingArea.Width;
+                this.Left = 0;
+            }
+            else width += 25;
+
+            if (InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(()=> {
+                    this.Width = width;
+                }));
+                return;
+            }
+
+            this.Width = width;
         }
 
         public string getPageInfo(int page) {
@@ -232,5 +249,6 @@ namespace English
 
             }
         }
+
     }
 }
