@@ -155,7 +155,9 @@ function menu_media_explorer(el) { }
 function menu_analytic_text(el) { }
 function menu_bookmark_this_page(el) { }
 function menu_like_this_page(el) { }
-function menu_login_user(el) { }
+function menu_login_user(el) {
+    window.open('local://login', '', 'width=200,height=100');
+}
 function menu_logout(el) { }
 function menu_setting(el) { }
 function menu_open_devtool(el) { api.js_open_devtool(); }
