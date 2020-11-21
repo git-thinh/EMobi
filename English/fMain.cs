@@ -21,7 +21,11 @@ namespace English
         ConcurrentDictionary<int, oPage> m_infos = new ConcurrentDictionary<int, oPage>();
         ConcurrentDictionary<int, byte[]> m_pages = new ConcurrentDictionary<int, byte[]>();
 
-        private readonly WebView m_web;
+        int m_page_current = 0;
+        string m_file_name = string.Empty;
+        string m_file = string.Empty;
+
+        readonly WebView m_web;
 
         public fMain()
         {
@@ -46,9 +50,6 @@ namespace English
 
         private void main_Load(object sender, EventArgs e)
         {
-            //this.KeyPreview = true;
-            //this.KeyUp += form_KeyUp;
-
             this.FormClosing += main_formClosing;
             this.Shown += (se, ev) =>
             {
@@ -85,28 +86,25 @@ namespace English
 
             return false;
         }
-        private void form_KeyUp(object sender, KeyEventArgs e)
-        {
-            app_keyPress(e);
-        }
 
-        public Int32 getPageTotal() {
+        public Int32 getPageTotal()
+        {
             return m_pages.Count;
         }
 
         public void mainInited()
         {
-            m_web.ShowDevTools();
-
-            new Thread(() =>
-            {
-                openFileEBK(@"D:\book.data\speakout.ebk");
-                //openFileEBK(@"D:\book.data\english grammar in use 3rd edition.ebk");
-                m_web.ExecuteScript("pageInit();");
-            }).Start();
+            //////m_web.ShowDevTools();
+            //new Thread(() =>
+            //{
+            //    //openFileEBK(@"D:\book.data\speakout.ebk");
+            //    openFileEBK(@"D:\book.data\murphy r english grammar in use 2012 4 ed .ebk");
+            //    m_web.ExecuteScript("pageInit();");
+            //}).Start();
         }
-        
-        public void setAppWidth(int width, int height) {
+
+        public void setAppWidth(int width, int height)
+        {
             if (width > Screen.PrimaryScreen.WorkingArea.Width)
             {
                 width = Screen.PrimaryScreen.WorkingArea.Width;
@@ -116,7 +114,8 @@ namespace English
 
             if (InvokeRequired)
             {
-                this.Invoke(new MethodInvoker(()=> {
+                this.Invoke(new MethodInvoker(() =>
+                {
                     this.Width = width;
                 }));
                 return;
@@ -125,85 +124,17 @@ namespace English
             this.Width = width;
         }
 
-        public string getPageInfo(int page) {
+        public string getPageInfo(int page)
+        {
             string s = "{}";
-            if (m_infos.ContainsKey(page)) {
+            if (m_infos.ContainsKey(page))
+            {
                 oPage p = null;
                 m_infos.TryGetValue(page, out p);
                 if (p != null)
                     s = JsonConvert.SerializeObject(p);
             }
             return s;
-        }
-
-        void app_keyPress(KeyEventArgs ev)
-        {
-
-            switch (ev.KeyData)
-            {
-                case Keys.Enter:
-                    //if (IS_SELECTION && _menuAutoCropPageSelected.Checked && m_selections.Count > 0)
-                    //{
-                    //    cropPageUpdate();
-                    //    IS_CROP_ENTERING = true;
-                    //}
-                    //pageOpen(PageNumber);
-                    break;
-                case Keys.F1:
-                    //if (IS_SELECTION)
-                    //    IS_SELECTION = false;
-                    //else
-                    //    IS_SELECTION = true;
-                    break;
-                case Keys.Right:
-                    //pageOpen(PageNumber + 1);
-                    break;
-                case Keys.Left:
-                    //pageOpen(PageNumber - 1);
-                    break;
-                case Keys.Up:
-                    //if (IS_SELECTION && _pictureBox.Tag != null)
-                    //{
-                    //    var sel = (UiSelectRectangle)_pictureBox.Tag;
-                    //    sel.Top = sel.Top - 1;
-                    //    sel.Height = sel.Height + 1;
-
-                    //    var rec = (Rectangle)sel.Tag;
-                    //    rec.Y = rec.Y - 1;
-                    //    rec.Height = rec.Height + 1;
-                    //    sel.Tag = rec;
-                    //}
-                    break;
-                case Keys.Down:
-                    //if (IS_SELECTION && _pictureBox.Tag != null)
-                    //{
-                    //    var sel = (UiSelectRectangle)_pictureBox.Tag;
-                    //    sel.Top = sel.Top + 1;
-                    //    sel.Height = sel.Height - 1;
-
-                    //    var rec = (Rectangle)sel.Tag;
-                    //    rec.Y = rec.Y + 1;
-                    //    rec.Height = rec.Height - 1;
-                    //    sel.Tag = rec;
-                    //}
-                    break;
-                case Keys.PageUp:
-                    //pageOpen(0);
-                    break;
-                case Keys.PageDown:
-                    //pageOpen(m_pages.Count - 1);
-                    break;
-                case Keys.Escape:
-                    //if (_menuStrip.Visible)
-                    //{
-                    //    menuHide();
-                    //}
-                    //else
-                    //{
-                    //    this.WindowState = FormWindowState.Minimized;
-                    //}
-                    break;
-            }
         }
 
         string doc_formatName(string name)
@@ -226,6 +157,7 @@ namespace English
         void openFileEBK(string file, int page = 0)
         {
             m_infos.Clear();
+            m_pages.Clear();
 
             using (ZipFile zip = ZipFile.Read(file))
             {
@@ -250,5 +182,82 @@ namespace English
             }
         }
 
+        public Int32 getScreenWidth()
+        {
+            return Screen.PrimaryScreen.WorkingArea.Width;
+        }
+
+        bool openDailogBrowserDocument()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = PATH_DATA;
+                openFileDialog.Filter = "EBook Files (*.ebk)|*.ebk|PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
+                //openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string file = openFileDialog.FileName;
+                    if (file.EndsWith(".ebk"))
+                    {
+                        m_file = file;
+                        m_file_name = Path.GetFileName(file);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public void js_open()
+        {
+            bool ok = false;
+            jsInvoke(() => { ok = openDailogBrowserDocument(); });
+            if (ok)
+            {
+                m_web.ExecuteScript("loading(true);");
+                new Thread(() =>
+                {
+                    openFileEBK(m_file);
+                    m_web.ExecuteScript("pageInit();");
+                }).Start();
+            }
+        }
+
+        public void js_exit()
+        {
+            jsInvoke(() =>
+            {
+                this.Close();
+            });
+        }
+
+        public void js_open_devtool()
+        {
+            jsInvoke(() =>
+            {
+                m_web.ShowDevTools();
+            });
+        }
+
+        public void js_page_set_current(int page)
+        {
+            m_page_current = page;
+            jsInvoke(() =>
+            {
+                this.Text = string.Format("[{0}] - {1}", m_page_current + 1, m_file_name);
+            });
+        }
+
+        void jsInvoke(Action action)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(action));
+                return;
+            }
+            action();
+        }
     }
 }

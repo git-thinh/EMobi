@@ -8,20 +8,32 @@ document.oncontextmenu = function (e) {
 function loading(visable) {
     var el = document.getElementById('loading');
     if (el) {
-        if (visable == true)
+        if (visable == true) {
+            var pel = document.getElementById('i' + m_page);
+            if (pel) pel.style.opacity = 0;
+
+            document.body.style.backgroundColor = 'black';
+            document.body.style.overflowY = 'hidden';
             el.style.display = 'inline-block';
-        else
+        } else {
+            document.body.style.backgroundColor = 'white';
+            document.body.style.overflowY = 'auto';
             el.style.display = 'none';
+        }
     }
 }
 
 function pageInit() {
     var max = api.getPageTotal();
+    var id = (new Date()).getTime();
     for (var i = 0; i < max; i++) {
-        var img = document.createElement('img');
-        img.id = 'i' + i;
-        img.setAttribute('src', 'img://i' + i);
-        document.body.appendChild(img);
+        var el = document.getElementById('i' + i);
+        if (el) document.body.removeChild(el);
+
+        el = document.createElement('img');
+        el.id = 'i' + i;
+        el.setAttribute('src', 'img://i' + i + '?_=' + id);
+        document.body.appendChild(el);
     }
     pageOpen(0);
 }
@@ -30,48 +42,36 @@ var m_page = 0, m_total = 0;
 function pageOpen(page) {
     if (page < 0) return;
 
+    var screenWidth = api.getScreenWidth();
     var json = api.getPageInfo(page);
     var info = JSON.parse(json);
-    //console.log(info);
 
     if (info && info.Width && info.Height) {
         api.setAppWidth(info.Width, info.Height);
-    }
 
-    var el = document.getElementById('i' + page);
-    if (el) {
-        var old = document.getElementById('i' + m_page);
-        if (old) {
-            old.style.opacity = 0;
-        }
+        if (info.Width < screenWidth)
+            document.body.style.overflowX = 'hidden';
+        else
+            document.body.style.overflowX = 'auto';
 
-        el.style.opacity = 1;
+        var el = document.getElementById('i' + page);
+        if (el) {
+            var old = document.getElementById('i' + m_page);
+            if (old) {
+                old.style.opacity = 0;
+            }
 
-        m_page = page;
-        loading(false);
+            el.style.opacity = 1;
 
-        setTimeout(function () {
+            m_page = page;
+            loading(false);
+
             document.body.scrollLeft = 0;
             document.body.scrollTop = 0;
-            el.focus();
-        }, 10);
+
+            api.js_page_set_current(page);
+        }
     }
-
-    //var el = document.getElementById('page');
-    //if (info && el) {
-    //    el.style.width = info.Width + 'px';
-    //    el.style.height = info.Height + 'px';
-    //    el.style.backgroundImage = 'url(img://i' + page + ')';
-    //    m_page = page;
-    //    loading(false);
-    //    api.setAppWidth(info.Width, info.Height);               
-    //    el.focus();
-
-    //    setTimeout(function () {
-    //        document.body.scrollLeft = 0;
-    //        el.focus();
-    //    }, 10)
-    //}
 }
 
 function pagePrev() { pageOpen(m_page - 1); }
@@ -131,6 +131,7 @@ function pageMouseMove(event) {
 }
 
 function pageMouseUp(event) {
+    menuHide();
     var sel = CHECK_IS_SELECTION();
     console.log('PAGE_MOUSE_UP', sel);
 }
@@ -140,7 +141,7 @@ function pageMouseUp(event) {
 function CHECK_IS_SELECTION() { return document.body.style.cursor == 'crosshair'; }
 
 function menu_search(el) { }
-function menu_open_document(el) { }
+function menu_open_document(el) { api.js_open(); }
 function menu_tree_explorer(el) { }
 function menu_selection(el) {
     document.body.style.cursor = 'crosshair';
@@ -157,7 +158,8 @@ function menu_like_this_page(el) { }
 function menu_login_user(el) { }
 function menu_logout(el) { }
 function menu_setting(el) { }
-function menu_exit(el) { }
+function menu_open_devtool(el) { api.js_open_devtool(); }
+function menu_exit(el) { api.js_exit(); }
 
 window.addEventListener('DOMContentLoaded', function (event) {
     api.mainInited();

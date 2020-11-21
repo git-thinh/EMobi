@@ -197,7 +197,13 @@ namespace English
     {
         void mainInited();
         Int32 getPageTotal();
+        Int32 getScreenWidth();
         string getPageInfo(int page);
         void setAppWidth(int width, int height);
+
+        void js_page_set_current(int page);
+        void js_open();
+        void js_open_devtool();
+        void js_exit();
     }
 }
