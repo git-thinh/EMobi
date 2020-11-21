@@ -7,7 +7,12 @@
     <script src="main.js"></script>
     <script src="font.all.min.js"></script>
 </head>
-<body onkeydown="pageKeyPress(event);">
+<body 
+      onkeydown="pageKeyPress(event);" 
+      onclick="pageClick(event)"
+      onmousedown="pageMouseDown(event)"
+      onmousemove="pageMouseMove(event)"
+      onmouseup="pageMouseUp(event)">
     <img id="loading" src="loading.gif" />
 
     <div class="ui-button-page" onmousemove="this.style.opacity = 1;" onmouseout="this.style.opacity = 0;">

@@ -1,5 +1,7 @@
 ﻿
-document.oncontextmenu = function () {
+document.oncontextmenu = function (e) {
+    //console.log('RIGHT_CLICK = ', e.pageX, e.pageY);
+    setTimeout(function (x, y) { pageMenu(x, y); }, 1, e.pageX, e.pageY);
     return false;
 };
 
@@ -87,11 +89,63 @@ function pageKeyPress(event) {
     }
 }
 
+function pageClick(event) {
+    //console.log('PAGE_CLICK = ', event);
+    menuHide();
+}
+
+var PAGE_MENU_TIMER = null;
+function pageMenu(x, y) {
+    if (PAGE_MENU_TIMER != null) {
+        clearTimeout(PAGE_MENU_TIMER);
+        PAGE_MENU_TIMER = null;
+    }
+
+    var el = document.getElementById('menu');
+    if (el) {
+        el.style.top = '7px';
+        el.style.left = x + 'px';
+        el.style.display = 'inline-block';
+        PAGE_MENU_TIMER = setTimeout(menuHide, 5000);
+    }
+}
+
+function menuHide() {
+    if (PAGE_MENU_TIMER != null) {
+        clearTimeout(PAGE_MENU_TIMER);
+        PAGE_MENU_TIMER = null;
+    }
+
+    var el = document.getElementById('menu');
+    if (el) el.style.display = 'none';
+}
+
+function pageMouseDown(event) {
+    var sel = CHECK_IS_SELECTION();
+    console.log('PAGE_MOUSE_DOWN', sel);
+}
+
+function pageMouseMove(event) {
+    var sel = CHECK_IS_SELECTION();
+    console.log('PAGE_MOUSE_MOVE', sel);
+}
+
+function pageMouseUp(event) {
+    var sel = CHECK_IS_SELECTION();
+    console.log('PAGE_MOUSE_UP', sel);
+}
+
+/////////////////////////////////////////////
+
+function CHECK_IS_SELECTION() { return document.body.style.cursor == 'crosshair'; }
 
 function menu_search(el) { }
 function menu_open_document(el) { }
 function menu_tree_explorer(el) { }
-function menu_selection(el) { }
+function menu_selection(el) {
+    document.body.style.cursor = 'crosshair';
+    //document.body.style.cursor = "default";
+}
 function menu_selection_group(el) { }
 function menu_selection_note(el) { }
 function menu_selection_comment(el) { }

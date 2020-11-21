@@ -78,7 +78,7 @@ img {
     left: 45px;
     top: 45px;
     min-width: 250px;
-    display: inline-block;
+    display: none;
     overflow: hidden;
 }
 
