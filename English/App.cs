@@ -1,4 +1,5 @@
 ﻿using CefSharp;
+using EnglishModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -63,6 +64,8 @@ namespace English
         }
     }
 
+    
+
     static class App
     {
         static App()
@@ -100,6 +103,8 @@ namespace English
         [STAThread]
         static void Main()
         {
+            oPATH.Init();
+
             Settings settings = new Settings()
             {
 
@@ -109,16 +114,20 @@ namespace English
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var f = new fMain();
+
+            var m = new fOther();
+            var f = new fMain(m);
             CEF.RegisterScheme("local", new SchemeHandlerFactory());
             CEF.RegisterScheme("img", new ImageHandlerFactory(f));
             CEF.RegisterJsObject("api", f);
             Application.Run(f);
-
-            //model.Dispose();
+            m.Close();
             CEF.Shutdown();
-            //Environment.Exit(0);
         }
+    }
+
+    public interface IOther {
+        void show();
     }
 
     public interface IMain
@@ -201,6 +210,7 @@ namespace English
         string getPageInfo(int page);
         void setAppWidth(int width, int height);
 
+        void js_media_show();
         void js_page_set_current(int page);
         void js_open();
         void js_open_devtool();

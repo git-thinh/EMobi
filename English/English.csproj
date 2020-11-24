@@ -95,6 +95,12 @@
     <Compile Include="fMain.Designer.cs">
       <DependentUpon>fMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="fOther.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fOther.Designer.cs">
+      <DependentUpon>fOther.cs</DependentUpon>
+    </Compile>
     <Compile Include="MimeTypeMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System.Linq\DeepCopy.Assign.cs" />
@@ -168,6 +174,9 @@
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fOther.resx">
+      <DependentUpon>fOther.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -176,6 +185,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -188,9 +198,53 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\app.png" />
+    <Content Include="Images\app_small.png" />
+    <Content Include="Images\bottom.png" />
+    <Content Include="Images\first.png" />
+    <Content Include="Images\LanguageCreator.png" />
+    <Content Include="Images\last.png" />
+    <Content Include="Images\lock.png" />
+    <Content Include="Images\lock_small.png" />
+    <Content Include="Images\menu.png" />
+    <Content Include="Images\menu_h.png" />
+    <Content Include="Images\menu_v.png" />
+    <Content Include="Images\mic.png" />
+    <Content Include="Images\next.png" />
+    <Content Include="Images\next_small.png" />
+    <Content Include="Images\pause_.png" />
+    <Content Include="Images\pause_circle_outline.png" />
+    <Content Include="Images\play_arrow.png" />
+    <Content Include="Images\play_circle_outline.png" />
+    <Content Include="Images\prev.png" />
+    <Content Include="Images\prev_small.png" />
+    <Content Include="Images\record_off.png" />
+    <Content Include="Images\record_off_small.png" />
+    <Content Include="Images\record_on.png" />
+    <Content Include="Images\record_on_small.png" />
+    <Content Include="Images\repeat_all.png" />
+    <Content Include="Images\repeat_all_small.png" />
+    <Content Include="Images\repeat_one.png" />
+    <Content Include="Images\repeat_one_small.png" />
+    <Content Include="Images\search.png" />
+    <Content Include="Images\search_small.png" />
+    <Content Include="Images\setting.png" />
+    <Content Include="Images\setting_small.png" />
+    <Content Include="Images\shuffle.png" />
+    <Content Include="Images\shuffle_small.png" />
+    <Content Include="Images\Snapshort.png" />
+    <Content Include="Images\stop.png" />
+    <Content Include="Images\unlock.png" />
+    <Content Include="Images\unlock_small.png" />
     <EmbeddedResource Include="DLL\DotNetZip.dll" />
     <EmbeddedResource Include="DLL\Newtonsoft.Json.dll" />
     <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EnglishModel\EnglishModel.csproj">
+      <Project>{2485886c-c962-49b5-ad22-2acd66d8ed41}</Project>
+      <Name>EnglishModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

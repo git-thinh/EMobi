@@ -1,0 +1,9 @@
+C:\EMobi\English.ReName\bin\Debug\English.ReName.exe
+C:\EMobi\English.ReName\bin\Debug\English.ReName.pdb
+C:\EMobi\English.ReName\obj\Debug\English.ReName.csprojAssemblyReference.cache
+C:\EMobi\English.ReName\obj\Debug\English.ReName.csproj.CoreCompileInputs.cache
+C:\EMobi\Debug\ReName.exe
+C:\EMobi\Debug\ReName.pdb
+C:\EMobi\English.ReName\obj\Debug\ReName.exe
+C:\EMobi\English.ReName\obj\Debug\ReName.pdb
+C:\EMobi\English.ReName\obj\Debug\English.ReName.csproj.CopyComplete

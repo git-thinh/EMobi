@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Collins",
+    "types": [ "CRAWLER_MP3" ],
+    "url": "https://www.collinsdictionary.com/dictionary/english/"
+  },
+  {
+    "id": 2,
+    "name": "Cambridge",
+    "types": [ "CRAWLER_MP3" ],
+    "url": "https://dictionary.cambridge.org/dictionary/english/"
+  },
+  {
+    "id": 3,
+    "name": "Oxford",
+    "types": [ "CRAWLER_MP3" ],
+    "url": "https://www.oxfordlearnersdictionaries.com/definition/english/abet?q="
+  },
+  {
+    "id": 4,
+    "name": "Vocabulary.com",
+    "types": [ "CRAWLER_WORD_FAMILY" ],
+    "url": "https://www.vocabulary.com/dictionary/"
+  },
+  {
+    "id": 100,
+    "name": "Lingoes Dictionary",
+    "types": [ "MP3" ],
+    "url": ""
+  },
+  {
+    "id": 101,
+    "name": "engVid",
+    "types": [ "MP3", "MP4" ],
+    "url": ""
+  },
+  {
+    "id": 102,
+    "name": "Shaw English",
+    "types": [ "MP3", "MP4" ],
+    "url": ""
+  },
+  {
+    "id": 103,
+    "name": "BBC Learning English",
+    "types": [ "MP3", "MP4" ],
+    "url": ""
+  }
+]

@@ -23,7 +23,9 @@ function loading(visable) {
     }
 }
 
-function pageInit() {
+function pageInit(page) {
+    if (page == null || page == undefined) page = 0;
+
     var max = api.getPageTotal();
     var id = (new Date()).getTime();
     for (var i = 0; i < max; i++) {
@@ -35,7 +37,8 @@ function pageInit() {
         el.setAttribute('src', 'img://i' + i + '?_=' + id);
         document.body.appendChild(el);
     }
-    pageOpen(0);
+
+    pageOpen(page);
 }
 
 var m_page = 0, m_total = 0;
@@ -151,7 +154,9 @@ function menu_selection_group(el) { }
 function menu_selection_note(el) { }
 function menu_selection_comment(el) { }
 function menu_selection_link_other(el) { }
-function menu_media_explorer(el) { }
+function menu_media_explorer(el) {
+    api.js_media_show();
+}
 function menu_analytic_text(el) { }
 function menu_bookmark_this_page(el) { }
 function menu_like_this_page(el) { }

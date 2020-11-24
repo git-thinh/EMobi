@@ -1,5 +1,6 @@
 ﻿using CefSharp;
 using CefSharp.WinForms;
+using EnglishModel;
 using Ionic.Zip;
 using Newtonsoft.Json;
 using System;
@@ -15,9 +16,7 @@ namespace English
 {
     public partial class fMain : Form, ISchemeHandler, IBoundObject
     {
-        string PASSWORD = "Mr.Thinh's Gifts";
-        string FOLDER_DATA = "book.data";
-        string PATH_DATA = Application.StartupPath[0] + @":\book.data";
+        readonly IOther m_media;
         ConcurrentDictionary<int, oPage> m_infos = new ConcurrentDictionary<int, oPage>();
         ConcurrentDictionary<int, byte[]> m_pages = new ConcurrentDictionary<int, byte[]>();
 
@@ -27,9 +26,10 @@ namespace English
 
         readonly WebView m_web;
 
-        public fMain()
+        public fMain(IOther _media)
         {
             InitializeComponent();
+            m_media = _media;
 
             fMain.CheckForIllegalCrossThreadCalls = true;
             Control.CheckForIllegalCrossThreadCalls = true;
@@ -41,7 +41,7 @@ namespace English
                 FileAccessFromFileUrlsAllowed = true,
                 WebSecurityDisabled = true
             };
-            m_web = new WebView("local://main", setting) { Dock = DockStyle.Fill, AllowDrop = false };
+            m_web = new WebView("local://main", setting) { Dock = DockStyle.Fill, AllowDrop = false, BackColor = Color.Black };
             m_web.ContextMenuStrip = null;
 
             this.AllowDrop = false;
@@ -56,12 +56,53 @@ namespace English
                 this.Top = 0;
                 this.Left = 0;
                 this.Height = Screen.PrimaryScreen.WorkingArea.Height;
-            };
 
+                try
+                {
+                    if (File.Exists("setting.bin"))
+                    {
+                        var setting = JsonConvert.DeserializeObject<oSetting>(File.ReadAllText("setting.bin"));
+                        if (!string.IsNullOrEmpty(setting.DocumentFile))
+                        {
+                            setting.DocumentName = Path.GetFileName(setting.DocumentFile);
+                            if (File.Exists(setting.DocumentFile) == false)
+                                setting.DocumentFile = Path.Combine(oPATH.PATH_DATA, setting.DocumentName);
+                            if (File.Exists(setting.DocumentFile))
+                            {
+                                m_file = setting.DocumentFile;
+                                m_file_name = setting.DocumentName;
+                                m_page_current = setting.PageNumber;
+
+                                openFileEBK_onThread(m_file, m_page_current);
+
+                                m_media.show();
+                                return;
+                            }
+                        }
+                    }
+                }
+                catch { }
+
+                bool ok = openDailogBrowserDocument();
+                if (ok) openFileEBK_onThread(m_file, m_page_current);
+
+                m_media.show();
+            };
         }
 
         private void main_formClosing(object sender, FormClosingEventArgs e)
         {
+            if (m_pages.Count > 0)
+            {
+                var o = new oSetting()
+                {
+                    DocumentFile = m_file,
+                    PageNumber = m_page_current
+                };
+                //var buf = m_pages[m_page_current];
+                //o.ImageBase64 = Convert.ToBase64String(buf);
+                File.WriteAllText("setting.bin", JsonConvert.SerializeObject(o, Formatting.None));
+            }
             ((IWebBrowser)m_web).Dispose();
         }
 
@@ -92,8 +133,21 @@ namespace English
             return m_pages.Count;
         }
 
+        void openFileEBK_onThread(string file, int page = 0) {
+
+            this.Text = string.Format("[ OPENING ] - {0}", Path.GetFileName(file));
+
+            new Thread(new ParameterizedThreadStart((o) => {
+                var f = (o as Tuple<string, int>);
+                openFileEBK(f.Item1, f.Item2);
+                pageInit(f.Item2);
+            })).Start(new Tuple<string, int>(file, page));
+        }
+
         public void mainInited()
         {
+            //pageInit(m_page_current);
+
             //////m_web.ShowDevTools();
             //new Thread(() =>
             //{
@@ -166,10 +220,9 @@ namespace English
                     if (entry.FileName.EndsWith(".jpg"))
                     {
                         int i = int.Parse(entry.FileName.Substring(0, entry.FileName.Length - 4));
-
                         using (MemoryStream ms = new MemoryStream())
                         {
-                            entry.ExtractWithPassword(ms, PASSWORD);
+                            entry.ExtractWithPassword(ms, oPATH.PASSWORD);
                             var buf = ms.ToArray();
                             m_pages.TryAdd(i, buf);
 
@@ -178,9 +231,10 @@ namespace English
                         }
                     }
                 }
-
             }
         }
+
+        void pageInit(int page = 0) { if(m_pages.Count > 0)  m_web.ExecuteScript("pageInit(" + page.ToString() + ");"); }
 
         public Int32 getScreenWidth()
         {
@@ -191,7 +245,7 @@ namespace English
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = PATH_DATA;
+                openFileDialog.InitialDirectory = oPATH.PATH_DATA;
                 openFileDialog.Filter = "EBook Files (*.ebk)|*.ebk|PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
                 //openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
@@ -246,7 +300,15 @@ namespace English
             m_page_current = page;
             jsInvoke(() =>
             {
-                this.Text = string.Format("[{0}] - {1}", m_page_current + 1, m_file_name);
+                this.Text = string.Format("{0}.{1} - {2}", m_page_current + 1, m_pages.Count, m_file_name);
+            });
+        }
+
+        public void js_media_show()
+        {
+            jsInvoke(() =>
+            {
+                m_media.show();
             });
         }
 
