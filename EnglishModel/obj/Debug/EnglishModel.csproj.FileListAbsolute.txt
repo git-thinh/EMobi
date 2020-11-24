@@ -1,6 +1,0 @@
-C:\EMobi\EnglishModel\bin\Debug\EnglishModel.dll
-C:\EMobi\EnglishModel\bin\Debug\EnglishModel.pdb
-C:\EMobi\EnglishModel\obj\Debug\EnglishModel.csproj.CoreCompileInputs.cache
-C:\EMobi\EnglishModel\obj\Debug\EnglishModel.dll
-C:\EMobi\EnglishModel\obj\Debug\EnglishModel.pdb
-C:\EMobi\EnglishModel\obj\Debug\EnglishModel.csprojAssemblyReference.cache
