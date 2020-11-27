@@ -89,6 +89,12 @@
     <Compile Include="ConcurrentDictionary\System\PlatformHelper.cs" />
     <Compile Include="ConcurrentDictionary\System\SR.cs" />
     <Compile Include="ConcurrentDictionary\System\Threading\Volatile.cs" />
+    <Compile Include="fEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fEditor.Designer.cs">
+      <DependentUpon>fEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="fMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,9 @@
     <Compile Include="System.Linq\Tuple\IStructuralComparable.cs" />
     <Compile Include="System.Linq\Tuple\IStructuralEquatable.cs" />
     <Compile Include="System.Linq\Tuple\Tuple.cs" />
+    <EmbeddedResource Include="fEditor.resx">
+      <DependentUpon>fEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
     </EmbeddedResource>

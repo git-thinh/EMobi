@@ -14,6 +14,7 @@ namespace EnglishModel
         public static string PATH_MP3_SENTENCE = PATH_START_APP[0] + @":\book.mp3.sentence";
         public static string PATH_MP3_TEXT = PATH_START_APP[0] + @":\book.mp3.text";
         public static string PATH_MP4 = PATH_START_APP[0] + @":\book.mp4";
+        public static string PATH_WORD_TEXT = PATH_START_APP[0] + @":\book.word.text";
 
         public static void Init()
         {
