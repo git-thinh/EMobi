@@ -120,7 +120,8 @@ namespace English
             CEF.RegisterScheme("local", new SchemeHandlerFactory());
             CEF.RegisterScheme("img", new ImageHandlerFactory(f));
             CEF.RegisterJsObject("api", f);
-            Application.Run(f);
+            //Application.Run(f);
+            Application.Run(new fEditor("ability"));
             m.Close();
             CEF.Shutdown();
         }

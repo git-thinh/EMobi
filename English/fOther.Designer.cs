@@ -33,6 +33,20 @@ namespace English
             this._tabSearch = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this._tabSearch_Word = new System.Windows.Forms.TabPage();
+            this._searchResult_panelDetail = new System.Windows.Forms.FlowLayoutPanel();
+            this._searchResult_checkList = new System.Windows.Forms.CheckedListBox();
+            this._searchResult_panelHeader = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this._panelSearch_BoxAlbum = new System.Windows.Forms.FlowLayoutPanel();
+            this._panelSearch_BoxTag = new System.Windows.Forms.FlowLayoutPanel();
+            this._panelSearch_BoxSubject = new System.Windows.Forms.FlowLayoutPanel();
+            this._labelSearch_BrowserSubject = new System.Windows.Forms.Label();
+            this._labelSearch_BrowserAlbum = new System.Windows.Forms.Label();
+            this._labelSearch_BrowserTag = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this._tabSearch_Album = new System.Windows.Forms.TabPage();
             this._tabSearch_Pronounce = new System.Windows.Forms.TabPage();
             this._tabSearch_Sentence = new System.Windows.Forms.TabPage();
@@ -69,11 +83,12 @@ namespace English
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addnewFromSearchBoxIntoSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadContentPronounceMeanEtcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.reloadCacheWordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuCache_ReloadWords = new System.Windows.Forms.ToolStripMenuItem();
+            this.pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editAudioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reloadCacheWordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuCache_ReloadWords = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.wordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeSelectedItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pushSelectedItemsOnSearchBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,26 +115,19 @@ namespace English
             this._textSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this._buttonSearchClose = new System.Windows.Forms.Label();
-            this.pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._searchResult_panelDetail = new System.Windows.Forms.FlowLayoutPanel();
-            this._searchResult_checkList = new System.Windows.Forms.CheckedListBox();
-            this._searchResult_panelHeader = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.bookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openCurrentPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuWord_updateArticleAboutUsing = new System.Windows.Forms.ToolStripMenuItem();
             this._tabPage.SuspendLayout();
             this._tabSearch.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this._tabSearch_Word.SuspendLayout();
+            this._searchResult_panelHeader.SuspendLayout();
             this._tabMedia.SuspendLayout();
             this._tabMediaContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._buttonSearch)).BeginInit();
             this._mediaPlayer.SuspendLayout();
             this._panelMedia.SuspendLayout();
-            this._searchResult_panelHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // _tabPage
@@ -181,6 +189,149 @@ namespace English
             this._tabSearch_Word.TabIndex = 1;
             this._tabSearch_Word.Text = "Words";
             this._tabSearch_Word.UseVisualStyleBackColor = true;
+            // 
+            // _searchResult_panelDetail
+            // 
+            this._searchResult_panelDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._searchResult_panelDetail.Location = new System.Drawing.Point(3, 313);
+            this._searchResult_panelDetail.Name = "_searchResult_panelDetail";
+            this._searchResult_panelDetail.Size = new System.Drawing.Size(478, 378);
+            this._searchResult_panelDetail.TabIndex = 0;
+            // 
+            // _searchResult_checkList
+            // 
+            this._searchResult_checkList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this._searchResult_checkList.Dock = System.Windows.Forms.DockStyle.Top;
+            this._searchResult_checkList.Font = new System.Drawing.Font("Consolas", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._searchResult_checkList.FormattingEnabled = true;
+            this._searchResult_checkList.Location = new System.Drawing.Point(3, 79);
+            this._searchResult_checkList.Name = "_searchResult_checkList";
+            this._searchResult_checkList.Size = new System.Drawing.Size(478, 234);
+            this._searchResult_checkList.TabIndex = 0;
+            // 
+            // _searchResult_panelHeader
+            // 
+            this._searchResult_panelHeader.Controls.Add(this.panel1);
+            this._searchResult_panelHeader.Controls.Add(this._panelSearch_BoxAlbum);
+            this._searchResult_panelHeader.Controls.Add(this._panelSearch_BoxTag);
+            this._searchResult_panelHeader.Controls.Add(this._panelSearch_BoxSubject);
+            this._searchResult_panelHeader.Controls.Add(this._labelSearch_BrowserSubject);
+            this._searchResult_panelHeader.Controls.Add(this._labelSearch_BrowserAlbum);
+            this._searchResult_panelHeader.Controls.Add(this._labelSearch_BrowserTag);
+            this._searchResult_panelHeader.Controls.Add(this.label10);
+            this._searchResult_panelHeader.Controls.Add(this.label9);
+            this._searchResult_panelHeader.Controls.Add(this.label8);
+            this._searchResult_panelHeader.Controls.Add(this.label3);
+            this._searchResult_panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this._searchResult_panelHeader.Location = new System.Drawing.Point(3, 3);
+            this._searchResult_panelHeader.Name = "_searchResult_panelHeader";
+            this._searchResult_panelHeader.Size = new System.Drawing.Size(478, 76);
+            this._searchResult_panelHeader.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel1.Location = new System.Drawing.Point(41, 58);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(413, 16);
+            this.panel1.TabIndex = 9;
+            // 
+            // _panelSearch_BoxAlbum
+            // 
+            this._panelSearch_BoxAlbum.BackColor = System.Drawing.Color.WhiteSmoke;
+            this._panelSearch_BoxAlbum.Location = new System.Drawing.Point(41, 18);
+            this._panelSearch_BoxAlbum.Name = "_panelSearch_BoxAlbum";
+            this._panelSearch_BoxAlbum.Size = new System.Drawing.Size(413, 17);
+            this._panelSearch_BoxAlbum.TabIndex = 4;
+            // 
+            // _panelSearch_BoxTag
+            // 
+            this._panelSearch_BoxTag.BackColor = System.Drawing.Color.WhiteSmoke;
+            this._panelSearch_BoxTag.Location = new System.Drawing.Point(41, 38);
+            this._panelSearch_BoxTag.Name = "_panelSearch_BoxTag";
+            this._panelSearch_BoxTag.Size = new System.Drawing.Size(413, 17);
+            this._panelSearch_BoxTag.TabIndex = 4;
+            // 
+            // _panelSearch_BoxSubject
+            // 
+            this._panelSearch_BoxSubject.BackColor = System.Drawing.Color.WhiteSmoke;
+            this._panelSearch_BoxSubject.Location = new System.Drawing.Point(41, -2);
+            this._panelSearch_BoxSubject.Name = "_panelSearch_BoxSubject";
+            this._panelSearch_BoxSubject.Size = new System.Drawing.Size(413, 17);
+            this._panelSearch_BoxSubject.TabIndex = 3;
+            // 
+            // _labelSearch_BrowserSubject
+            // 
+            this._labelSearch_BrowserSubject.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labelSearch_BrowserSubject.Location = new System.Drawing.Point(455, 1);
+            this._labelSearch_BrowserSubject.Name = "_labelSearch_BrowserSubject";
+            this._labelSearch_BrowserSubject.Size = new System.Drawing.Size(20, 15);
+            this._labelSearch_BrowserSubject.TabIndex = 7;
+            this._labelSearch_BrowserSubject.Text = "...";
+            this._labelSearch_BrowserSubject.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this._labelSearch_BrowserSubject.Click += new System.EventHandler(this._labelSearch_BrowserSubject_Click);
+            // 
+            // _labelSearch_BrowserAlbum
+            // 
+            this._labelSearch_BrowserAlbum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labelSearch_BrowserAlbum.Location = new System.Drawing.Point(456, 19);
+            this._labelSearch_BrowserAlbum.Name = "_labelSearch_BrowserAlbum";
+            this._labelSearch_BrowserAlbum.Size = new System.Drawing.Size(20, 15);
+            this._labelSearch_BrowserAlbum.TabIndex = 6;
+            this._labelSearch_BrowserAlbum.Text = "...";
+            this._labelSearch_BrowserAlbum.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this._labelSearch_BrowserAlbum.Click += new System.EventHandler(this._labelSearch_BrowserAlbum_Click);
+            // 
+            // _labelSearch_BrowserTag
+            // 
+            this._labelSearch_BrowserTag.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labelSearch_BrowserTag.Location = new System.Drawing.Point(456, 38);
+            this._labelSearch_BrowserTag.Name = "_labelSearch_BrowserTag";
+            this._labelSearch_BrowserTag.Size = new System.Drawing.Size(20, 15);
+            this._labelSearch_BrowserTag.TabIndex = 5;
+            this._labelSearch_BrowserTag.Text = "...";
+            this._labelSearch_BrowserTag.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this._labelSearch_BrowserTag.Click += new System.EventHandler(this._labelSearch_BrowserTag_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.Color.DarkGray;
+            this.label10.Location = new System.Drawing.Point(11, 58);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(31, 13);
+            this.label10.TabIndex = 8;
+            this.label10.Text = "Type";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.Color.DarkGray;
+            this.label9.Location = new System.Drawing.Point(16, 39);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(26, 13);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Tag";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.DarkGray;
+            this.label8.Location = new System.Drawing.Point(6, 19);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(36, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Album";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.DarkGray;
+            this.label3.Location = new System.Drawing.Point(0, 1);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(43, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Subject";
             // 
             // _tabSearch_Album
             // 
@@ -476,6 +627,7 @@ namespace English
             this.toolStripSeparator4,
             this.wordToolStripMenuItem,
             this.albumToolStripMenuItem,
+            this.bookToolStripMenuItem,
             this.toolStripSeparator3,
             this._menuWindowOnTop,
             this._menuSetting,
@@ -542,10 +694,25 @@ namespace English
             this.reloadContentPronounceMeanEtcToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.reloadContentPronounceMeanEtcToolStripMenuItem.Text = "Reload Content: pronounce, mean, etc";
             // 
-            // toolStripSeparator4
+            // pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(179, 6);
+            this.pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem.Name = "pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem";
+            this.pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
+            this.pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem.Text = "Push Selected Items To Tab Search Result";
+            // 
+            // audioToolStripMenuItem
+            // 
+            this.audioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editAudioToolStripMenuItem});
+            this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(182, 24);
+            this.audioToolStripMenuItem.Text = "Audio";
+            // 
+            // editAudioToolStripMenuItem
+            // 
+            this.editAudioToolStripMenuItem.Name = "editAudioToolStripMenuItem";
+            this.editAudioToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.editAudioToolStripMenuItem.Text = "Edit Audio";
             // 
             // reloadCacheWordsToolStripMenuItem
             // 
@@ -562,25 +729,17 @@ namespace English
             this._menuCache_ReloadWords.Text = "Reload Words";
             this._menuCache_ReloadWords.Click += new System.EventHandler(this._menuCache_ReloadWords_Click);
             // 
-            // audioToolStripMenuItem
+            // toolStripSeparator4
             // 
-            this.audioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editAudioToolStripMenuItem});
-            this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(182, 24);
-            this.audioToolStripMenuItem.Text = "Audio";
-            // 
-            // editAudioToolStripMenuItem
-            // 
-            this.editAudioToolStripMenuItem.Name = "editAudioToolStripMenuItem";
-            this.editAudioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editAudioToolStripMenuItem.Text = "Edit Audio";
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(179, 6);
             // 
             // wordToolStripMenuItem
             // 
             this.wordToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removeSelectedItemsToolStripMenuItem,
-            this.pushSelectedItemsOnSearchBoxToolStripMenuItem});
+            this.pushSelectedItemsOnSearchBoxToolStripMenuItem,
+            this._menuWord_updateArticleAboutUsing});
             this.wordToolStripMenuItem.Name = "wordToolStripMenuItem";
             this.wordToolStripMenuItem.Size = new System.Drawing.Size(182, 24);
             this.wordToolStripMenuItem.Text = "Word";
@@ -818,95 +977,26 @@ namespace English
             this._buttonSearchClose.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this._buttonSearchClose.Click += new System.EventHandler(this._buttonSearchClose_Click);
             // 
-            // pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem
+            // bookToolStripMenuItem
             // 
-            this.pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem.Name = "pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem";
-            this.pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.pushSelectedItemsOnSearchBoxToQueueSearchToolStripMenuItem.Text = "Push Selected Items To Tab Search Result";
+            this.bookToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openCurrentPageToolStripMenuItem});
+            this.bookToolStripMenuItem.Name = "bookToolStripMenuItem";
+            this.bookToolStripMenuItem.Size = new System.Drawing.Size(182, 24);
+            this.bookToolStripMenuItem.Text = "Book";
             // 
-            // _searchResult_panelDetail
+            // openCurrentPageToolStripMenuItem
             // 
-            this._searchResult_panelDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._searchResult_panelDetail.Location = new System.Drawing.Point(3, 295);
-            this._searchResult_panelDetail.Name = "_searchResult_panelDetail";
-            this._searchResult_panelDetail.Size = new System.Drawing.Size(478, 396);
-            this._searchResult_panelDetail.TabIndex = 0;
+            this.openCurrentPageToolStripMenuItem.Name = "openCurrentPageToolStripMenuItem";
+            this.openCurrentPageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openCurrentPageToolStripMenuItem.Text = "Open Current Page";
             // 
-            // _searchResult_checkList
+            // _menuWord_updateArticleAboutUsing
             // 
-            this._searchResult_checkList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this._searchResult_checkList.Dock = System.Windows.Forms.DockStyle.Top;
-            this._searchResult_checkList.Font = new System.Drawing.Font("Consolas", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._searchResult_checkList.FormattingEnabled = true;
-            this._searchResult_checkList.Location = new System.Drawing.Point(3, 61);
-            this._searchResult_checkList.Name = "_searchResult_checkList";
-            this._searchResult_checkList.Size = new System.Drawing.Size(478, 234);
-            this._searchResult_checkList.TabIndex = 0;
-            // 
-            // _searchResult_panelHeader
-            // 
-            this._searchResult_panelHeader.Controls.Add(this.flowLayoutPanel2);
-            this._searchResult_panelHeader.Controls.Add(this.flowLayoutPanel3);
-            this._searchResult_panelHeader.Controls.Add(this.flowLayoutPanel1);
-            this._searchResult_panelHeader.Controls.Add(this.label9);
-            this._searchResult_panelHeader.Controls.Add(this.label8);
-            this._searchResult_panelHeader.Controls.Add(this.label3);
-            this._searchResult_panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this._searchResult_panelHeader.Location = new System.Drawing.Point(3, 3);
-            this._searchResult_panelHeader.Name = "_searchResult_panelHeader";
-            this._searchResult_panelHeader.Size = new System.Drawing.Size(478, 58);
-            this._searchResult_panelHeader.TabIndex = 1;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.DarkGray;
-            this.label3.Location = new System.Drawing.Point(3, 2);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Subject";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.ForeColor = System.Drawing.Color.DarkGray;
-            this.label8.Location = new System.Drawing.Point(3, 21);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(36, 13);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Album";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.Color.DarkGray;
-            this.label9.Location = new System.Drawing.Point(3, 40);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(26, 13);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "Tag";
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(47, -1);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(389, 18);
-            this.flowLayoutPanel1.TabIndex = 3;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(47, 18);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(389, 18);
-            this.flowLayoutPanel2.TabIndex = 4;
-            // 
-            // flowLayoutPanel3
-            // 
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(47, 37);
-            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(389, 18);
-            this.flowLayoutPanel3.TabIndex = 4;
+            this._menuWord_updateArticleAboutUsing.Name = "_menuWord_updateArticleAboutUsing";
+            this._menuWord_updateArticleAboutUsing.Size = new System.Drawing.Size(347, 22);
+            this._menuWord_updateArticleAboutUsing.Text = "Update Article About Using this Word";
+            this._menuWord_updateArticleAboutUsing.Click += new System.EventHandler(this._menuWord_updateArticleAboutUsing_Click);
             // 
             // fOther
             // 
@@ -930,6 +1020,8 @@ namespace English
             this._tabSearch.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this._tabSearch_Word.ResumeLayout(false);
+            this._searchResult_panelHeader.ResumeLayout(false);
+            this._searchResult_panelHeader.PerformLayout();
             this._tabMedia.ResumeLayout(false);
             this._tabMediaContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._buttonSearch)).EndInit();
@@ -937,8 +1029,6 @@ namespace English
             this._mediaPlayer.PerformLayout();
             this._panelMedia.ResumeLayout(false);
             this._panelMedia.PerformLayout();
-            this._searchResult_panelHeader.ResumeLayout(false);
-            this._searchResult_panelHeader.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1024,8 +1114,16 @@ namespace English
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel _panelSearch_BoxAlbum;
+        private System.Windows.Forms.FlowLayoutPanel _panelSearch_BoxTag;
+        private System.Windows.Forms.FlowLayoutPanel _panelSearch_BoxSubject;
+        private System.Windows.Forms.Label _labelSearch_BrowserTag;
+        private System.Windows.Forms.Label _labelSearch_BrowserAlbum;
+        private System.Windows.Forms.Label _labelSearch_BrowserSubject;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem bookToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openCurrentPageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _menuWord_updateArticleAboutUsing;
     }
 }

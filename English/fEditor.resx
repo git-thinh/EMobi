@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="_textEdit.Text" xml:space="preserve">
+    <value>
+1. Nghĩa của từ ability
+
+Từ ability thường được dịch sang tiếng Việt là khả năng. Điều thú vị ở đây là, cũng giống như từ khả năng, từ ability cũng có có 2 sắc thái nghĩa khác nhau:
+
+Nghĩa 1: một điều có thể xảy ra được, một việc có thể làm được.
+Ví dụ: The system has the ability to run more than one program at the same time.
+Dịch nghĩa: Hệ thống có khả năng chạy nhiều chương trình cùng lúc.
+ 
+Nghĩa 2: kỹ năng, trình độ của một người
+Ví dụ: The TOEIC generally reflects one’s ability to use English.
+Dịch nghĩa: Bài thi TOEIC nói chung là phản ánh được khả năng sử dụng tiếng Anh của một người.
+ 
+
+2. Các trường hợp dùng từ ability chưa đúng
+
+Vì đã biết là từ ability thường dịch là khả năng nên chúng ta thường hay dịch những câu tiếng Việt có từ khả năng thành ability. Tuy nhiên, từ ability thường được dùng cho những câu khá "nghiêm túc" chứ không dùng cho những câu nói thường ngày.
+
+Everyone has the right to good medical care regardless of their ability to pay.
+Mọi người đều có quyền được hưởng chế độ chăm sóc y tế bất kể khả năng chi trả của họ là như thế nào.
+She showed great ability in mathematics.
+Cô ấy cho thấy khả năng đặc biệt về toán học.
+ 
+
+Đối với nghĩa 1 của từ khả năng, trong nói chuyện thường ngày khi chúng ta nói là "có khả năng" làm gì đó thì chúng ta có thể dùng động từ "can":
+
+Cô ấy có khả năng hát rất hay.
+She can sing quite well. 
+Anh ấy có khả năng bơi nhanh.
+He can swim fast.
+ 
+
+Đối với nghĩa 2 của từ khả năng, trong nói chuyện thường ngày thì chúng ta nên dùng từ skills:
+
+Tôi muốn cải thiện khả năng nói tiếng Anh của mình.
+I want to improve my English speaking skills.
+Có nhiều cách để phát triển khả năng viết lách.
+There are many ways to develop your writing skills.
+ 
+
+Ngoài ra, có một số từ trong tiếng Anh đã bao gồm nghĩa khả năng trong từ đó, vì vậy chúng ta nên dùng trực tiếp những từ này thay vì dùng ability:
+
+Để nói khả năng lãnh đạo, thay vì nói leading ability, chúng ta nói leadership.
+Để nói khả năng trình diễn âm nhạc, thay vì nói music ability, chúng ta nói musicianship.</value>
+  </data>
+</root>

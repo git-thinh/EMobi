@@ -46,5 +46,17 @@
     "name": "BBC Learning English",
     "types": [ "MP3", "MP4" ],
     "url": ""
+  },
+  {
+    "id": 104,
+    "name": "BBC Speakout Elementary",
+    "types": [ "MP3", "MP4", "BOOK", "COVERSATION" ],
+    "url": ""
+  },
+  {
+    "id": 105,
+    "name": "Key Language Basic",
+    "types": [ "MP3", "MP4", "BOOK", "CONVERSATION" ],
+    "url": ""
   }
 ]

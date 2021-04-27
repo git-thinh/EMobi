@@ -120,6 +120,9 @@ namespace English
                 .Select(x => Path.GetFileName(x).Split('#')[0].ToLower())
                 .OrderBy(x => x)
                 .ToArray();
+            ui_searchHistory.MouseClick += (se, ev) => { 
+            
+            };
         }
 
         #region [ SEARCH ]
@@ -179,9 +182,34 @@ namespace English
         private void _menuWord_ReloadContent_Click(object sender, EventArgs e)
         {
 
+        }
+
         #endregion
+
+        private void _labelSearch_BrowserTag_Click(object sender, EventArgs e)
+        {
 
         }
 
+        private void _labelSearch_BrowserAlbum_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _labelSearch_BrowserSubject_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _menuWord_updateArticleAboutUsing_Click(object sender, EventArgs e)
+        {
+            int index = ui_searchHistory.SelectedIndex;
+            if (index != -1)
+            {
+                string word = ui_searchHistory.Items[index].ToString();
+                var f = new fEditor(word);
+                f.Show();
+            }
+        }
     }
 }
